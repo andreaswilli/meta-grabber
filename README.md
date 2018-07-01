@@ -2,7 +2,7 @@
 
 A tool to grab meta data for tv shows and rename files on your hard disk.
 
-### Example
+## Example
 
 #### Before
 ```
@@ -29,4 +29,10 @@ S02 E07 - Häutungen.mkv
 S02 E08 - Die Lebenden und die Verdammten.mkv
 S02 E09 - Virus.mkv
 S02 E10 - Der Passagier.mkv
+```
+
+## Dev stuff
+Run it locally by running
+```
+yarn dev
 ```
