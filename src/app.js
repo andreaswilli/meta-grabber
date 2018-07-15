@@ -4,6 +4,7 @@ import { remote } from 'electron';
 
 import TvShowInput from './components/tvShowInput';
 import { makeRequestCreator, baseUrl, apiKey } from './util/request';
+import { formatEpisodeName } from './util/format';
 
 export default class App extends Component {
 
@@ -78,13 +79,13 @@ export default class App extends Component {
         <TvShowInput
           onSelect={this.handleSelect.bind(this)}/>
         {this.state.seasons.map(s => (
-          <div key={s.season_number}>
+          <div
+            key={s.season_number}>
             <b>{s.name}</b><br />
             {s.episodes && s.episodes.map(e =>
-              <div key={e.episode_number}>
-                S{('0'+e.season_number).slice(-2)}
-                &nbsp; {/* TODO: use normal space */}
-                E{('0'+e.episode_number).slice(-2)} - {e.name}
+              <div
+                key={e.episode_number}>
+                {formatEpisodeName(e, this.state.tvShow)}
               </div>
             )}
           </div>
