@@ -15,8 +15,8 @@ export default class App extends Component {
     };
   }
 
-  chooseTvShow(tvShowItem) {
-    this.setState({ tvShow: tvShowItem.id });
+  chooseTvShow(tvShow) {
+    this.setState({ tvShow: tvShow.id });
   }
 
   async open() {
