@@ -80,10 +80,12 @@ export default class App extends Component {
           onSelect={this.handleSelect.bind(this)}/>
         {this.state.seasons.map(s => (
           <div
+            className="pre"
             key={s.season_number}>
             <b>{s.name}</b><br />
             {s.episodes && s.episodes.map(e =>
               <div
+                className="pre"
                 key={e.episode_number}>
                 {formatEpisodeName(e, this.state.tvShow)}
               </div>
