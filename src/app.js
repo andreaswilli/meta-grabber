@@ -3,20 +3,60 @@ import axios from 'axios';
 import { remote } from 'electron';
 
 import TvShowInput from './components/tvShowInput';
+import { makeRequestCreator, baseUrl, apiKey } from './util/request';
 
 export default class App extends Component {
 
   constructor(props) {
     super(props);
+    this.get = makeRequestCreator();
 
     this.state = {
       files: [],
       tvShow: null,
+      seasons: [],
     };
   }
 
   chooseTvShow(tvShow) {
     this.setState({ tvShow: tvShow.id });
+  }
+
+  async getSeasonsOf(tvShow) {
+    if (!tvShow || !tvShow.id) {
+      this.setState({ seasons: [] });
+      return;
+    }
+    try {
+      const response = await this.get(
+        `${baseUrl}/tv/${tvShow.id}?api_key=${apiKey}&language=de`
+      );
+      // this.setState({ seasons: response.data.seasons });
+      const seasons =
+        await Promise.all(response.data.seasons.map(async season => {
+          try{
+            const response = await (makeRequestCreator())(
+              `${baseUrl}/tv/${tvShow.id}/season/${
+                season.season_number}?api_key=${apiKey}&language=de`
+            );
+            return response.data;
+          } catch(e) {
+              // TODO: error handling
+          }
+        }));
+      this.setState({ seasons });
+    } catch(e) {
+      if (axios.isCancel(e)) {
+        // ignore canceled request
+      } else {
+        // TODO: error handling
+      };
+    }
+  }
+
+  handleSelect(tvShow) {
+    this.chooseTvShow(tvShow);
+    this.getSeasonsOf(tvShow);
   }
 
   async open() {
@@ -36,7 +76,19 @@ export default class App extends Component {
           {this.state.files.map(f => <li key={f}>{f}</li>)}
         </ul>
         <TvShowInput
-          onSelect={this.chooseTvShow.bind(this)}/>
+          onSelect={this.handleSelect.bind(this)}/>
+        {this.state.seasons.map(s => (
+          <div key={s.season_number}>
+            <b>{s.name}</b><br />
+            {s.episodes && s.episodes.map(e =>
+              <div key={e.episode_number}>
+                S{('0'+e.season_number).slice(-2)}
+                &nbsp; {/* TODO: use normal space */}
+                E{('0'+e.episode_number).slice(-2)} - {e.name}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     );
   }
