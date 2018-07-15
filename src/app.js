@@ -11,12 +11,12 @@ export default class App extends Component {
 
     this.state = {
       files: [],
-      selectedTvShow: null,
+      tvShow: null,
     };
   }
 
   chooseTvShow(tvShowItem) {
-    this.setState({ selectedTvShow: tvShowItem.id });
+    this.setState({ tvShow: tvShowItem.id });
   }
 
   async open() {
