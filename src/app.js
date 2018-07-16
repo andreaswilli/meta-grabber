@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { remote } from 'electron';
 
 import TvShowInput from './components/tvShowInput';
+import FilePicker from './components/filePicker';
 import { makeRequestCreator, baseUrl, apiKey } from './util/request';
 import { formatEpisodeName } from './util/format';
 
@@ -60,19 +60,21 @@ export default class App extends Component {
     this.getSeasonsOf(tvShow);
   }
 
-  async open() {
-    const files = await remote.dialog.showOpenDialog({
-      properties: ['openFile', 'multiSelections', 'createDirectory'],
+  // use Set() to prevent duplicates in array
+  handleFileOpen(files) {
+    this.setState({
+      files: files.length === 0 ? files : [...new Set([
+        ...this.state.files,
+        ...files,
+      ])],
     });
-    if (!files) return;
-    this.setState({ files });
   }
 
   render () {
     return (
       <div>
         <h1>Title</h1>
-        <button onClick={this.open.bind(this)}>open</button>
+        <FilePicker onFileOpen={this.handleFileOpen.bind(this)} />
         <ul>
           {this.state.files.map(f => <li key={f}>{f}</li>)}
         </ul>
