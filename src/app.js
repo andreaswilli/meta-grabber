@@ -5,6 +5,8 @@ import TvShowInput from './components/tvShowInput';
 import FilePicker from './components/filePicker';
 import { makeRequestCreator, baseUrl, apiKey } from './util/request';
 import { formatEpisodeName } from './util/format';
+import { flatten } from './util/array';
+import FileRename from './components/FileRename';
 
 export default class App extends Component {
 
@@ -80,6 +82,13 @@ export default class App extends Component {
         </ul>
         <TvShowInput
           onSelect={this.handleSelect.bind(this)}/>
+        <FileRename
+          episodes={
+            flatten(this.state.seasons.map(s => s.episodes))
+              .map(e => formatEpisodeName(e, this.state.tvShow))
+          }
+          files={this.state.files}
+        />
         {this.state.seasons.map(s => (
           <div
             className="pre"
