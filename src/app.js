@@ -83,26 +83,14 @@ export default class App extends Component {
         <TvShowInput
           onSelect={this.handleSelect.bind(this)}/>
         <FileRename
-          episodes={
-            flatten(this.state.seasons.map(s => s.episodes))
-              .map(e => formatEpisodeName(e, this.state.tvShow))
+          seasons={
+            this.state.seasons.map(s => ({
+              name: s.name,
+              episodes: s.episodes.map(e => formatEpisodeName(e, this.state.tvShow)),
+            }))
           }
-          files={this.state.files}
+          files={this.state.files.sort()}
         />
-        {this.state.seasons.map(s => (
-          <div
-            className="pre"
-            key={s.season_number}>
-            <b>{s.name}</b><br />
-            {s.episodes && s.episodes.map(e =>
-              <div
-                className="pre"
-                key={e.episode_number}>
-                {formatEpisodeName(e, this.state.tvShow)}
-              </div>
-            )}
-          </div>
-        ))}
       </div>
     );
   }

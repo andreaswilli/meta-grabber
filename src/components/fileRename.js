@@ -4,24 +4,16 @@ export default class FileRename extends Component {
   render() {
     return (
       <div>
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Episode Name</th>
-              <th>Old file name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(this.props.episodes || []).map((e, i) => (
-              <tr key={e}>
-                <td><input type="checkbox" /></td>
-                <td>{e}</td>
-                <td>{this.props.files[i] || ''}</td>
-              </tr>
+        {(this.props.seasons || []).map(s => (
+          <div key={s.name}>
+            <label className="pre"><input type="checkbox" />{s.name}</label>
+            {s.episodes.map(e => (
+              <div key={e}>
+                <label className="pre"><input type="checkbox" />{e}</label>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        ))}
       </div>
     );
   }
