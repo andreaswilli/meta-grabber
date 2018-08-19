@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import { flatten } from '../util/array';
+import { formatFileName } from '../util/format';
+
 export default class FileRename extends Component {
 
   constructor(props) {
@@ -7,7 +10,12 @@ export default class FileRename extends Component {
 
     this.state = {
       excludedSeasons: [],
+      assignments: [],
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.assignEpisodesToFiles(nextProps);
   }
 
   isSeasonExcluded(seasonName) {
@@ -21,15 +29,15 @@ export default class FileRename extends Component {
         episode === episodeName).length > 0).length > 0;
   }
 
-  handleSeasonChange(e, seasonName) {
+  async handleSeasonChange(e, seasonName) {
     if (e.target.checked) {
       // include season
-      this.setState({
+      await this.setState({
         excludedSeasons: this.state.excludedSeasons.filter(s => s.name !== seasonName),
       });
     } else {
       // exclude season
-      this.setState({
+      await this.setState({
         excludedSeasons: [
           ...this.state.excludedSeasons,
           {
@@ -40,9 +48,10 @@ export default class FileRename extends Component {
         ],
       });
     }
+    this.assignEpisodesToFiles(this.props);
   }
 
-  handleEpisodeChange(e, episodeName) {
+  async handleEpisodeChange(e, episodeName) {
     let season = this.props.seasons.find(season =>
       season.episodes.filter(episode =>
         episode === episodeName).length > 0);
@@ -61,7 +70,7 @@ export default class FileRename extends Component {
           },
         ];
       }
-      this.setState({ excludedSeasons });
+      await this.setState({ excludedSeasons });
     } else {
       // exclude episode
       let excludedSeasons = excludedSeason
@@ -82,8 +91,30 @@ export default class FileRename extends Component {
             excludedEpisodes: [episodeName],
           },
         ];
-      this.setState({ excludedSeasons });
+      await this.setState({ excludedSeasons });
     }
+    this.assignEpisodesToFiles(this.props);
+  }
+
+  assignEpisodesToFiles(props) {
+    let excludedEpisodesCount = 0;
+    this.setState({
+      assignments: flatten(props.seasons.map(s => s.episodes)).map((e, i) => {
+        let excluded = this.isEpisodeExcluded(e);
+        if (excluded) {
+          excludedEpisodesCount++;
+        }
+        return {
+          name: e,
+          fileName: excluded ? undefined : props.files[i - excludedEpisodesCount],
+        };
+      }),
+    });
+  }
+
+  getAssignedFileName(episodeName) {
+    let assignment = this.state.assignments.find(a => a.name === episodeName);
+    return assignment ? assignment.fileName : null;
   }
 
   render() {
@@ -107,7 +138,7 @@ export default class FileRename extends Component {
                     checked={!this.isEpisodeExcluded(e)}
                     onChange={event => this.handleEpisodeChange(event, e)}
                   />
-                  {e}
+                  <span>{e}</span>&nbsp;<b>{formatFileName(this.getAssignedFileName(e))}</b>
                 </label>
               </div>
             ))}
