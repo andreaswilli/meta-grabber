@@ -12,7 +12,6 @@ export default class TvShowInput extends Component {
     this.get = makeRequestCreator();
 
     this.state = {
-      query: '',
       results: [],
     };
   }
@@ -33,7 +32,7 @@ export default class TvShowInput extends Component {
   }
 
   handleChange({ target: { value: query } }) {
-    this.setState({ query });
+    this.props.onChange(query);
 
     if (!query || query.trim().length < 3) {
       this.setState({ results: [] });
@@ -44,7 +43,7 @@ export default class TvShowInput extends Component {
   }
 
   handleSelect(query, tvShowItem) {
-    this.setState({ query });
+    this.props.onChange(query);
     this.props.onSelect(tvShowItem);
   }
 
@@ -58,7 +57,7 @@ export default class TvShowInput extends Component {
             {item.name} ({item.first_air_date.substr(0,4)})
           </div>
         }
-        value={this.state.query}
+        value={this.props.query}
         onChange={this.handleChange.bind(this)}
         onSelect={this.handleSelect.bind(this)}
       />

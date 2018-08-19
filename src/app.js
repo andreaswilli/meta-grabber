@@ -19,6 +19,7 @@ export default class App extends Component {
       files: [],
       tvShow: null,
       seasons: [],
+      query: '',
     };
   }
 
@@ -73,13 +74,24 @@ export default class App extends Component {
     });
   }
 
+  handleFileRenameSuccess() {
+    this.setState({
+      files: [],
+      tvShow: null,
+      seasons: [],
+      query: '',
+    });
+  }
+
   render () {
     return (
       <div>
         <h1>Title</h1>
         <FilePicker onFileOpen={this.handleFileOpen.bind(this)} />
         <TvShowInput
-          onSelect={this.handleSelect.bind(this)}/>
+          query={this.state.query}
+          onSelect={this.handleSelect.bind(this)}
+          onChange={query => this.setState({ query })}/>
         <FileRename
           seasons={
             this.state.seasons.map(s => ({
@@ -88,6 +100,7 @@ export default class App extends Component {
             }))
           }
           files={this.state.files.sort()}
+          onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
         />
       </div>
     );
