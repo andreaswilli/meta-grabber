@@ -15,12 +15,15 @@ export default class App extends Component {
     super(props);
     this.get = makeRequestCreator();
 
-    this.state = {
+    this.initialState = {
       files: [],
       tvShow: null,
       seasons: [],
       query: '',
+      outputDir: null,
     };
+
+    this.state = this.initialState;
   }
 
   chooseTvShow(tvShow) {
@@ -75,12 +78,7 @@ export default class App extends Component {
   }
 
   handleFileRenameSuccess() {
-    this.setState({
-      files: [],
-      tvShow: null,
-      seasons: [],
-      query: '',
-    });
+    this.setState(this.initialState);
   }
 
   render () {
@@ -100,7 +98,10 @@ export default class App extends Component {
             }))
           }
           files={this.state.files.sort()}
+          outputDir={this.state.outputDir}
           onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
+          onChooseOutputDir={outputDir => this.setState({ outputDir })}
+          onClearOutputDir={() => this.setState({ outputDir: null })}
         />
       </div>
     );

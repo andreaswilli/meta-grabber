@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fs from 'fs';
+import { remote } from 'electron';
 
 import { flatten } from '../util/array';
 import { formatFileName, formatFilePath, formatFileExtension } from '../util/format';
@@ -118,11 +119,19 @@ export default class FileRename extends Component {
     return assignment ? assignment.fileName : null;
   }
 
+  async handleChooseOutputDir() {
+    const outputDir = await remote.dialog.showOpenDialog({
+      properties: ['openDirectory'],
+    });
+    if (!outputDir) return;
+    this.props.onChooseOutputDir(outputDir);
+  }
+
   renameFiles() {
     let error = false;
     let assignments = this.state.assignments.filter(a => a.fileName);
     assignments.map((a, i) => {
-      let newFileName = `${formatFilePath(a.fileName)}/${a.name}.${formatFileExtension(a.fileName)}`;
+      let newFileName = `${this.props.outputDir || formatFilePath(a.fileName)}/${a.name}.${formatFileExtension(a.fileName)}`;
       fs.rename(a.fileName, newFileName, err => {
         if (err) {
           error = true;
@@ -138,6 +147,10 @@ export default class FileRename extends Component {
   render() {
     return (
       <div>
+        <span>{this.props.outputDir}</span>
+        <button onClick={this.handleChooseOutputDir.bind(this)}>choose output dir</button>
+        <button onClick={this.props.onClearOutputDir}>clear</button>
+        <br />
         <button onClick={this.renameFiles.bind(this)}>rename</button>
         {(this.props.seasons || []).map(s => (
           <div key={s.name}>
