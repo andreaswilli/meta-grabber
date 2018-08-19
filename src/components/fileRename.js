@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import fs from 'fs';
 
 import { flatten } from '../util/array';
-import { formatFileName } from '../util/format';
+import { formatFileName, formatFilePath, formatFileExtension } from '../util/format';
 
 export default class FileRename extends Component {
 
@@ -117,9 +118,19 @@ export default class FileRename extends Component {
     return assignment ? assignment.fileName : null;
   }
 
+  async renameFiles() {
+    this.state.assignments.filter(a => a.fileName).map(a => {
+      let newFileName = `${formatFilePath(a.fileName)}/${a.name}.${formatFileExtension(a.fileName)}`;
+      await fs.rename(a.fileName, newFileName, err => {
+        if (err) throw err;
+      });
+    });
+  }
+
   render() {
     return (
       <div>
+        <button onClick={this.renameFiles.bind(this)}>rename</button>
         {(this.props.seasons || []).map(s => (
           <div key={s.name}>
             <label className="pre">

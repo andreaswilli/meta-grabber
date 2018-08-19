@@ -5,6 +5,16 @@ export function formatFileName(fileName) {
   return fileName.split('/').last();
 }
 
+export function formatFilePath(fileName) {
+  if (!fileName) return fileName;
+  return fileName.split('/').slice(0, -1).join('/');
+}
+
+export function formatFileExtension(fileName) {
+  if (!fileName) return fileName;
+  return fileName.split('.').last();
+}
+
 export function formatEpisodeName(episode, tvShow) {
   return template
     .replace(/\{tvshow_name\}/g, tvShow.name)
