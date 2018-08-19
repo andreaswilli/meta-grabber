@@ -121,7 +121,7 @@ export default class FileRename extends Component {
 
   async handleChooseOutputDir() {
     const outputDir = await remote.dialog.showOpenDialog({
-      properties: ['openDirectory'],
+      properties: ['openDirectory', 'createDirectory'],
     });
     if (!outputDir) return;
     this.props.onChooseOutputDir(outputDir);
