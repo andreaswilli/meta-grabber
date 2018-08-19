@@ -17,6 +17,9 @@ export default class FileRename extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (JSON.stringify(this.props.seasons) !== JSON.stringify(nextProps.seasons)) {
+      this.setState({ excludedSeasons: [] });
+    }
     this.assignEpisodesToFiles(nextProps);
   }
 
