@@ -118,10 +118,10 @@ export default class FileRename extends Component {
     return assignment ? assignment.fileName : null;
   }
 
-  async renameFiles() {
+  renameFiles() {
     this.state.assignments.filter(a => a.fileName).map(a => {
       let newFileName = `${formatFilePath(a.fileName)}/${a.name}.${formatFileExtension(a.fileName)}`;
-      await fs.rename(a.fileName, newFileName, err => {
+      fs.rename(a.fileName, newFileName, err => {
         if (err) throw err;
       });
     });
