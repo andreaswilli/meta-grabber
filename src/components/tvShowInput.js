@@ -47,20 +47,29 @@ export default class TvShowInput extends Component {
     this.props.onSelect(tvShowItem);
   }
 
+  clearInput() {
+    this.props.onChange('');
+    this.props.onSelect({ id: null });
+    this.setState({ results: [] });
+  }
+
   render () {
     return (
-      <Autocomplete
-        getItemValue={(item) => item.name}
-        items={this.state.results}
-        renderItem={(item, isHighlighted) =>
-          <div key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-            {item.name} ({item.first_air_date.substr(0,4)})
-          </div>
-        }
-        value={this.props.query}
-        onChange={this.handleChange.bind(this)}
-        onSelect={this.handleSelect.bind(this)}
-      />
+      <div>
+        <Autocomplete
+          getItemValue={(item) => item.name}
+          items={this.state.results}
+          renderItem={(item, isHighlighted) =>
+            <div key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+              {item.name} ({item.first_air_date.substr(0,4)})
+            </div>
+          }
+          value={this.props.query}
+          onChange={this.handleChange.bind(this)}
+          onSelect={this.handleSelect.bind(this)}
+        />
+        <button onClick={this.clearInput.bind(this)}>clear</button>
+      </div>
     );
   }
 }
