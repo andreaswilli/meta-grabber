@@ -83,8 +83,7 @@ export default class App extends Component {
 
   render () {
     return (
-      <div>
-        <h1>Title</h1>
+      <div className="container">
         <FilePicker onFileOpen={this.handleFileOpen.bind(this)} />
         <TvShowInput
           query={this.state.query}

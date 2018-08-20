@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import fs from 'fs';
 import { remote } from 'electron';
 
+import Button from './button';
 import { flatten } from '../util/array';
 import { formatFileName, formatFilePath, formatFileExtension } from '../util/format';
 
@@ -150,35 +151,51 @@ export default class FileRename extends Component {
   render() {
     return (
       <div>
-        <span>{this.props.outputDir}</span>
-        <button onClick={this.handleChooseOutputDir.bind(this)}>choose output dir</button>
-        <button onClick={this.props.onClearOutputDir}>clear</button>
-        <br />
-        <button onClick={this.renameFiles.bind(this)}>rename</button>
-        {(this.props.seasons || []).map(s => (
-          <div key={s.name}>
-            <label className="pre">
-              <input
-                type="checkbox"
-                checked={!this.isSeasonExcluded(s.name)}
-                onChange={event => this.handleSeasonChange(event, s.name)}
-              />
-              {s.name}
-            </label>
-            {s.episodes.map(e => (
-              <div key={e}>
-                <label className="pre offset">
-                  <input
-                    type="checkbox"
-                    checked={!this.isEpisodeExcluded(e)}
-                    onChange={event => this.handleEpisodeChange(event, e)}
-                  />
-                  <span>{e}</span>&nbsp;<b>{formatFileName(this.getAssignedFileName(e))}</b>
-                </label>
-              </div>
-            ))}
-          </div>
-        ))}
+        {this.props.seasons.length > 0 && <div className="section">
+          {(this.props.seasons || []).map(s => (
+            <div key={s.name}>
+              <label className="pre">
+                <input
+                  type="checkbox"
+                  checked={!this.isSeasonExcluded(s.name)}
+                  onChange={event => this.handleSeasonChange(event, s.name)}
+                />
+                {s.name}
+              </label>
+              {s.episodes.map(e => (
+                <div key={e}>
+                  <label className="pre offset">
+                    <input
+                      type="checkbox"
+                      checked={!this.isEpisodeExcluded(e)}
+                      onChange={event => this.handleEpisodeChange(event, e)}
+                    />
+                    <span>{e}</span>&nbsp;<b>{formatFileName(this.getAssignedFileName(e))}</b>
+                  </label>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>}
+        <div className="file-rename__output section">
+          <div className="file-rename__output__dir">{this.props.outputDir}</div>
+          <Button
+            className="file-rename__output__choose"
+            label="choose output dir"
+            onClick={this.handleChooseOutputDir.bind(this)}
+          />
+          <Button
+            className="file-rename__output__clear"
+            label="X"
+            onClick={this.props.onClearOutputDir}
+          />
+        </div>
+        <div className="file-rename__rename section">
+          <Button
+            label="rename"
+            onClick={this.renameFiles.bind(this)}
+          />
+        </div>
       </div>
     );
   }

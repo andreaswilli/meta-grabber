@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { remote } from 'electron';
 
+import Button from './button';
+
 export default class FilePicker extends Component {
 
   async open() {
@@ -13,9 +15,16 @@ export default class FilePicker extends Component {
 
   render() {
     return (
-      <div>
-        <button onClick={this.open.bind(this)}>open files</button>
-        <button onClick={() => this.props.onFileOpen([])}>clear files</button>
+      <div className="file-picker section">
+        <Button
+          label="open files"
+          onClick={this.open.bind(this)}
+        />
+        <Button
+          className="file-picker__clear"
+          label="X"
+          onClick={() => this.props.onFileOpen([])}
+        />
       </div>
     );
   }

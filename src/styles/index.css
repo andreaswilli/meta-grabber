@@ -1,7 +1,129 @@
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+/* TODO */
 .pre {
   white-space: pre;
 }
 
-.offset {
-  padding-left: 16px;
+/* dark background #3d4e6b */
+body {
+  background: #2f3e56;
+  color: #eff3f9;
+  margin: 0;
+  font-family: 'Varela Round';
+  font-size: 18px;
+}
+
+.container {
+  background: #2f3e56;
+  padding: 24px;
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.section {
+  padding-top: 32px;
+  padding-bottom: 32px;
+  background-image: linear-gradient(to right, white 33%, rgba(255,255,255,0) 0%);
+  background-position: bottom;
+  background-size: 35px 1px;
+  background-repeat: repeat-x;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px;
+  height: 14px;
+  min-width: 14px;
+  text-align: center;
+  line-height: 14px;
+  background-color: #eff3f9;
+  color: #2a2f35;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.button:not(.button--disabled):hover {
+  background-color: #d7dbe0;
+  cursor: pointer;
+}
+
+.button--disabled {
+  color: #a1a4a8;
+  background-color: #d7dbe0;
+  cursor: default;
+}
+
+.tv-show-input {
+  display: flex;
+}
+
+.tv-show-input__wrapper {
+  display: flex;
+  flex-grow: 1;
+}
+
+.tv-show-input__input {
+  height: 14px;
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 6px;
+  background-color: #eff3f9;
+  color: #2a2f35;
+  outline: none;
+  border: none;
+  flex-grow: 1;
+}
+
+.tv-show-input__clear {
+  flex-grow: 0;
+  margin-left: 4px;
+}
+
+.tv-show-input__menu {
+
+}
+
+.tv-show-input__menu__item {
+
+}
+
+.tv-show-input__menu__item--selected {
+
+}
+
+.file-rename__output {
+  display: flex;
+}
+
+.file-rename__output__dir {
+  flex-grow: 1;
+  line-height: 38px;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-rename__output__choose {
+  margin-left: 8px;
+  flex-grow: 0;
+}
+
+.file-rename__output__clear {
+  margin-left: 4px;
+  flex-grow: 0;
+}
+
+.file-rename__rename {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.file-picker {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.file-picker__clear {
+  margin-left: 4px;
 }

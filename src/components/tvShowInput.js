@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Autocomplete from 'react-autocomplete';
 
+import Button from './button';
 import { makeRequestCreator, baseUrl, apiKey } from '../util/request';
 
 export default class TvShowInput extends Component {
@@ -55,12 +56,35 @@ export default class TvShowInput extends Component {
 
   render () {
     return (
-      <div>
+      <div className="tv-show-input section">
         <Autocomplete
+          wrapperStyle={{}}
+          wrapperProps={{
+            className: 'tv-show-input__wrapper',
+          }}
+          inputProps={{
+            className: 'tv-show-input__input',
+          }}
+          menuStyle={{
+            borderRadius: '6px',
+            background: '#eff3f9',
+            padding: '6px 0',
+            'margin-top': '4px',
+            position: 'fixed',
+            overflow: 'auto',
+            maxHeight: '50%',
+            display: this.state.results.length > 0 ? 'block' : 'none',
+          }}
           getItemValue={(item) => item.name}
           items={this.state.results}
           renderItem={(item, isHighlighted) =>
-            <div key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+            <div key={item.id} style={{
+              color: '#2a2f35',
+              background: isHighlighted ? 'lightgray' : '#eff3f9',
+              height: '14px',
+              padding: '12px',
+              'line-height': '14px',
+            }}>
               {item.name} ({item.first_air_date.substr(0,4)})
             </div>
           }
@@ -68,7 +92,11 @@ export default class TvShowInput extends Component {
           onChange={this.handleChange.bind(this)}
           onSelect={this.handleSelect.bind(this)}
         />
-        <button onClick={this.clearInput.bind(this)}>clear</button>
+        <Button
+          className="tv-show-input__clear"
+          label="X"
+          onClick={this.clearInput.bind(this)}
+        />
       </div>
     );
   }
