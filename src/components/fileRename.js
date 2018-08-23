@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fs from 'fs';
 import { remote } from 'electron';
+import classNames from 'classnames';
 
 import Button from './button';
 import { flatten } from '../util/array';
@@ -154,7 +155,7 @@ export default class FileRename extends Component {
         {this.props.seasons.length > 0 && <div className="section">
           {(this.props.seasons || []).map(s => (
             <div key={s.name}>
-              <label className="pre">
+              <label className="file-rename__season">
                 <input
                   type="checkbox"
                   checked={!this.isSeasonExcluded(s.name)}
@@ -162,9 +163,11 @@ export default class FileRename extends Component {
                 />
                 {s.name}
               </label>
-              {s.episodes.map(e => (
+              {s.episodes.map((e, i) => (
                 <div key={e}>
-                  <label className="pre offset">
+                  <label className={classNames('file-rename__episode', {
+                    'file-rename__episode--even': i%2 == 0,
+                  })}>
                     <input
                       type="checkbox"
                       checked={!this.isEpisodeExcluded(e)}

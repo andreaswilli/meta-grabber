@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
-/* TODO */
-.pre {
-  white-space: pre;
-}
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
 
 /* dark background #3d4e6b */
 body {
@@ -38,7 +35,7 @@ body {
   line-height: 14px;
   background-color: #eff3f9;
   color: #2a2f35;
-  border-radius: 6px;
+  border-radius: 2px;
   transition: background-color 0.2s;
   flex-shrink: 0;
 }
@@ -67,7 +64,7 @@ body {
   height: 14px;
   padding: 12px;
   font-size: 18px;
-  border-radius: 6px;
+  border-radius: 2px;
   background-color: #eff3f9;
   color: #2a2f35;
   outline: none;
@@ -80,15 +77,29 @@ body {
   margin-left: 4px;
 }
 
-.tv-show-input__menu {
-
+.file-rename__season {
+  white-space: pre;
+  display: block;
+  text-transform: uppercase;
+  margin-top: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-family: "Open Sans";
+  letter-spacing: 1px;
 }
 
-.tv-show-input__menu__item {
-
+.file-rename__episode {
+  white-space: pre;
+  display: block;
+  height: 14px;
+  line-height: 14px;
+  padding: 12px;
+  padding-left: 24px;
 }
 
-.tv-show-input__menu__item--selected {
+.file-rename__episode--even {
+  background-color: #3d4e6b;
+}
 
 }
 

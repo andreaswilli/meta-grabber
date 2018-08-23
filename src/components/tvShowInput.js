@@ -66,10 +66,10 @@ export default class TvShowInput extends Component {
             className: 'tv-show-input__input',
           }}
           menuStyle={{
-            borderRadius: '6px',
+            borderRadius: '2px',
             background: '#eff3f9',
             padding: '6px 0',
-            'margin-top': '4px',
+            marginTop: '4px',
             position: 'fixed',
             overflow: 'auto',
             maxHeight: '50%',
@@ -83,7 +83,7 @@ export default class TvShowInput extends Component {
               background: isHighlighted ? 'lightgray' : '#eff3f9',
               height: '14px',
               padding: '12px',
-              'line-height': '14px',
+              lineHeight: '14px',
             }}>
               {item.name} ({item.first_air_date.substr(0,4)})
             </div>
