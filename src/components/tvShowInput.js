@@ -74,6 +74,7 @@ export default class TvShowInput extends Component {
             overflow: 'auto',
             maxHeight: '50%',
             display: this.state.results.length > 0 ? 'block' : 'none',
+            zIndex: 10,
           }}
           getItemValue={(item) => item.name}
           items={this.state.results}

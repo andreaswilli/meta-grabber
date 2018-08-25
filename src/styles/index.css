@@ -77,30 +77,66 @@ body {
   margin-left: 4px;
 }
 
-.file-rename__season {
+.file-rename__item {
   white-space: pre;
   display: block;
-  text-transform: uppercase;
-  margin-top: 16px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  font-family: "Open Sans";
-  letter-spacing: 1px;
-}
-
-.file-rename__episode {
-  white-space: pre;
-  display: block;
-  height: 14px;
+  box-sizing: border-box;
+  height: 38px;
   line-height: 14px;
   padding: 12px;
   padding-left: 24px;
-}
-
-.file-rename__episode--even {
+  cursor: pointer;
+  opacity: 0.6;
   background-color: #3d4e6b;
+  color: white;
 }
 
+.file-rename__item:hover {
+  opacity: 1;
+}
+
+.file-rename__item:not(.file-rename__item--included):hover {
+  border-left: 1px solid white;
+  padding-left: 23px;
+}
+
+.file-rename__item--included {
+  border-left: 4px solid white;
+  padding-left: 20px;
+  opacity: 0.8;
+}
+
+.file-rename__item--season {
+  text-transform: uppercase;
+  margin-top: 24px;
+  padding-top: 12px;
+  padding-bottom: 4px;
+  padding-left: 2px;
+  font-family: "Open Sans";
+  letter-spacing: 1px;
+  background-color: transparent;
+}
+
+.file-rename__item--season:not(.file-rename__item--included):hover {
+  border-left:0;
+  padding-left: 2px;
+}
+
+.file-rename__item--season--included {
+  border-left: 0;
+  padding-left: 2px;
+}
+
+.file-rename__item--season--excluded--whole {
+  border-bottom: 1px solid white;
+}
+
+.file-rename__item--even {
+  background-color: #4f678e;
+}
+
+.file-rename__item__checkbox {
+  display: none;
 }
 
 .file-rename__output {

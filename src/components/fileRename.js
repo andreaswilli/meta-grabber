@@ -36,6 +36,13 @@ export default class FileRename extends Component {
         episode === episodeName).length > 0).length > 0;
   }
 
+  isWholeSeasonExcluded(seasonName) {
+    return (this.state.excludedSeasons.find(season =>
+      season.name === seasonName) || { excludedEpisodes: {}}).excludedEpisodes.length ===
+      this.props.seasons.find(season =>
+      season.name === seasonName).episodes.length;
+  }
+
   async handleSeasonChange(e, seasonName) {
     if (e.target.checked) {
       // include season
@@ -155,21 +162,28 @@ export default class FileRename extends Component {
         {this.props.seasons.length > 0 && <div className="section">
           {(this.props.seasons || []).map(s => (
             <div key={s.name}>
-              <label className="file-rename__season">
+              <label className={classNames('file-rename__item', 'file-rename__item--season', {
+                'file-rename__item--included': !this.isSeasonExcluded(s.name),
+                'file-rename__item--season--included': !this.isSeasonExcluded(s.name),
+                'file-rename__item--season--excluded--whole': this.isWholeSeasonExcluded(s.name),
+              })}>
                 <input
                   type="checkbox"
+                  className="file-rename__item__checkbox"
                   checked={!this.isSeasonExcluded(s.name)}
                   onChange={event => this.handleSeasonChange(event, s.name)}
                 />
                 {s.name}
               </label>
-              {s.episodes.map((e, i) => (
+              {!this.isWholeSeasonExcluded(s.name) && s.episodes.map((e, i) => (
                 <div key={e}>
-                  <label className={classNames('file-rename__episode', {
-                    'file-rename__episode--even': i%2 == 0,
+                  <label className={classNames('file-rename__item', {
+                    'file-rename__item--even': i%2 == 0,
+                    'file-rename__item--included': !this.isEpisodeExcluded(e),
                   })}>
                     <input
                       type="checkbox"
+                      className="file-rename__item__checkbox"
                       checked={!this.isEpisodeExcluded(e)}
                       onChange={event => this.handleEpisodeChange(event, e)}
                     />
@@ -181,7 +195,7 @@ export default class FileRename extends Component {
           ))}
         </div>}
         <div className="file-rename__output section">
-          <div className="file-rename__output__dir">{this.props.outputDir}</div>
+          <div className="file-rename__output__dir">{this.props.outputDir || 'none (leave the files where they are)'}</div>
           <Button
             className="file-rename__output__choose"
             label="choose output dir"
