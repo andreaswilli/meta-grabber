@@ -94,6 +94,8 @@ body {
   padding-right: 12px;
   font-family: "Open Sans";
   letter-spacing: 1px;
+  box-shadow: 0 0 0 0 white;
+  transition: box-shadow 0.2s;
 }
 
 .file-rename__item:hover {
@@ -111,13 +113,11 @@ body {
 }
 
 .file-rename__item--episode:not(.file-rename__item--included):hover {
-  border-left: 1px solid white;
-  padding-left: 23px;
+  box-shadow: -1px 0 0 0 white;
 }
 
 .file-rename__item--included {
-  border-left: 4px solid white;
-  padding-left: 20px;
+  box-shadow: -4px 0 0 0 white;
   opacity: 0.8;
 }
 
