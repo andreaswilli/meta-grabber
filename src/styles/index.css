@@ -83,19 +83,34 @@ body {
   box-sizing: border-box;
   height: 38px;
   line-height: 14px;
-  padding: 12px;
-  padding-left: 24px;
   cursor: pointer;
   opacity: 0.6;
-  background-color: #3d4e6b;
   color: white;
+  text-transform: uppercase;
+  margin-top: 24px;
+  padding-top: 12px;
+  padding-bottom: 4px;
+  padding-left: 2px;
+  padding-right: 12px;
+  font-family: "Open Sans";
+  letter-spacing: 1px;
 }
 
 .file-rename__item:hover {
   opacity: 1;
 }
 
-.file-rename__item:not(.file-rename__item--included):hover {
+.file-rename__item--episode {
+  text-transform: none;
+  margin: 0;
+  padding: 12px;
+  padding-left: 24px;
+  background-color: #3d4e6b;
+  font-family: 'Varela Round';
+  letter-spacing: normal;
+}
+
+.file-rename__item--episode:not(.file-rename__item--included):hover {
   border-left: 1px solid white;
   padding-left: 23px;
 }
@@ -106,28 +121,7 @@ body {
   opacity: 0.8;
 }
 
-.file-rename__item--season {
-  text-transform: uppercase;
-  margin-top: 24px;
-  padding-top: 12px;
-  padding-bottom: 4px;
-  padding-left: 2px;
-  font-family: "Open Sans";
-  letter-spacing: 1px;
-  background-color: transparent;
-}
-
-.file-rename__item--season:not(.file-rename__item--included):hover {
-  border-left:0;
-  padding-left: 2px;
-}
-
-.file-rename__item--season--included {
-  border-left: 0;
-  padding-left: 2px;
-}
-
-.file-rename__item--season--excluded--whole {
+.file-rename__item--season--excluded {
   border-bottom: 1px solid white;
 }
 

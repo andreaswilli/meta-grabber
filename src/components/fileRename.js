@@ -162,10 +162,8 @@ export default class FileRename extends Component {
         {this.props.seasons.length > 0 && <div className="section">
           {(this.props.seasons || []).map(s => (
             <div key={s.name}>
-              <label className={classNames('file-rename__item', 'file-rename__item--season', {
-                'file-rename__item--included': !this.isSeasonExcluded(s.name),
-                'file-rename__item--season--included': !this.isSeasonExcluded(s.name),
-                'file-rename__item--season--excluded--whole': this.isWholeSeasonExcluded(s.name),
+              <label className={classNames('file-rename__item', {
+                'file-rename__item--season--excluded': this.isWholeSeasonExcluded(s.name),
               })}>
                 <input
                   type="checkbox"
@@ -177,7 +175,7 @@ export default class FileRename extends Component {
               </label>
               {!this.isWholeSeasonExcluded(s.name) && s.episodes.map((e, i) => (
                 <div key={e}>
-                  <label className={classNames('file-rename__item', {
+                  <label className={classNames('file-rename__item', 'file-rename__item--episode', {
                     'file-rename__item--even': i%2 == 0,
                     'file-rename__item--included': !this.isEpisodeExcluded(e),
                   })}>
