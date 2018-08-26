@@ -160,8 +160,9 @@ export default class FileRename extends Component {
   render() {
     return (
       <div>
-        {this.props.seasons.length > 0 && <div className="section">
-          {(this.props.seasons || []).map(s => (
+        {(this.props.seasons.length > 0 || this.props.loading) && <div className="section">
+          {this.props.loading && <div className="file-rename__loading">loading...</div>}
+          {!this.props.loading && (this.props.seasons || []).map(s => (
             <AnimateHeight
               key={s.name}
               duration={ 500 }

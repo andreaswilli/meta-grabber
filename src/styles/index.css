@@ -77,6 +77,10 @@ body {
   margin-left: 4px;
 }
 
+.file-rename__loading {
+  text-align: center;
+}
+
 .file-rename__item {
   white-space: pre;
   display: block;

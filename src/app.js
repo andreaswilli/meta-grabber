@@ -21,6 +21,7 @@ export default class App extends Component {
       seasons: [],
       query: '',
       outputDir: null,
+      loading: false,
     };
 
     this.state = this.initialState;
@@ -35,6 +36,7 @@ export default class App extends Component {
       this.setState({ seasons: [] });
       return;
     }
+    this.setState({ loading: true });
     try {
       const response = await this.get(
         `${baseUrl}/tv/${tvShow.id}?api_key=${apiKey}&language=de`
@@ -52,7 +54,7 @@ export default class App extends Component {
               // TODO: error handling
           }
         }));
-      this.setState({ seasons });
+      this.setState({ seasons, loading: false });
     } catch(e) {
       if (axios.isCancel(e)) {
         // ignore canceled request
@@ -96,6 +98,7 @@ export default class App extends Component {
               episodes: s.episodes.map(e => formatEpisodeName(e, this.state.tvShow)),
             }))
           }
+          loading={this.state.loading}
           files={this.state.files.sort()}
           outputDir={this.state.outputDir}
           onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
