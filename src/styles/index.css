@@ -107,6 +107,10 @@ body {
   margin-left: 4px;
 }
 
+.settings-button {
+  margin-left: 32px;
+}
+
 .file-rename__loading {
   text-align: center;
 }

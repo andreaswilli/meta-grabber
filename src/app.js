@@ -6,6 +6,7 @@ import FilePicker from './components/filePicker';
 import { makeRequestCreator, baseUrl, apiKey } from './util/request';
 import { formatEpisodeName } from './util/format';
 import FileRename from './components/fileRename';
+import Button from './components/button';
 
 import './util/array.js';
 
@@ -94,6 +95,11 @@ export default class App extends Component {
               onChange={query => this.setState({ query })}
             />
             <FilePicker onFileOpen={this.handleFileOpen.bind(this)} />
+            <Button
+              label="settings"
+              className="settings-button"
+              onClick={() => {}}
+            />
           </div>
           <FileRename
             seasons={
