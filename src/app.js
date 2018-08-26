@@ -86,25 +86,30 @@ export default class App extends Component {
   render () {
     return (
       <div className="container">
-        <FilePicker onFileOpen={this.handleFileOpen.bind(this)} />
-        <TvShowInput
-          query={this.state.query}
-          onSelect={this.handleSelect.bind(this)}
-          onChange={query => this.setState({ query })}/>
-        <FileRename
-          seasons={
-            this.state.seasons.map(s => ({
-              name: s.name,
-              episodes: s.episodes.map(e => formatEpisodeName(e, this.state.tvShow)),
-            }))
-          }
-          loading={this.state.loading}
-          files={this.state.files.sort()}
-          outputDir={this.state.outputDir}
-          onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
-          onChooseOutputDir={outputDir => this.setState({ outputDir })}
-          onClearOutputDir={() => this.setState({ outputDir: null })}
-        />
+        <div className="page">
+          <div className="section">
+            <TvShowInput
+              query={this.state.query}
+              onSelect={this.handleSelect.bind(this)}
+              onChange={query => this.setState({ query })}
+            />
+            <FilePicker onFileOpen={this.handleFileOpen.bind(this)} />
+          </div>
+          <FileRename
+            seasons={
+              this.state.seasons.map(s => ({
+                name: s.name,
+                episodes: s.episodes.map(e => formatEpisodeName(e, this.state.tvShow)),
+              }))
+            }
+            loading={this.state.loading}
+            files={this.state.files.sort()}
+            outputDir={this.state.outputDir}
+            onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
+            onChooseOutputDir={outputDir => this.setState({ outputDir })}
+            onClearOutputDir={() => this.setState({ outputDir: null })}
+          />
+        </div>
       </div>
     );
   }

@@ -159,47 +159,49 @@ export default class FileRename extends Component {
 
   render() {
     return (
-      <div>
-        {(this.props.seasons.length > 0 || this.props.loading) && <div className="section">
-          {this.props.loading && <div className="file-rename__loading">loading...</div>}
-          {!this.props.loading && (this.props.seasons || []).map(s => (
-            <AnimateHeight
-              key={s.name}
-              duration={ 500 }
-              height={ this.isWholeSeasonExcluded(s.name) ? 62 : 'auto' }
-            >
-              <label className={classNames('file-rename__item', {
-                'file-rename__item--season--excluded': this.isWholeSeasonExcluded(s.name),
-              })}>
-                <input
-                  type="checkbox"
-                  className="file-rename__item__checkbox"
-                  checked={!this.isSeasonExcluded(s.name)}
-                  onChange={event => this.handleSeasonChange(event, s.name)}
-                />
-                {s.name}
-              </label>
-              {s.episodes.map((e, i) => (
-                <div key={e}>
-                  <label className={classNames('file-rename__item', 'file-rename__item--episode', {
-                    'file-rename__item--even': i%2 == 0,
-                    'file-rename__item--included': !this.isEpisodeExcluded(e),
-                  })}>
-                    <input
-                      type="checkbox"
-                      className="file-rename__item__checkbox"
-                      checked={!this.isEpisodeExcluded(e)}
-                      onChange={event => this.handleEpisodeChange(event, e)}
-                    />
-                    <div>{e}</div>
-                    <div className="file-rename__item__file-name">{formatFileName(this.getAssignedFileName(e))}</div>
-                  </label>
-                </div>
-              ))}
-            </AnimateHeight>
-          ))}
+      <React.Fragment>
+        {<div className="section section--main">
+          <div className="file-rename__seasons">
+            {this.props.loading && <div className="file-rename__loading">loading...</div>}
+            {!this.props.loading && (this.props.seasons || []).map((s, i) => (
+              <AnimateHeight
+                key={s.name}
+                duration={ 500 }
+                height={ this.isWholeSeasonExcluded(s.name) ? 62 : 'auto' }
+              >
+                <label className={classNames('file-rename__item', {
+                  'file-rename__item--season--excluded': this.isWholeSeasonExcluded(s.name),
+                })}>
+                  <input
+                    type="checkbox"
+                    className="file-rename__item__checkbox"
+                    checked={!this.isSeasonExcluded(s.name)}
+                    onChange={event => this.handleSeasonChange(event, s.name)}
+                  />
+                  {s.name}
+                </label>
+                {s.episodes.map((e, i) => (
+                  <div key={e}>
+                    <label className={classNames('file-rename__item', 'file-rename__item--episode', {
+                      'file-rename__item--even': i%2 == 0,
+                      'file-rename__item--included': !this.isEpisodeExcluded(e),
+                    })}>
+                      <input
+                        type="checkbox"
+                        className="file-rename__item__checkbox"
+                        checked={!this.isEpisodeExcluded(e)}
+                        onChange={event => this.handleEpisodeChange(event, e)}
+                      />
+                      <div>{e}</div>
+                      <div className="file-rename__item__file-name">{formatFileName(this.getAssignedFileName(e))}</div>
+                    </label>
+                  </div>
+                ))}
+              </AnimateHeight>
+            ))}
+          </div>
         </div>}
-        <div className="file-rename__output section">
+        <div className="section section--output">
           <div className="file-rename__output__dir">{this.props.outputDir || 'none (leave the files where they are)'}</div>
           <Button
             className="file-rename__output__choose"
@@ -211,14 +213,13 @@ export default class FileRename extends Component {
             label="X"
             onClick={this.props.onClearOutputDir}
           />
-        </div>
-        <div className="file-rename__rename section">
           <Button
+            className="file-rename__rename-button"
             label="rename"
             onClick={this.renameFiles.bind(this)}
           />
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

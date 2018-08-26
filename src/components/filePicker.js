@@ -15,7 +15,7 @@ export default class FilePicker extends Component {
 
   render() {
     return (
-      <div className="file-picker section">
+      <div className="file-picker">
         <Button
           label="open files"
           onClick={this.open.bind(this)}

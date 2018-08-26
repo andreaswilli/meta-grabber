@@ -56,7 +56,7 @@ export default class TvShowInput extends Component {
 
   render () {
     return (
-      <div className="tv-show-input section">
+      <div className="tv-show-input">
         <Autocomplete
           wrapperStyle={{}}
           wrapperProps={{
