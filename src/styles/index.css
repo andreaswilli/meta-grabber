@@ -83,10 +83,10 @@ body {
 
 .file-rename__item {
   white-space: pre;
-  display: block;
+  display: flex;
   box-sizing: border-box;
   height: 38px;
-  line-height: 14px;
+  line-height: 18px;
   cursor: pointer;
   opacity: 0.6;
   color: white;
@@ -109,7 +109,7 @@ body {
 .file-rename__item--episode {
   text-transform: none;
   margin: 0;
-  padding: 12px;
+  padding: 10px 12px;
   padding-left: 24px;
   background-color: #3d4e6b;
   font-family: 'Varela Round';
@@ -137,6 +137,15 @@ body {
 
 .file-rename__item__checkbox {
   display: none;
+}
+
+.file-rename__item__file-name {
+  text-align: right;
+  flex-grow: 1;
+  opacity: 0.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 8px;
 }
 
 .file-rename__output {

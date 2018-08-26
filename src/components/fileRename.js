@@ -191,7 +191,8 @@ export default class FileRename extends Component {
                       checked={!this.isEpisodeExcluded(e)}
                       onChange={event => this.handleEpisodeChange(event, e)}
                     />
-                    <span>{e}</span>&nbsp;<b>{formatFileName(this.getAssignedFileName(e))}</b>
+                    <div>{e}</div>
+                    <div className="file-rename__item__file-name">{formatFileName(this.getAssignedFileName(e))}</div>
                   </label>
                 </div>
               ))}
