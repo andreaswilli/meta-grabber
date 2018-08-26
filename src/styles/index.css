@@ -123,6 +123,8 @@ body {
 
 .file-rename__item--season--excluded {
   border-bottom: 1px solid white;
+  transition: border 0.2s;
+  transition-delay: 0.5s;
 }
 
 .file-rename__item--even {

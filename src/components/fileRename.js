@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import fs from 'fs';
 import { remote } from 'electron';
 import classNames from 'classnames';
+import AnimateHeight from 'react-animate-height';
 
 import Button from './button';
 import { flatten } from '../util/array';
@@ -161,7 +162,11 @@ export default class FileRename extends Component {
       <div>
         {this.props.seasons.length > 0 && <div className="section">
           {(this.props.seasons || []).map(s => (
-            <div key={s.name}>
+            <AnimateHeight
+              key={s.name}
+              duration={ 500 }
+              height={ this.isWholeSeasonExcluded(s.name) ? 62 : 'auto' }
+            >
               <label className={classNames('file-rename__item', {
                 'file-rename__item--season--excluded': this.isWholeSeasonExcluded(s.name),
               })}>
@@ -173,7 +178,7 @@ export default class FileRename extends Component {
                 />
                 {s.name}
               </label>
-              {!this.isWholeSeasonExcluded(s.name) && s.episodes.map((e, i) => (
+              {s.episodes.map((e, i) => (
                 <div key={e}>
                   <label className={classNames('file-rename__item', 'file-rename__item--episode', {
                     'file-rename__item--even': i%2 == 0,
@@ -189,7 +194,7 @@ export default class FileRename extends Component {
                   </label>
                 </div>
               ))}
-            </div>
+            </AnimateHeight>
           ))}
         </div>}
         <div className="file-rename__output section">
