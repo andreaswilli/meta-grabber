@@ -99,6 +99,14 @@ body {
   margin-left: 4px;
 }
 
+.file-picker {
+  margin-left: 32px;
+}
+
+.file-picker__clear {
+  margin-left: 4px;
+}
+
 .file-rename__loading {
   text-align: center;
 }
@@ -197,12 +205,4 @@ body {
 
 .file-rename__rename-button {
   margin-left: 32px;
-}
-
-.file-picker {
-  margin-left: 32px;
-}
-
-.file-picker__clear {
-  margin-left: 4px;
 }

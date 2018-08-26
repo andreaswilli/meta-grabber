@@ -5,7 +5,7 @@ import TvShowInput from './components/tvShowInput';
 import FilePicker from './components/filePicker';
 import { makeRequestCreator, baseUrl, apiKey } from './util/request';
 import { formatEpisodeName } from './util/format';
-import FileRename from './components/FileRename';
+import FileRename from './components/fileRename';
 
 import './util/array.js';
 
