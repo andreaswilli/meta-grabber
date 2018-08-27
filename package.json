@@ -1,5 +1,6 @@
 {
   "name": "meta-grabber",
+  "productName": "Meta Grabber",
   "version": "0.1.0",
   "description": "A tool to grab meta data for tv shows and rename files on your hard disk.",
   "main": "main.js",
