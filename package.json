@@ -1,20 +1,20 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "meta-grabber",
+  "version": "0.1.0",
+  "description": "A tool to grab meta data for tv shows and rename files on your hard disk.",
   "main": "main.js",
   "scripts": {
     "dev": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/andreaswilli/meta-grabber",
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "tv shows",
+    "meta data",
+    "file rename",
+    "the movie database"
   ],
-  "author": "GitHub",
+  "author": "Andreas Willi",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^2.0.8",
