@@ -95,11 +95,11 @@ export default class App extends Component {
               onChange={query => this.setState({ query })}
             />
             <FilePicker onFileOpen={this.handleFileOpen.bind(this)} />
-            <Button
+            {/*<Button
               label="settings"
               className="settings-button"
               onClick={() => {}}
-            />
+            />*/}
           </div>
           <FileRename
             seasons={

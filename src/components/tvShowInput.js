@@ -64,6 +64,7 @@ export default class TvShowInput extends Component {
           }}
           inputProps={{
             className: 'tv-show-input__input',
+            placeholder: 'Search TV show...',
           }}
           menuStyle={{
             borderRadius: '2px',
