@@ -2,12 +2,12 @@ const template = 'S{season_number} E{episode_number} - {episode_name}';
 
 export function formatFileName(fileName) {
   if (!fileName) return fileName;
-  return fileName.split('/').last();
+  return fileName.split(/[\/\\]/).last();
 }
 
 export function formatFilePath(fileName) {
   if (!fileName) return fileName;
-  return fileName.split('/').slice(0, -1).join('/');
+  return fileName.split(/[\/\\]/).slice(0, -1).join('/');
 }
 
 export function formatFileExtension(fileName) {
