@@ -59,6 +59,7 @@ body {
   transition: background-color 0.2s;
   flex-shrink: 0;
   user-select: none;
+  white-space: nowrap;
 }
 
 .button:not(.button--disabled):hover {
@@ -101,6 +102,7 @@ body {
 
 .file-picker {
   margin-left: 32px;
+  flex-shrink: 0;
 }
 
 .file-picker__clear {
