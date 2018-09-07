@@ -30,6 +30,10 @@ export default class App extends Component {
     this.state = this.initialState;
   }
 
+  componentDidMount() {
+    this.updateUsageHint();
+  }
+
   chooseTvShow(tvShow) {
     this.setState({ tvShow: tvShow.id });
   }
@@ -37,6 +41,7 @@ export default class App extends Component {
   async getSeasonsOf(tvShow) {
     if (!tvShow || !tvShow.id) {
       this.setState({ seasons: [] });
+      this.updateUsageHint([]);
       return;
     }
     this.setState({ loading: true });
@@ -58,6 +63,7 @@ export default class App extends Component {
           }
         }));
       this.setState({ seasons, loading: false });
+      this.updateUsageHint(seasons);
     } catch(e) {
       if (axios.isCancel(e)) {
         // ignore canceled request
@@ -80,10 +86,33 @@ export default class App extends Component {
         ...files,
       ])],
     });
+    this.updateUsageHint(undefined, files);
   }
 
   handleFileRenameSuccess() {
     this.setState(this.initialState);
+  }
+
+  updateUsageHint(seasons, files) {
+    let newSeasons = seasons !== undefined ? seasons : this.state.seasons;
+    let newFiles = files !== undefined ? files : this.state.files;
+    if (newSeasons.length === 0 || newFiles.length === 0) {
+      this.setState({
+        messages: [
+          ...this.state.messages.filter(m => m.id !== 'usage-hint'), {
+            id: 'usage-hint',
+            text: `Please${newSeasons.length === 0
+              ? ` search for a TV show${newFiles.length === 0 ? ' and' : '.'}` : ''}
+              ${newFiles.length === 0 ? ' open the files you want to rename.' : ''}`,
+            type: 'info',
+          },
+        ]
+      })
+    } else {
+      this.setState({
+        messages: this.state.messages.filter(m => m.id !== 'usage-hint'),
+      });
+    }
   }
 
   render () {
