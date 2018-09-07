@@ -49,15 +49,18 @@
     },
     "mac": {
       "target": "zip",
+      "icon": "icons/icon.icns",
       "category": "public.app-category.utilities",
       "type": "distribution",
       "minimumSystemVersion": "10.10"
     },
     "win": {
-      "target": "portable"
+      "target": "portable",
+      "icon": "icons/icon.ico"
     },
     "linux": {
       "target": "AppImage",
+      "icon": "icons/icon.icns",
       "category": "Utility"
     },
     "publish": {
