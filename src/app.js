@@ -7,6 +7,7 @@ import { makeRequestCreator, baseUrl, apiKey } from './util/request';
 import { formatEpisodeName } from './util/format';
 import FileRename from './components/fileRename';
 import Button from './components/button';
+import Message from './components/message';
 
 import './util/array.js';
 
@@ -23,6 +24,7 @@ export default class App extends Component {
       query: '',
       outputDir: null,
       loading: false,
+      messages: [],
     };
 
     this.state = this.initialState;
@@ -101,6 +103,10 @@ export default class App extends Component {
               onClick={() => {}}
             />*/}
           </div>
+          <Message
+            messages={this.state.messages}
+            onMessagesUpdate={(messages) => this.setState({ messages })}
+          />
           <FileRename
             seasons={
               this.state.seasons.map(s => ({

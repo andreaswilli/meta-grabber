@@ -212,3 +212,41 @@ body {
 .file-rename__rename-button {
   margin-left: 32px;
 }
+
+.message {
+  padding: 8px 16px;
+  margin: 8px 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.message--info {
+  color: #3b7891;
+  background-color: #79d3f7;
+}
+
+.message--success {
+  color: green;
+  background-color: lightgreen;
+}
+
+.message--warning {
+  color: gray;
+  background-color: yellow;
+}
+
+.message--error {
+  color: #ffd8d8;
+  background-color: red;
+}
+
+.message__text {
+  flex-grow: 1;
+}
+
+.message__close {
+  flex-grow: 0;
+  cursor: pointer;
+  margin-left: 8px;
+}
