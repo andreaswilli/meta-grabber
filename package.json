@@ -1,6 +1,5 @@
 {
   "name": "meta-grabber",
-  "productName": "Meta Grabber",
   "version": "0.1.0",
   "description": "A tool to grab meta data for tv shows and rename files on your hard disk.",
   "main": "main.js",
@@ -39,5 +38,26 @@
     "react-autocomplete": "^1.8.1",
     "react-dom": "^16.4.1",
     "webpack": "^4.17.2"
+  },
+  "build": {
+    "appId": "com.andiw.metagrabber",
+    "productName": "Meta Grabber",
+    "artifactName": "${productName}-${version}-${os}.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "target": "zip",
+      "category": "public.app-category.utilities",
+      "type": "distribution",
+      "minimumSystemVersion": "10.10"
+    },
+    "win": {
+      "target": "portable"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Utility"
+    }
   }
 }
