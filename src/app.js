@@ -90,7 +90,30 @@ export default class App extends Component {
   }
 
   handleFileRenameSuccess() {
-    this.setState(this.initialState);
+    this.setState({
+      ...this.initialState,
+      messages: [
+        ...this.initialState.messages.filter(m => m.id !== 'rename-error'), {
+          id: 'rename-success',
+          text: 'Files successfully renamed!',
+          type: 'success',
+          autoDismiss: 5000,
+        },
+      ],
+    });
+  }
+
+  handleFileRenameError(error) {
+    this.setState({
+      messages: [
+        ...this.state.messages, {
+          id: 'rename-error',
+          text: `Files could not be renamed: ${error}`,
+          type: 'error',
+          dismissable: true,
+        },
+      ],
+    });
   }
 
   updateUsageHint(seasons, files) {
@@ -147,6 +170,7 @@ export default class App extends Component {
             files={this.state.files.sort()}
             outputDir={this.state.outputDir}
             onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
+            onFileRenameError={(error) => this.handleFileRenameError(error)}
             onChooseOutputDir={outputDir => this.setState({ outputDir })}
             onClearOutputDir={() => this.setState({ outputDir: null })}
           />

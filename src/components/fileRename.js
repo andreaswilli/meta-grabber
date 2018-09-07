@@ -141,20 +141,17 @@ export default class FileRename extends Component {
   }
 
   renameFiles() {
-    let error = false;
     let assignments = this.state.assignments.filter(a => a.fileName);
-    assignments.map((a, i) => {
-      let newFileName = `${this.props.outputDir || formatFilePath(a.fileName)}/${a.name}.${formatFileExtension(a.fileName)}`;
-      fs.rename(a.fileName, newFileName, err => {
-        if (err) {
-          error = true;
-          throw err;
-        }
-        if (i >= assignments.length - 1 && !error) {
-          this.props.onFileRenameSuccess();
-        }
-      });
-    });
+    try {
+      for (let i = 0; i < assignments.length; i++) {
+        const a = assignments[i];
+        let newFileName = `${this.props.outputDir || formatFilePath(a.fileName)}/${a.name}.${formatFileExtension(a.fileName)}`;
+        fs.renameSync(a.fileName, newFileName);
+      }
+      this.props.onFileRenameSuccess();
+    } catch(e) {
+      this.props.onFileRenameError(e);
+    }
   }
 
   render() {
