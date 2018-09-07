@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "electron .",
     "serve": "webpack --watch --mode development",
-    "package": "webpack --mode production && electron-builder -mwl"
+    "package": "webpack --mode production && electron-builder -mwl",
+    "package-publish": "webpack --mode production && electron-builder -mwl --publish always",
   },
   "homepage": "./",
   "repository": "https://github.com/andreaswilli/meta-grabber",
@@ -58,6 +59,11 @@
     "linux": {
       "target": "AppImage",
       "category": "Utility"
+    },
+    "publish": {
+      "provider": "github",
+      "vPrefixedTagName": true,
+      "releaseType": "draft"
     }
   }
 }
