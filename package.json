@@ -7,7 +7,7 @@
     "dev": "electron .",
     "serve": "webpack --watch --mode development",
     "package": "webpack --mode production && electron-builder -mwl",
-    "package-publish": "webpack --mode production && electron-builder -mwl --publish always",
+    "package-publish": "webpack --mode production && electron-builder -mwl --publish always"
   },
   "homepage": "./",
   "repository": "https://github.com/andreaswilli/meta-grabber",
