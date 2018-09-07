@@ -2,6 +2,11 @@
 
 A tool to grab meta data for tv shows and rename files on your hard disk.
 
+## Download
+
+`Meta Grabber` is available for macOS, Windows and Linux.
+The latest release can be downloaded [here](https://github.com/andreaswilli/meta-grabber/releases/latest).
+
 ## Example
 
 #### Before

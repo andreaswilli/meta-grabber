@@ -1,12 +1,15 @@
 {
   "name": "meta-grabber",
-  "productName": "Meta Grabber",
   "version": "0.1.0",
   "description": "A tool to grab meta data for tv shows and rename files on your hard disk.",
   "main": "main.js",
   "scripts": {
-    "dev": "electron ."
+    "dev": "electron .",
+    "serve": "webpack --watch --mode development",
+    "package": "webpack --mode production && electron-builder -mwl",
+    "package-publish": "webpack --mode production && electron-builder -mwl --publish always",
   },
+  "homepage": "./",
   "repository": "https://github.com/andreaswilli/meta-grabber",
   "keywords": [
     "Electron",
@@ -19,14 +22,48 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^2.0.8",
-    "electron-prebuilt-compile": "^2.0.3"
+    "electron-builder": "^20.28.3",
+    "webpack-cli": "^3.1.0"
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "7",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "classnames": "^2.2.6",
     "react": "^16.4.1",
     "react-animate-height": "^2.0.4",
     "react-autocomplete": "^1.8.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "webpack": "^4.17.2"
+  },
+  "build": {
+    "appId": "com.andiw.metagrabber",
+    "productName": "Meta Grabber",
+    "artifactName": "${productName}-${version}-${os}.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "target": "zip",
+      "category": "public.app-category.utilities",
+      "type": "distribution",
+      "minimumSystemVersion": "10.10"
+    },
+    "win": {
+      "target": "portable"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Utility"
+    },
+    "publish": {
+      "provider": "github",
+      "vPrefixedTagName": true,
+      "releaseType": "draft"
+    }
   }
 }
