@@ -12,7 +12,7 @@ export default class Message extends Component {
       <div>
         {(this.props.messages || []).map((m, i) => (
           <div
-            key={i}
+            key={m.id}
             className={classNames('message', `message--${m.type}`)}
           >
             <div className="message__text">{m.text}</div>
