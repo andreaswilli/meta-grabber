@@ -55,3 +55,6 @@ TODO:
 * Add Icons
 * a11y
 * i18n
+
+Known issues:
+* Focusing an element outside the viewport with <Tab\> can lead to weird behaviour.
