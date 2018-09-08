@@ -41,3 +41,16 @@ Run it locally by running
 ```
 yarn dev
 ```
+
+## WIP
+TODO:
+* Make buttons colourful
+* Adjust UI colours
+* Add Settings page (local storage)
+  * language of API requests
+  * naming template
+  * default output directory
+* Animate all the things
+  * Messages
+* Add Icons
+* Make UI keyboard navigable
