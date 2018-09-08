@@ -217,6 +217,7 @@ export default class FileRename extends Component {
             className="file-rename__rename-button"
             label="rename"
             onClick={this.renameFiles.bind(this)}
+            disabled={this.state.assignments.filter(a => a.fileName).length === 0}
           />
         </div>
       </React.Fragment>

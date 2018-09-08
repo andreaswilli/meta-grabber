@@ -8,6 +8,7 @@ export default class Button extends Component {
         className={classNames('button', this.props.className, {
           'button--disabled': this.props.disabled,
         })}
+        disabled={this.props.disabled}
         onClick={!this.props.disabled && this.props.onClick}
       >{this.props.label}</button>
     );
