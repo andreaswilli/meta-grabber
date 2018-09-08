@@ -166,16 +166,18 @@ export default class FileRename extends Component {
                 duration={ 500 }
                 height={ this.isWholeSeasonExcluded(s.name) ? 62 : 'auto' }
               >
-                <label className={classNames('file-rename__item', {
-                  'file-rename__item--season--excluded': this.isWholeSeasonExcluded(s.name),
-                })}>
+                <label>
                   <input
                     type="checkbox"
                     className="file-rename__item__checkbox"
                     checked={!this.isSeasonExcluded(s.name)}
                     onChange={event => this.handleSeasonChange(event, s.name)}
                   />
-                  {s.name}
+                  <div
+                    className={classNames('file-rename__item', {
+                      'file-rename__item--season--excluded': this.isWholeSeasonExcluded(s.name),
+                    })}
+                  >{s.name}</div>
                 </label>
                 {s.episodes.map((e, i) => (
                   <div key={e}>
@@ -185,6 +187,7 @@ export default class FileRename extends Component {
                     })}>
                       <input
                         type="checkbox"
+                        tabIndex={-1}
                         className="file-rename__item__checkbox"
                         checked={!this.isEpisodeExcluded(e)}
                         onChange={event => this.handleEpisodeChange(event, e)}

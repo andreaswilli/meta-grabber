@@ -53,6 +53,5 @@ TODO:
 * Animate all the things
   * Messages
 * Add Icons
-* Make UI keyboard navigable
 * a11y
 * i18n

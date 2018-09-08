@@ -4,12 +4,12 @@ import classNames from 'classnames';
 export default class Button extends Component {
   render () {
     return (
-      <div
+      <button
         className={classNames('button', this.props.className, {
           'button--disabled': this.props.disabled,
         })}
         onClick={!this.props.disabled && this.props.onClick}
-      >{this.props.label}</div>
+      >{this.props.label}</button>
     );
   }
 }

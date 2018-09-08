@@ -60,11 +60,19 @@ body {
   flex-shrink: 0;
   user-select: none;
   white-space: nowrap;
+  border: none;
+  box-sizing: content-box;
+  font-size: 18px;
 }
 
 .button:not(.button--disabled):hover {
   background-color: #d7dbe0;
   cursor: pointer;
+}
+
+.button:focus {
+  outline: 0;
+  background-color: #d7dbe0;
 }
 
 .button--disabled {
@@ -178,7 +186,12 @@ body {
 }
 
 .file-rename__item__checkbox {
-  display: none;
+  position: absolute;
+  opacity: 0;
+}
+
+.file-rename__item__checkbox:focus + .file-rename__item {
+  opacity: 1;
 }
 
 .file-rename__item__file-name {
