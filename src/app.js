@@ -148,7 +148,10 @@ export default class App extends Component {
               onSelect={this.handleSelect.bind(this)}
               onChange={query => this.setState({ query })}
             />
-            <FilePicker onFileOpen={this.handleFileOpen.bind(this)} />
+            <FilePicker
+              onFileOpen={this.handleFileOpen.bind(this)}
+              files={this.state.files}
+            />
             {/*<Button
               label="settings"
               className="settings-button"

@@ -210,11 +210,14 @@ export default class FileRename extends Component {
           />
           <Button
             className="file-rename__output__clear"
+            type="delete"
+            disabled={!this.props.outputDir}
             label="X"
             onClick={this.props.onClearOutputDir}
           />
           <Button
             className="file-rename__rename-button"
+            type="confirm"
             label="rename"
             onClick={this.renameFiles.bind(this)}
             disabled={this.state.assignments.filter(a => a.fileName).length === 0}

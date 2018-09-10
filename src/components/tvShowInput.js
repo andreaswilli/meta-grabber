@@ -101,6 +101,8 @@ export default class TvShowInput extends Component {
         />
         <Button
           className="tv-show-input__clear"
+          type="delete"
+          disabled={!this.props.query}
           label="X"
           onClick={this.clearInput.bind(this)}
         />

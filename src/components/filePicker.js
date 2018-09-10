@@ -22,6 +22,8 @@ export default class FilePicker extends Component {
         />
         <Button
           className="file-picker__clear"
+          type="delete"
+          disabled={!this.props.files.length > 0}
           label="X"
           onClick={() => this.props.onFileOpen([])}
         />
