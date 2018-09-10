@@ -44,8 +44,6 @@ yarn dev
 
 ## WIP
 TODO:
-* Make buttons colourful
-* Adjust UI colours
 * Add Settings page (local storage)
   * language of API requests
   * naming template
