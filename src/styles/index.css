@@ -353,7 +353,7 @@ body {
 .message {
   padding: 8px 16px;
   margin: 8px 0;
-  border-radius: 8px;
+  border-radius: 2px;
   display: flex;
   align-items: center;
   font-weight: 600;
