@@ -150,10 +150,16 @@ body {
   letter-spacing: 1px;
   box-shadow: 0 0 0 0 white;
   transition: box-shadow 0.2s;
+  flex-grow: 1;
 }
 
 .file-rename__item:hover {
   opacity: 1;
+}
+
+.file-rename__item__label {
+  display: flex;
+  align-items: flex-end;
 }
 
 .file-rename__item--episode {
@@ -186,7 +192,7 @@ body {
 }
 
 .file-rename__item__checkbox {
-  position: absolute;
+  margin-right: -15px;
   opacity: 0;
 }
 

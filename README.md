@@ -57,4 +57,4 @@ TODO:
 * i18n
 
 Known issues:
-* Focusing an element outside the viewport with <Tab\> can lead to weird behaviour.
+* none (for now) 🎉

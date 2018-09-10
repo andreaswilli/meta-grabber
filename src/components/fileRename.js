@@ -166,7 +166,7 @@ export default class FileRename extends Component {
                 duration={ 500 }
                 height={ this.isWholeSeasonExcluded(s.name) ? 62 : 'auto' }
               >
-                <label>
+                <label className="file-rename__item__label">
                   <input
                     type="checkbox"
                     className="file-rename__item__checkbox"
