@@ -68,7 +68,8 @@ export default class TvShowInput extends Component {
           }}
           menuStyle={{
             borderRadius: '2px',
-            background: '#eff3f9',
+            color: getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete'),
+            backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete'),
             padding: '6px 0',
             marginTop: '4px',
             position: 'fixed',
@@ -81,8 +82,12 @@ export default class TvShowInput extends Component {
           items={this.state.results}
           renderItem={(item, isHighlighted) =>
             <div key={item.id} style={{
-              color: '#2a2f35',
-              background: isHighlighted ? 'lightgray' : '#eff3f9',
+              color: isHighlighted
+                ? getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete-selected')
+                : getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete'),
+              background: isHighlighted
+                ? getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete-selected')
+                : getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete'),
               height: '14px',
               padding: '12px',
               lineHeight: '14px',

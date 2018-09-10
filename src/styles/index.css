@@ -5,14 +5,69 @@
   background: #ACD1FD;
 }
 
+:root {
+    /* default theme */
+    --color-main: #EBF1F1;
+    --color-bg-main: #262626;
+
+    --color-button: #262626;
+    --color-bg-button: #EBF1F1;
+    --color-button-hover: var(--color-button);
+    --color-bg-button-hover: #BEC3C7;
+    --color-button-disabled: #7F8D8E;
+    --color-bg-button-disabled: #363636;
+    --color-button-confirm: #EBF1F1;
+    --color-bg-button-confirm: #30CC71;
+    --color-button-confirm-hover: var(--color-button-confirm);
+    --color-bg-button-confirm-hover: #28AC60;
+    --color-button-confirm-disabled: var(--color-button-disabled);
+    --color-bg-button-confirm-disabled: var(--color-bg-button-disabled);
+    --color-button-delete: var(--color-button-confirm);
+    --color-bg-button-delete: #E64D3D;
+    --color-button-delete-hover: var(--color-button-delete);
+    --color-bg-button-delete-hover: #C0392B;
+    --color-button-delete-disabled: var(--color-button-disabled);
+    --color-bg-button-delete-disabled: var(--color-bg-button-disabled);
+
+    --color-input: #262626;
+    --color-bg-input: #EBF1F1;
+    --color-input-active: var(--color-input);
+    --color-bg-input-active: var(--color-bg-input);
+
+    --color-autocomplete: var(--color-input);
+    --color-bg-autocomplete: var(--color-bg-input);
+    --color-autocomplete-selected: #EBF1F1;
+    --color-bg-autocomplete-selected: #34495E;
+
+    --color-message-info: #EBF1F1;
+    --color-bg-message-info: #3497DB;
+    --color-message-warning: #363636;
+    --color-bg-message-warning: #F1C40F;
+    --color-message-error: var(--color-message-info);
+    --color-bg-message-error: #E64D3D;
+    --color-message-success: var(--color-message-info);
+    --color-bg-message-success: #30CC71;
+
+    --color-season: #EBF1F1;
+    --color-bg-season: transparent;
+    --color-border-season: var(--color-season);
+
+    --color-episode-odd: var(--color-episode-even);
+    --color-bg-episode-odd: #363636;
+    --color-border-episode-odd: #BEC3C7;
+    --color-episode-even: #EBF1F1;
+    --color-bg-episode-even: #2B2B2B;
+    --color-border-episode-even: var(--color-border-episode-odd);
+}
+
 html {
   height: 100%;
 }
 
 body {
   height: 100%;
-  background: #2f3e56;
-  color: #eff3f9;
+  background-color: var(--color-bg-main);
+  color: var(--color-main);
   margin: 0;
   font-family: 'Varela Round';
   font-size: 18px;
@@ -25,7 +80,6 @@ body {
 .container {
   height: 100%;
   box-sizing: border-box;
-  background: #2f3e56;
   padding: 24px;
   max-width: 850px;
   margin: 0 auto;
@@ -57,8 +111,8 @@ body {
   min-width: 14px;
   text-align: center;
   line-height: 14px;
-  background-color: #eff3f9;
-  color: #2a2f35;
+  background-color: var(--color-bg-button);
+  color: var(--color-button);
   border-radius: 2px;
   transition: background-color 0.2s;
   flex-shrink: 0;
@@ -69,20 +123,62 @@ body {
   font-size: 18px;
 }
 
+.button--confirm {
+  color: var(--color-button-confirm);
+  background-color: var(--color-bg-button-confirm);
+}
+
+.button--delete {
+  color: var(--color-button-delete);
+  background-color: var(--color-bg-button-delete);
+}
+
 .button:not(.button--disabled):hover {
-  background-color: #d7dbe0;
+  color: var(--color-button-hover);
+  background-color: var(--color-bg-button-hover);
   cursor: pointer;
+}
+
+.button--confirm:not(.button--disabled):hover {
+  color: var(--color-button-confirm-hover);
+  background-color: var(--color-bg-button-confirm-hover);
+}
+
+.button--delete:not(.button--disabled):hover {
+  color: var(--color-button-delete-hover);
+  background-color: var(--color-bg-button-delete-hover);
 }
 
 .button:focus {
   outline: 0;
-  background-color: #d7dbe0;
+  color: var(--color-button-hover);
+  background-color: var(--color-bg-button-hover);
+}
+
+.button--confirm:focus {
+  color: var(--color-button-confirm-hover);
+  background-color: var(--color-bg-button-confirm-hover);
+}
+
+.button--delete:focus {
+  color: var(--color-button-delete-hover);
+  background-color: var(--color-bg-button-delete-hover);
 }
 
 .button--disabled {
-  color: #a1a4a8;
-  background-color: #d7dbe0;
+  color: var(--color-button-disabled);
+  background-color: var(--color-bg-button-disabled);
   cursor: default;
+}
+
+.button--confirm.button--disabled {
+  color: var(--color-button-confirm-disabled);
+  background-color: var(--color-bg-button-confirm-disabled);
+}
+
+.button--delete.button--disabled {
+  color: var(--color-button-delete-disabled);
+  background-color: var(--color-bg-button-delete-disabled);
 }
 
 .tv-show-input {
@@ -100,11 +196,18 @@ body {
   padding: 12px;
   font-size: 18px;
   border-radius: 2px;
-  background-color: #eff3f9;
-  color: #2a2f35;
+  color: var(--color-input);
+  background-color: var(--color-bg-input);
   outline: none;
   border: none;
   flex-grow: 1;
+}
+
+.tv-show-input__input:hover,
+.tv-show-input__input:active,
+.tv-show-input__input:focus {
+  color: var(--color-input-active);
+  background-color: var(--color-bg-input-active);
 }
 
 .tv-show-input__clear {
@@ -143,7 +246,8 @@ body {
   line-height: 18px;
   cursor: pointer;
   opacity: 0.6;
-  color: white;
+  color: var(--color-season);
+  background-color: var(--color-bg-season);
   text-transform: uppercase;
   margin-top: 24px;
   padding-top: 12px;
@@ -152,7 +256,7 @@ body {
   padding-right: 12px;
   font-family: "Open Sans";
   letter-spacing: 1px;
-  box-shadow: 0 0 0 0 white;
+  box-shadow: 0 0 0 0 var(--color-border-season);
   transition: box-shadow 0.2s;
   flex-grow: 1;
 }
@@ -171,28 +275,38 @@ body {
   margin: 0;
   padding: 10px 12px;
   padding-left: 24px;
-  background-color: #3d4e6b;
+  color: var(--color-episode-odd);
+  background-color: var(--color-bg-episode-odd);
   font-family: 'Varela Round';
   letter-spacing: normal;
 }
 
 .file-rename__item--episode:not(.file-rename__item--included):hover {
-  box-shadow: -1px 0 0 0 white;
+  box-shadow: -1px 0 0 0 var(--color-border-episode-odd);
 }
 
 .file-rename__item--included {
-  box-shadow: -4px 0 0 0 white;
+  box-shadow: -4px 0 0 0 var(--color-border-episode-odd);
   opacity: 0.8;
 }
 
+.file-rename__item--episode.file-rename__item--included {
+  box-shadow: -4px 0 0 0 var(--color-border-episode-even);
+}
+
 .file-rename__item--season--excluded {
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid var(--color-border-season);
   transition: border 0.2s;
   transition-delay: 0.5s;
 }
 
 .file-rename__item--even {
-  background-color: #4f678e;
+  color: var(--color-episode-even);
+  background-color: var(--color-bg-episode-even);
+}
+
+.file-rename__item--even:not(.file-rename__item--included):hover {
+  box-shadow: -1px 0 0 0 var(--color-border-episode-even);
 }
 
 .file-rename__item__checkbox {
@@ -246,23 +360,23 @@ body {
 }
 
 .message--info {
-  color: #3b7891;
-  background-color: #79d3f7;
+  color: var(--color-message-info);
+  background-color: var(--color-bg-message-info);
 }
 
 .message--success {
-  color: green;
-  background-color: lightgreen;
+  color: var(--color-message-success);
+  background-color: var(--color-bg-message-success);
 }
 
 .message--warning {
-  color: gray;
-  background-color: yellow;
+  color: var(--color-message-warning);
+  background-color: var(--color-bg-message-warning);
 }
 
 .message--error {
-  color: #ffd8d8;
-  background-color: red;
+  color: var(--color-message-error);
+  background-color: var(--color-bg-message-error);
 }
 
 .message__text {
