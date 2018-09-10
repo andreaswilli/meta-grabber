@@ -3,14 +3,14 @@ import classNames from 'classnames';
 
 export default class Message extends Component {
 
-  dismissMessage(index) {
-    this.props.onMessagesUpdate(this.props.messages.filter((_, i) => i !== index));
+  dismissMessage(id) {
+    this.props.onMessagesUpdate(this.props.messages.filter(m => m.id !== id));
   }
 
   render() {
     return (
       <div>
-        {(this.props.messages || []).map((m, i) => (
+        {(this.props.messages || []).map(m => (
           <div
             key={m.id}
             className={classNames('message', `message--${m.type}`)}
@@ -19,12 +19,12 @@ export default class Message extends Component {
             {m.dismissable && (
               <div
                 className="message__close"
-                onClick={() => this.dismissMessage(i)}
+                onClick={() => this.dismissMessage(m.id)}
               >X</div>
             )}
             {(() => {
               if (!m.autoDismiss) return;
-              setTimeout(() => this.dismissMessage(i), m.autoDismiss);
+              setTimeout(() => this.dismissMessage(m.id), m.autoDismiss);
             })()}
           </div>
         ))}

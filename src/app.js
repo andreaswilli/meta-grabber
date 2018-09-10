@@ -125,8 +125,8 @@ export default class App extends Component {
           ...this.state.messages.filter(m => m.id !== 'usage-hint'), {
             id: 'usage-hint',
             text: `Please${newSeasons.length === 0
-              ? ` search for a TV show${newFiles.length === 0 ? ' and' : '.'}` : ''}
-              ${newFiles.length === 0 ? ' open the files you want to rename.' : ''}`,
+              ? ` search for a TV show${newFiles.length === 0 ? ' and' : '.'}` : ''}${
+                newFiles.length === 0 ? ' open the files you want to rename.' : ''}`,
             type: 'info',
           },
         ]
