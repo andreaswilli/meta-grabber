@@ -12,34 +12,23 @@ Rename your files in seconds! 🚀
 
 ![meta-grabber-demo](https://user-images.githubusercontent.com/17298270/45350375-ed4fbf00-b5b3-11e8-8cc2-a59e157a7205.gif)
 
-## Example
+## Instructions
+Rename your files with these steps:
 
-#### Before
-```
-atax-westworld.s02e01.1080p.mkv
-atax-westworld.s02e02-1080p.mkv
-atax-westworld.s02e03-1080p.mkv
-atax-westworld.s02e04-1080p.mkv
-atax-westworld.s02e05-1080p.mkv
-atax-westworld.s02e06-1080p.mkv
-atax-westworld.s02e07-1080p.mkv
-atax-westworld.s02e08-1080p.mkv
-atax-westworld.s02e09-1080p.mkv
-atax-westworld.s02e10-1080p.mkv
-```
-#### After
-```
-S02 E01 - Zeit der Vergeltung.mkv
-S02 E02 - Der Weg nach Glory.mkv
-S02 E03 - Das Fort der verlorenen Hoffnung.mkv
-S02 E04 - Das Rätsel der Sphinx.mkv
-S02 E05 - Eine neue Stimme.mkv
-S02 E06 - Phasenraum.mkv
-S02 E07 - Häutungen.mkv
-S02 E08 - Die Lebenden und die Verdammten.mkv
-S02 E09 - Virus.mkv
-S02 E10 - Der Passagier.mkv
-```
+1. **Search for your TV show.**  
+   Just begin typing the name of the show, the autocomplete will suggest results from the `themoviedb.org` API.
+   
+1. **Choose all the files you want to rename.**  
+   The files can also be located in different directories.
+   
+1. **Select seasons/episodes of the TV show.**  
+   You have to select, which seasons or episodes of the show you are looking for. You can toggle listed seasons/episodes by clicking them.
+   
+1. **(optional) Select your output directory.**  
+   You can move your files to a different directory as well. If you leave this empty, all the files will remain, where they are and just change its name.
+   
+1. **Click on rename.**  
+   Now click the `rename` button and you're done. 🎉
 
 ## Dev stuff
 Run it locally by running
