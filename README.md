@@ -1,6 +1,6 @@
 # meta-grabber
 
-A tool to grab meta data for tv shows and rename files on your hard disk.
+📺 A tool to grab meta data for tv shows and rename files on your hard disk.
 
 ## Download
 
