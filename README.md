@@ -47,6 +47,7 @@ TODO:
 * Add Icons
 * a11y
 * i18n
+* Add ability to open whole folders
 
 Known issues:
 * none (for now) 🎉
