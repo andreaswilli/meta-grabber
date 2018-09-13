@@ -66,6 +66,7 @@ html {
 
 body {
   height: 100%;
+  overflow: hidden;
   background-color: var(--color-bg-main);
   color: var(--color-main);
   margin: 0;
@@ -74,6 +75,10 @@ body {
 }
 
 #root {
+  height: 100%;
+}
+
+.app {
   height: 100%;
 }
 
@@ -387,4 +392,42 @@ body {
   flex-grow: 0;
   cursor: pointer;
   margin-left: 8px;
+}
+
+.settings-pane {
+  bottom: 0;
+  position: absolute;
+  height: 600px;
+  width: 100%;
+  background-color: #262626;
+  z-index: 10;
+  transition: bottom 0.3s ease-in-out;
+}
+
+.settings-pane--hidden {
+  bottom: -600px;
+}
+
+.settings-pane__setting {
+  max-width: 500px;
+}
+
+.settings-pane__setting__label {
+  margin-bottom: 8px;
+}
+
+.settings-backdrop {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 5;
+  transition: opacity 0.3s;
+}
+
+.settings-backdrop--hidden {
+  opacity: 0;
+  z-index: -1;
 }

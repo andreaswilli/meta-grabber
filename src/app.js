@@ -8,6 +8,7 @@ import { formatEpisodeName } from './util/format';
 import FileRename from './components/fileRename';
 import Button from './components/button';
 import Message from './components/message';
+import SettingsPane from './components/settingsPane';
 
 import './util/array.js';
 
@@ -25,6 +26,10 @@ export default class App extends Component {
       outputDir: null,
       loading: false,
       messages: [],
+      settingsPaneOpen: false,
+      settings: {
+        metaDataLang: localStorage.getItem('metaDataLang') || 'en',
+      },
     };
 
     this.state = this.initialState;
@@ -139,44 +144,53 @@ export default class App extends Component {
 
   render () {
     return (
-      <div className="container">
-        <div className="page">
-          <div className="section">
-            <TvShowInput
-              query={this.state.query}
-              onSelect={this.handleSelect.bind(this)}
-              onChange={query => this.setState({ query })}
+      <div className="app">
+        <div className="container">
+          <div className="page">
+            <div className="section">
+              <TvShowInput
+                query={this.state.query}
+                onSelect={this.handleSelect.bind(this)}
+                onChange={query => this.setState({ query })}
+                metaDataLang={this.state.settings.metaDataLang}
+              />
+              <FilePicker
+                onFileOpen={this.handleFileOpen.bind(this)}
+                files={this.state.files}
+              />
+              <Button
+                label="settings"
+                className="settings-button"
+                onClick={() => this.setState({ settingsPaneOpen: true })}
+              />
+            </div>
+            <Message
+              messages={this.state.messages}
+              onMessagesUpdate={(messages) => this.setState({ messages })}
             />
-            <FilePicker
-              onFileOpen={this.handleFileOpen.bind(this)}
-              files={this.state.files}
+            <FileRename
+              seasons={
+                this.state.seasons.map(s => ({
+                  name: s.name,
+                  episodes: s.episodes.map(e => formatEpisodeName(e, this.state.tvShow)),
+                }))
+              }
+              loading={this.state.loading}
+              files={this.state.files.sort()}
+              outputDir={this.state.outputDir}
+              onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
+              onFileRenameError={(error) => this.handleFileRenameError(error)}
+              onChooseOutputDir={outputDir => this.setState({ outputDir })}
+              onClearOutputDir={() => this.setState({ outputDir: null })}
             />
-            {/*<Button
-              label="settings"
-              className="settings-button"
-              onClick={() => {}}
-            />*/}
           </div>
-          <Message
-            messages={this.state.messages}
-            onMessagesUpdate={(messages) => this.setState({ messages })}
-          />
-          <FileRename
-            seasons={
-              this.state.seasons.map(s => ({
-                name: s.name,
-                episodes: s.episodes.map(e => formatEpisodeName(e, this.state.tvShow)),
-              }))
-            }
-            loading={this.state.loading}
-            files={this.state.files.sort()}
-            outputDir={this.state.outputDir}
-            onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
-            onFileRenameError={(error) => this.handleFileRenameError(error)}
-            onChooseOutputDir={outputDir => this.setState({ outputDir })}
-            onClearOutputDir={() => this.setState({ outputDir: null })}
-          />
         </div>
+        <SettingsPane
+          onOpenChange={open => this.setState({ settingsPaneOpen: open })}
+          onChange={settings => this.setState({ settings })}
+          openState={this.state.settingsPaneOpen}
+          settings={this.state.settings}
+        />
       </div>
     );
   }
