@@ -19,7 +19,6 @@ export default class SettingsPane extends Component {
   async loadLanguages() {
     try {
       const response = await (makeRequestCreator())('/configuration/languages');
-      console.log((response.data.find(l => l.iso_639_1 === this.props.settings.metaDataLang) || {}).english_name);
       this.setState({
         languages: response.data,
         query: (response.data.find(l => l.iso_639_1 === this.props.settings.metaDataLang) || {}).english_name,
