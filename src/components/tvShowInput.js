@@ -3,7 +3,7 @@ import axios from 'axios';
 import Autocomplete from 'react-autocomplete';
 
 import Button from './button';
-import { makeRequestCreator, baseUrl, apiKey } from '../util/request';
+import { makeRequestCreator } from '../util/request';
 
 export default class TvShowInput extends Component {
 
@@ -20,7 +20,7 @@ export default class TvShowInput extends Component {
   async search(query) {
     try {
       const response = await this.get(
-        `${baseUrl}/search/tv?api_key=${apiKey}&language=de&query=${query}`
+        `/search/tv?language=${this.props.metaDataLang}&query=${query}`
       );
       this.setState({ results: response.data.results });
     } catch(e) {

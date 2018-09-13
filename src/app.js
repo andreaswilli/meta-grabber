@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import TvShowInput from './components/tvShowInput';
 import FilePicker from './components/filePicker';
-import { makeRequestCreator, baseUrl, apiKey } from './util/request';
+import { makeRequestCreator } from './util/request';
 import { formatEpisodeName } from './util/format';
 import FileRename from './components/fileRename';
 import Button from './components/button';
@@ -47,15 +47,14 @@ export default class App extends Component {
     this.setState({ loading: true });
     try {
       const response = await this.get(
-        `${baseUrl}/tv/${tvShow.id}?api_key=${apiKey}&language=de`
+        `/tv/${tvShow.id}?language=${this.state.settings.metaDataLang}`
       );
       // this.setState({ seasons: response.data.seasons });
       const seasons =
         await Promise.all(response.data.seasons.map(async season => {
           try{
             const response = await (makeRequestCreator())(
-              `${baseUrl}/tv/${tvShow.id}/season/${
-                season.season_number}?api_key=${apiKey}&language=de`
+              `/tv/${tvShow.id}/season/${season.season_number}?language=${this.state.settings.metaDataLang}`
             );
             return response.data;
           } catch(e) {
