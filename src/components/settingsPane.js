@@ -72,6 +72,7 @@ export default class SettingsPane extends Component {
                 inputProps={{
                   className: 'tv-show-input__input',
                   placeholder: 'Choose language',
+                  tabIndex: this.props.openState ? '0' : '-1',
                 }}
                 menuStyle={{
                   borderRadius: '2px',
