@@ -9,6 +9,7 @@
     /* default theme */
     --color-main: #EBF1F1;
     --color-bg-main: #262626;
+    --color-error: #E64D3D;
 
     --color-button: #262626;
     --color-bg-button: #EBF1F1;
@@ -196,25 +197,6 @@ body {
   flex-grow: 1;
 }
 
-.tv-show-input__input {
-  height: 14px;
-  padding: 12px;
-  font-size: 18px;
-  border-radius: 2px;
-  color: var(--color-input);
-  background-color: var(--color-bg-input);
-  outline: none;
-  border: none;
-  flex-grow: 1;
-}
-
-.tv-show-input__input:hover,
-.tv-show-input__input:active,
-.tv-show-input__input:focus {
-  color: var(--color-input-active);
-  background-color: var(--color-bg-input-active);
-}
-
 .tv-show-input__clear {
   flex-grow: 0;
   margin-left: 4px;
@@ -323,6 +305,12 @@ body {
   opacity: 1;
 }
 
+.file-rename__item__name {
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .file-rename__item__file-name {
   text-align: right;
   flex-grow: 1;
@@ -410,10 +398,21 @@ body {
 
 .settings-pane__setting {
   max-width: 500px;
+  margin-top: 24px;
+  box-sizing: border-box;
 }
 
 .settings-pane__setting__label {
   margin-bottom: 8px;
+}
+
+.settings-pane__setting__message {
+  white-space: pre-wrap;
+  margin-top: 8px;
+}
+
+.error {
+  color: var(--color-error);
 }
 
 .settings-backdrop {
@@ -430,6 +429,27 @@ body {
 .settings-backdrop--hidden {
   opacity: 0;
   z-index: -1;
+}
+
+.input {
+  height: 38px;
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 2px;
+  color: var(--color-input);
+  background-color: var(--color-bg-input);
+  outline: none;
+  border: none;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
+.input:hover,
+.input:active,
+.input:focus {
+  color: var(--color-input-active);
+  background-color: var(--color-bg-input-active);
 }
 
 .link {

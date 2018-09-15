@@ -30,6 +30,21 @@ Rename your files with these steps:
 1. **Click on rename.**  
    Now click the `rename` button and you're done. 🎉
 
+## Settings
+
+### File name template
+With this setting you can define the template, used to rename your files. You can set it to anything you want, however invalid characters such as `?` will be ignored.
+
+Also you can use the placeholders listed below, to dynamically insert meta data into the name. In fact, you have to use at least `{season_no}` and `{episode_no}` to make sure, every file name is unique.
+
+Placeholder | Example value | Description
+--- | --- | ---
+`{season_no}` | `05` | The number of the season.
+`{episode_no}` | `16` | The number of the episode.
+`{episode_name}` | `Felina` | The name of the episode.
+`{show_name}` | `Breaking Bad` | The name of the tv show.
+`{year}` | `2008` | The year in which the tv show was first aired.
+
 ## Dev stuff
 Run it locally by running
 ```

@@ -63,7 +63,7 @@ export default class TvShowInput extends Component {
             className: 'tv-show-input__wrapper',
           }}
           inputProps={{
-            className: 'tv-show-input__input',
+            className: 'input',
             placeholder: 'Search TV show...',
           }}
           menuStyle={{
@@ -92,7 +92,7 @@ export default class TvShowInput extends Component {
               padding: '12px',
               lineHeight: '14px',
             }}>
-              {item.name} ({item.first_air_date.substr(0,4)})
+              {item.name} ({item.first_air_date.substr(0, 4)})
             </div>
           }
           value={this.props.query}

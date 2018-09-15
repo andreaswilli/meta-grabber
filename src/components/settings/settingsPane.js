@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import Autocomplete from 'react-autocomplete';
 
-import { makeRequestCreator } from '../util/request';
+import { makeRequestCreator } from '../../util/request';
+import NamingTemplate from './namingTemplate';
+import Link from '../../components/link';
 
 export default class SettingsPane extends Component {
 
@@ -30,6 +32,8 @@ export default class SettingsPane extends Component {
 
   handleClose() {
     localStorage.setItem('metaDataLang', this.props.settings.metaDataLang);
+    localStorage.setItem('template', this.props.settings.template);
+    this.namingTemplate.setState({ template: this.props.settings.template }); // reset invalid template
     this.props.onOpenChange(false);
   }
 
@@ -70,7 +74,7 @@ export default class SettingsPane extends Component {
                   className: 'tv-show-input__wrapper',
                 }}
                 inputProps={{
-                  className: 'tv-show-input__input',
+                  className: 'input',
                   placeholder: 'Choose language',
                   tabIndex: this.props.openState ? '0' : '-1',
                 }}
@@ -108,6 +112,19 @@ export default class SettingsPane extends Component {
                 onSelect={this.handleLanguageSelect.bind(this)}
               />
             </div>
+            <div className="settings-pane__setting">
+              <div className="settings-pane__setting__label">
+                The template for file names (<Link
+                  url="https://github.com/andreaswilli/meta-grabber#file-name-template"
+                  label="help"
+                />).</div>
+              <NamingTemplate
+                onRef={ref => this.namingTemplate = ref}
+                onChange={template => this.handleSettingsChange('template', template)}
+                template={this.props.settings.template}
+                openState={this.props.openState}
+              />
+            </div>
           </div>
         </div>
         <div
@@ -116,9 +133,6 @@ export default class SettingsPane extends Component {
           })}
           onClick={() => this.handleClose()}
         />
-        {JSON.stringify(this.state.languages.filter(l =>
-          l.name.match(this.state.query) || l.english_name.match(this.state.query) || l.iso_639_1.match(this.state.query)
-        ))}
       </div>
     );
   }

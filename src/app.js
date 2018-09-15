@@ -8,7 +8,7 @@ import { formatEpisodeName } from './util/format';
 import FileRename from './components/fileRename';
 import Button from './components/button';
 import Message from './components/message';
-import SettingsPane from './components/settingsPane';
+import SettingsPane from './components/settings/settingsPane';
 
 import './util/array.js';
 
@@ -29,6 +29,7 @@ export default class App extends Component {
       settingsPaneOpen: false,
       settings: {
         metaDataLang: localStorage.getItem('metaDataLang') || 'en',
+        template: localStorage.getItem('template') || 'S{season_no} E{episode_no} - {episode_name}',
       },
     };
 
@@ -37,10 +38,6 @@ export default class App extends Component {
 
   componentDidMount() {
     this.updateUsageHint();
-  }
-
-  chooseTvShow(tvShow) {
-    this.setState({ tvShow: tvShow.id });
   }
 
   async getSeasonsOf(tvShow) {
@@ -78,7 +75,7 @@ export default class App extends Component {
   }
 
   handleSelect(tvShow) {
-    this.chooseTvShow(tvShow);
+    this.setState({ tvShow });
     this.getSeasonsOf(tvShow);
   }
 
@@ -172,7 +169,7 @@ export default class App extends Component {
               seasons={
                 this.state.seasons.map(s => ({
                   name: s.name,
-                  episodes: s.episodes.map(e => formatEpisodeName(e, this.state.tvShow)),
+                  episodes: s.episodes.map(e => formatEpisodeName(e, this.state.tvShow, this.state.settings.template)),
                 }))
               }
               loading={this.state.loading}
