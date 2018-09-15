@@ -431,3 +431,12 @@ body {
   opacity: 0;
   z-index: -1;
 }
+
+.link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: none;
+}
