@@ -136,8 +136,8 @@ export default class FileRename extends Component {
     const outputDir = await remote.dialog.showOpenDialog({
       properties: ['openDirectory', 'createDirectory'],
     });
-    if (!outputDir) return;
-    this.props.onChooseOutputDir(outputDir);
+    if (!outputDir[0]) return;
+    this.props.onChooseOutputDir(outputDir[0]);
   }
 
   renameFiles() {
@@ -145,7 +145,18 @@ export default class FileRename extends Component {
     try {
       for (let i = 0; i < assignments.length; i++) {
         const a = assignments[i];
-        let newFileName = `${this.props.outputDir || formatFilePath(a.fileName)}/${a.name}.${formatFileExtension(a.fileName)}`;
+        const newFileDir = ((this.props.outputDir !== '?' && this.props.outputDir)
+          || formatFilePath(a.fileName))
+            .replace(/\{show_name\}/g, this.props.tvShow.name || 'error')
+            .replace(/[#%&\{\}<>\*\?$!'":@]/g, '');
+        try {
+          // test if directory is existing
+          fs.statSync(newFileDir);
+        } catch(e) {
+          // create directory if it does not exist yet
+          fs.mkdirSync(newFileDir);
+        }
+        let newFileName = `${newFileDir}/${a.name}.${formatFileExtension(a.fileName)}`;
         fs.renameSync(a.fileName, newFileName);
       }
       this.props.onFileRenameSuccess();
@@ -202,7 +213,11 @@ export default class FileRename extends Component {
           </div>
         </div>}
         <div className="section section--output">
-          <div className="file-rename__output__dir">{this.props.outputDir || 'none (leave the files where they are)'}</div>
+          <div className="file-rename__output__dir">
+            {((this.props.outputDir !== '?' && this.props.outputDir) || 'none (leave the files where they are)')
+              .replace(/\{show_name\}/g, this.props.tvShow.name || '{show_name}')
+              .replace(/[#%&<>\*\?$!'":@]/g, '')}
+          </div>
           <Button
             className="file-rename__output__choose"
             label="choose output dir"
@@ -211,7 +226,7 @@ export default class FileRename extends Component {
           <Button
             className="file-rename__output__clear"
             type="delete"
-            disabled={!this.props.outputDir}
+            disabled={!this.props.outputDir || this.props.outputDir === '?'}
             label="X"
             onClick={this.props.onClearOutputDir}
           />

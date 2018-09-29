@@ -412,6 +412,14 @@ body {
   opacity: 0.5;
 }
 
+.settings-pane__setting__group {
+  display: flex;
+}
+
+.settings-pane__setting__group__button {
+  margin-left: 8px;
+}
+
 .error {
   color: var(--color-error);
 }

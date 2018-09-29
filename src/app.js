@@ -30,6 +30,7 @@ export default class App extends Component {
       settings: {
         metaDataLang: localStorage.getItem('metaDataLang') || 'en',
         template: localStorage.getItem('template') || 'S{season_no} E{episode_no} - {episode_name}',
+        defaultOutputDir: localStorage.getItem('defaultOutputDir'),
       },
     };
 
@@ -93,6 +94,11 @@ export default class App extends Component {
   handleFileRenameSuccess() {
     this.setState({
       ...this.initialState,
+      settings: {
+        metaDataLang: localStorage.getItem('metaDataLang') || 'en',
+        template: localStorage.getItem('template') || 'S{season_no} E{episode_no} - {episode_name}',
+        defaultOutputDir: localStorage.getItem('defaultOutputDir'),
+      },
       messages: [
         ...this.initialState.messages.filter(m => m.id !== 'rename-error'), {
           id: 'rename-success',
@@ -166,6 +172,7 @@ export default class App extends Component {
               onMessagesUpdate={(messages) => this.setState({ messages })}
             />
             <FileRename
+              tvShow={this.state.tvShow || {}}
               seasons={
                 this.state.seasons.map(s => ({
                   name: s.name,
@@ -174,11 +181,11 @@ export default class App extends Component {
               }
               loading={this.state.loading}
               files={this.state.files.sort()}
-              outputDir={this.state.outputDir}
+              outputDir={this.state.outputDir || this.state.settings.defaultOutputDir}
               onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
               onFileRenameError={(error) => this.handleFileRenameError(error)}
               onChooseOutputDir={outputDir => this.setState({ outputDir })}
-              onClearOutputDir={() => this.setState({ outputDir: null })}
+              onClearOutputDir={() => this.setState({ outputDir: '?' })}
             />
           </div>
         </div>

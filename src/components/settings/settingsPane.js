@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import Autocomplete from 'react-autocomplete';
+import { remote } from 'electron';
 
 import { makeRequestCreator } from '../../util/request';
 import NamingTemplate from './namingTemplate';
 import Link from '../../components/link';
+import Button from '../../components/button';
 
 export default class SettingsPane extends Component {
 
@@ -33,6 +35,7 @@ export default class SettingsPane extends Component {
   handleClose() {
     localStorage.setItem('metaDataLang', this.props.settings.metaDataLang);
     localStorage.setItem('template', this.props.settings.template);
+    localStorage.setItem('defaultOutputDir', this.props.settings.defaultOutputDir);
     this.namingTemplate.setState({ template: this.props.settings.template }); // reset invalid template
     this.props.onOpenChange(false);
   }
@@ -58,6 +61,14 @@ export default class SettingsPane extends Component {
     )
   }
 
+  async handleChooseOutputDir() {
+    const outputDir = await remote.dialog.showOpenDialog({
+      properties: ['openDirectory', 'createDirectory'],
+    });
+    if (!outputDir[0]) return;
+    this.handleSettingsChange('defaultOutputDir', outputDir[0]);
+  }
+
   render() {
     return (
       <div>
@@ -67,7 +78,7 @@ export default class SettingsPane extends Component {
           <div className="container">
             <h2>Settings</h2>
             <div className="settings-pane__setting">
-              <div className="settings-pane__setting__label">The language of the meta data.</div>
+              <div className="settings-pane__setting__label">Meta data language.</div>
               <Autocomplete
                 wrapperStyle={{}}
                 wrapperProps={{
@@ -114,7 +125,7 @@ export default class SettingsPane extends Component {
             </div>
             <div className="settings-pane__setting">
               <div className="settings-pane__setting__label">
-                The template for file names (<Link
+                File name template (<Link
                   url="https://github.com/andreaswilli/meta-grabber#file-name-template"
                   label="help"
                 />).</div>
@@ -124,6 +135,28 @@ export default class SettingsPane extends Component {
                 template={this.props.settings.template}
                 openState={this.props.openState}
               />
+            </div>
+            <div className="settings-pane__setting">
+              <div className="settings-pane__setting__label">
+                Default output directory.
+              </div>
+              <div className="settings-pane__setting__group">
+                <input
+                  type="text"
+                  className="input"
+                  value={this.props.settings.defaultOutputDir}
+                  onChange={event => this.handleSettingsChange('defaultOutputDir', event.target.value)}
+                  tabIndex={this.props.openState ? 0 : -1}
+                />
+                <Button
+                  className="settings-pane__setting__group__button"
+                  label="choose"
+                  onClick={this.handleChooseOutputDir.bind(this)}
+                />
+              </div>
+              <div className="settings-pane__setting__message">
+                You can use <code>{'{show_name}'}</code> to dynamically include the name of the tv show.
+              </div>
             </div>
           </div>
         </div>

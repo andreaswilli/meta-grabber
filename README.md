@@ -32,6 +32,9 @@ Rename your files with these steps:
 
 ## Settings
 
+### Meta data language
+Specifies the language of the meta data that will be grabbed. Defaults to English.
+
 ### File name template
 With this setting you can define the template, used to rename your files. You can set it to anything you want, however invalid characters such as `?` will be ignored.
 
@@ -45,6 +48,9 @@ Placeholder | Example value | Description
 `{show_name}` | `Breaking Bad` | The name of the tv show.
 `{year}` | `2008` | The year in which the tv show was first aired.
 
+### Default output directory
+The output directory that will be used, if you don't select one manually. Your directory name can also include `{show_name}`, which will be replaced with the name of the tv show. This is useful to automatically organise your tv shows in subfolders.
+
 ## Dev stuff
 Run it locally by running
 ```
@@ -53,8 +59,6 @@ yarn dev
 
 ## WIP
 TODO:
-* [settings page] naming template
-* [settings page] default output directory
 * Animate all the things
   * Messages
 * Add Icons
