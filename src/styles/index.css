@@ -383,17 +383,17 @@ body {
 }
 
 .settings-pane {
-  bottom: 0;
+  bottom: -200px;
   position: absolute;
-  height: 600px;
+  height: 800px;
   width: 100%;
   background-color: #262626;
   z-index: 10;
-  transition: bottom 0.3s ease-in-out;
+  transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .settings-pane--hidden {
-  bottom: -600px;
+  bottom: -800px;
 }
 
 .settings-pane__setting {
@@ -409,6 +409,7 @@ body {
 .settings-pane__setting__message {
   white-space: pre-wrap;
   margin-top: 8px;
+  opacity: 0.5;
 }
 
 .error {
