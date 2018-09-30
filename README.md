@@ -51,6 +51,12 @@ Placeholder | Example value | Description
 ### Default output directory
 The output directory that will be used, if you don't select one manually. Your directory name can also include `{show_name}`, which will be replaced with the name of the tv show. This is useful to automatically organise your tv shows in subfolders.
 
+### Included file types
+You can open a whole directory or even multiple at once. This option specifies, which file types will be included. Defaults to `mkv,avi,mp4,mov`.
+
+### Excluded terms
+Files that contain one of the terms set here will not get included. This concerns the complete file name (including directory name). This option is mainly existing to not open sample files when importing whole directories. Defaults to `sample`.
+
 ## Dev stuff
 Run it locally by running
 ```
@@ -64,7 +70,6 @@ TODO:
 * Add Icons
 * a11y
 * i18n
-* Add ability to open whole folders
 
 Known issues:
 * none (for now) 🎉

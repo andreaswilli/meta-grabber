@@ -385,6 +385,7 @@ body {
 .settings-pane {
   bottom: -200px;
   position: absolute;
+  overflow: auto;
   height: 800px;
   width: 100%;
   background-color: #262626;
@@ -394,6 +395,10 @@ body {
 
 .settings-pane--hidden {
   bottom: -800px;
+}
+
+.settings-pane__container {
+  margin-bottom: 200px;
 }
 
 .settings-pane__setting {

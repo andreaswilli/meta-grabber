@@ -2,15 +2,22 @@ import React, { Component } from 'react';
 import { remote } from 'electron';
 
 import Button from './button';
+import { readRecursively } from '../util/fs';
 
 export default class FilePicker extends Component {
 
   async open() {
     const files = await remote.dialog.showOpenDialog({
-      properties: ['openFile', 'multiSelections'],
+      properties: ['openFile', 'openDirectory', 'multiSelections'],
     });
     if (!files) return;
-    this.props.onFileOpen(files);
+    console.log('terms: ', this.props.excludedTerms);
+    this.props.onFileOpen(readRecursively(files)
+      .filter(file =>
+        this.props.includedExtensions.filter(ext => ext).some(extension => file.toLowerCase().endsWith(extension)) &&
+        !this.props.excludedTerms.filter(term => term).some(term => file.toLowerCase().includes(term)
+      )
+    ));
   }
 
   render() {

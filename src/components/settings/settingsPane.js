@@ -33,9 +33,12 @@ export default class SettingsPane extends Component {
   }
 
   handleClose() {
-    localStorage.setItem('metaDataLang', this.props.settings.metaDataLang);
-    localStorage.setItem('template', this.props.settings.template);
-    localStorage.setItem('defaultOutputDir', this.props.settings.defaultOutputDir);
+    console.log(this.props.settings.excludedTerms);
+    localStorage.setItem('metaDataLang', this.props.settings.metaDataLang || '(empty)');
+    localStorage.setItem('template', this.props.settings.template || '(empty)');
+    localStorage.setItem('defaultOutputDir', this.props.settings.defaultOutputDir || '(empty)');
+    localStorage.setItem('includedExtensions', (this.props.settings.includedExtensions.filter(ext => ext).length > 0 && this.props.settings.includedExtensions) || '(empty)');
+    localStorage.setItem('excludedTerms', (this.props.settings.excludedTerms.filter(term => term).length > 0 && this.props.settings.excludedTerms) || '(empty)');
     this.namingTemplate.setState({ template: this.props.settings.template }); // reset invalid template
     this.props.onOpenChange(false);
   }
@@ -75,7 +78,7 @@ export default class SettingsPane extends Component {
         <div className={classNames('settings-pane', {
           'settings-pane--hidden': !this.props.openState,
         })}>
-          <div className="container">
+          <div className="container settings-pane__container">
             <h2>Settings</h2>
             <div className="settings-pane__setting">
               <div className="settings-pane__setting__label">Meta data language.</div>
@@ -156,6 +159,38 @@ export default class SettingsPane extends Component {
               </div>
               <div className="settings-pane__setting__message">
                 You can use <code>{'{show_name}'}</code> to dynamically include the name of the tv show.
+              </div>
+            </div>
+            <div className="settings-pane__setting">
+              <div className="settings-pane__setting__label">
+                Included file types.
+              </div>
+              <input
+                type="text"
+                className="input"
+                value={this.props.settings.includedExtensions}
+                onChange={event => this.handleSettingsChange('includedExtensions', event.target.value
+                  .split(',').map(ext => ext.trim()))}
+                tabIndex={this.props.openState ? 0 : -1}
+              />
+              <div className="settings-pane__setting__message">
+                These file extensions will be included when opening files (separate with <code>,</code>).
+              </div>
+            </div>
+            <div className="settings-pane__setting">
+              <div className="settings-pane__setting__label">
+                Excluded terms.
+              </div>
+              <input
+                type="text"
+                className="input"
+                value={this.props.settings.excludedTerms}
+                onChange={event => this.handleSettingsChange('excludedTerms', event.target.value
+                  .split(',').map(term => term.trim()))}
+                tabIndex={this.props.openState ? 0 : -1}
+              />
+              <div className="settings-pane__setting__message">
+                Exclude files that contain one of these terms in their name or path (separate with <code>,</code>).
               </div>
             </div>
           </div>

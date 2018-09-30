@@ -27,11 +27,7 @@ export default class App extends Component {
       loading: false,
       messages: [],
       settingsPaneOpen: false,
-      settings: {
-        metaDataLang: localStorage.getItem('metaDataLang') || 'en',
-        template: localStorage.getItem('template') || 'S{season_no} E{episode_no} - {episode_name}',
-        defaultOutputDir: localStorage.getItem('defaultOutputDir'),
-      },
+      settings: this.loadSettings(),
     };
 
     this.state = this.initialState;
@@ -39,6 +35,19 @@ export default class App extends Component {
 
   componentDidMount() {
     this.updateUsageHint();
+  }
+
+  loadSettings() {
+    return {
+      metaDataLang: (localStorage.getItem('metaDataLang') || 'en').replace(/^\(empty\)$/, ''),
+      template: (localStorage.getItem('template') || 'S{season_no} E{episode_no} - {episode_name}')
+        .replace(/^\(empty\)$/, ''),
+      defaultOutputDir: (localStorage.getItem('defaultOutputDir')).replace(/^\(empty\)$/, ''),
+      includedExtensions: ((localStorage.getItem('includedExtensions') || 'mkv,avi,mp4,mov'))
+        .replace(/^\(empty\)$/, '').split(',').map(ext => ext.trim()).filter(ext => ext),
+      excludedTerms: ((localStorage.getItem('excludedTerms') || 'sample'))
+        .replace(/^\(empty\)$/, '').split(',').map(ext => ext.trim()).filter(term => term),
+    };
   }
 
   async getSeasonsOf(tvShow) {
@@ -94,11 +103,7 @@ export default class App extends Component {
   handleFileRenameSuccess() {
     this.setState({
       ...this.initialState,
-      settings: {
-        metaDataLang: localStorage.getItem('metaDataLang') || 'en',
-        template: localStorage.getItem('template') || 'S{season_no} E{episode_no} - {episode_name}',
-        defaultOutputDir: localStorage.getItem('defaultOutputDir'),
-      },
+      settings: this.loadSettings(),
       messages: [
         ...this.initialState.messages.filter(m => m.id !== 'rename-error'), {
           id: 'rename-success',
@@ -159,6 +164,8 @@ export default class App extends Component {
               />
               <FilePicker
                 onFileOpen={this.handleFileOpen.bind(this)}
+                includedExtensions={this.state.settings.includedExtensions}
+                excludedTerms={this.state.settings.excludedTerms}
                 files={this.state.files}
               />
               <Button
