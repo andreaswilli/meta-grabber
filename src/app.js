@@ -42,7 +42,7 @@ export default class App extends Component {
       metaDataLang: (localStorage.getItem('metaDataLang') || 'en').replace(/^\(empty\)$/, ''),
       template: (localStorage.getItem('template') || 'S{season_no} E{episode_no} - {episode_name}')
         .replace(/^\(empty\)$/, ''),
-      defaultOutputDir: (localStorage.getItem('defaultOutputDir')).replace(/^\(empty\)$/, ''),
+      defaultOutputDir: (localStorage.getItem('defaultOutputDir') || '').replace(/^\(empty\)$/, ''),
       includedExtensions: ((localStorage.getItem('includedExtensions') || 'mkv,avi,mp4,mov'))
         .replace(/^\(empty\)$/, '').split(',').map(ext => ext.trim()).filter(ext => ext),
       excludedTerms: ((localStorage.getItem('excludedTerms') || 'sample'))
