@@ -22,10 +22,10 @@ Rename your files with these steps:
    The files can also be located in different directories.
 
 1. **Select seasons/episodes of the TV show.**  
-   You have to select, which seasons or episodes of the show you are looking for. You can toggle listed seasons/episodes by clicking them.
+   You have to select which seasons or episodes of the show you are looking for. You can toggle listed seasons/episodes on or off by clicking them.
 
 1. **(optional) Select your output directory.**  
-   You can move your files to a different directory as well. If you leave this empty, all the files will remain, where they are and just change its name.
+   You can move your files to a different directory as well. If you leave this empty, all the files will remain where they are and just change their names.
 
 1. **Click on rename.**  
    Now click the `rename` button and you're done. 🎉
@@ -36,9 +36,9 @@ Rename your files with these steps:
 Specifies the language of the meta data that will be grabbed. Defaults to English.
 
 ### File name template
-With this setting you can define the template, used to rename your files. You can set it to anything you want, however invalid characters such as `?` will be ignored.
+With this setting you can define the template used to rename your files. You can set it to anything you want, however invalid characters such as `?` will be ignored.
 
-Also you can use the placeholders listed below, to dynamically insert meta data into the name. In fact, you have to use at least `{season_no}` and `{episode_no}` to make sure, every file name is unique.
+Also you can use the placeholders listed below to dynamically insert meta data into the name. In fact, you have to use at least `{season_no}` and `{episode_no}` to make sure every file name is unique.
 
 Placeholder | Example value | Description
 --- | --- | ---
@@ -49,13 +49,13 @@ Placeholder | Example value | Description
 `{year}` | `2008` | The year in which the tv show was first aired.
 
 ### Default output directory
-The output directory that will be used, if you don't select one manually. Your directory name can also include `{show_name}`, which will be replaced with the name of the tv show. This is useful to automatically organise your tv shows in subfolders.
+The output directory that will be used if you don't manually select one. Your directory name can also include `{show_name}`, which will be replaced with the name of the tv show. This is useful to automatically organise your tv shows in subfolders.
 
 ### Included file types
-You can open a whole directory or even multiple at once. This option specifies, which file types will be included. Defaults to `mkv,avi,mp4,mov`.
+You can open a whole directory or even multiple at once. This option specifies which file types will be included. Defaults to `mkv,avi,mp4,mov`.
 
 ### Excluded terms
-Files that contain one of the terms set here will not get included. This concerns the complete file name (including directory name). This option is mainly existing to not open sample files when importing whole directories. Defaults to `sample`.
+Files that contain one of the terms set here will not get included. This applies to the complete file name (including directory name). This option is mainly existing to not open sample files when importing whole directories. Defaults to `sample`.
 
 ## Dev stuff
 Run it locally by running
