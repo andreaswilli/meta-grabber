@@ -108,7 +108,7 @@ export default class App extends Component {
           id: 'rename-success',
           text: 'Files successfully renamed!',
           type: 'success',
-          autoDismiss: 5000,
+          autoDismiss: 3000,
         },
       ],
     });
