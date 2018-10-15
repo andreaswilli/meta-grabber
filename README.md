@@ -65,8 +65,6 @@ yarn dev
 
 ## WIP
 TODO:
-* Animate all the things
-  * Messages
 * Add Icons
 * a11y
 * i18n
