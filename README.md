@@ -69,6 +69,7 @@ TODO:
 * a11y
 * i18n
 * Add loading indicators
+* Exclude all seasons by default
 
 Known issues:
 * none (for now) 🎉
