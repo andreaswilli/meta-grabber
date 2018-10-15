@@ -68,6 +68,7 @@ TODO:
 * Add Icons
 * a11y
 * i18n
+* Add loading indicators
 
 Known issues:
 * none (for now) 🎉
