@@ -61,7 +61,6 @@ export default class App extends Component {
       const response = await this.get(
         `/tv/${tvShow.id}?language=${this.state.settings.metaDataLang}`
       );
-      // this.setState({ seasons: response.data.seasons });
       const seasons =
         await Promise.all(response.data.seasons.map(async season => {
           try{
