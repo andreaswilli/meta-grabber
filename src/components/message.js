@@ -23,7 +23,6 @@ export default class Message extends Component {
   }
 
   componentDidUpdate() {
-    console.log('update', this.props.message.id, this.props.message.willDismiss);
     if(this.props.message.willDismiss && !this.state.outAnimation) {
       this.handleDismissMessage(this.props.message.id);
     }
