@@ -180,7 +180,7 @@ export default class App extends Component {
             </div>
             <Messages
               messages={this.state.messages}
-              onMessagesUpdate={messages => his.setState({ messages })}
+              onMessagesUpdate={messages => this.setState({ messages })}
             />
             <FileRename
               tvShow={this.state.tvShow || {}}
