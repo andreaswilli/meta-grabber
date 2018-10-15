@@ -350,6 +350,20 @@ body {
   display: flex;
   align-items: center;
   font-weight: 600;
+  position: relative;
+  transition: opacity 0.5s ease-in-out, left 0.5s ease-in-out;
+  opacity: 0;
+  left: -100%;
+}
+
+.message--visible {
+  opacity: 1;
+  left: 0;
+}
+
+.message--dismiss {
+  opacity: 0;
+  left: 100%;
 }
 
 .message--info {

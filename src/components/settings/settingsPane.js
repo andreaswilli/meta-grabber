@@ -33,7 +33,6 @@ export default class SettingsPane extends Component {
   }
 
   handleClose() {
-    console.log(this.props.settings.excludedTerms);
     localStorage.setItem('metaDataLang', this.props.settings.metaDataLang || '(empty)');
     localStorage.setItem('template', this.props.settings.template || '(empty)');
     localStorage.setItem('defaultOutputDir', this.props.settings.defaultOutputDir || '(empty)');

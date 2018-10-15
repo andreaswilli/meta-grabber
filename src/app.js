@@ -7,8 +7,8 @@ import { makeRequestCreator } from './util/request';
 import { formatEpisodeName } from './util/format';
 import FileRename from './components/fileRename';
 import Button from './components/button';
-import Message from './components/message';
 import SettingsPane from './components/settings/settingsPane';
+import Messages from './components/messages';
 
 import './util/array.js';
 
@@ -145,7 +145,12 @@ export default class App extends Component {
       })
     } else {
       this.setState({
-        messages: this.state.messages.filter(m => m.id !== 'usage-hint'),
+        messages: [
+          ...this.state.messages.filter(m => m.id !== 'usage-hint'), {
+            ...this.state.messages.find(m => m.id === 'usage-hint'),
+            willDismiss: true,
+          },
+        ],
       });
     }
   }
@@ -174,9 +179,9 @@ export default class App extends Component {
                 onClick={() => this.setState({ settingsPaneOpen: true })}
               />
             </div>
-            <Message
+            <Messages
               messages={this.state.messages}
-              onMessagesUpdate={(messages) => this.setState({ messages })}
+              onMessagesUpdate={messages => his.setState({ messages })}
             />
             <FileRename
               tvShow={this.state.tvShow || {}}

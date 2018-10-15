@@ -11,7 +11,6 @@ export default class FilePicker extends Component {
       properties: ['openFile', 'openDirectory', 'multiSelections'],
     });
     if (!files) return;
-    console.log('terms: ', this.props.excludedTerms);
     this.props.onFileOpen(readRecursively(files)
       .filter(file =>
         this.props.includedExtensions.filter(ext => ext).some(extension => file.toLowerCase().endsWith(extension)) &&
