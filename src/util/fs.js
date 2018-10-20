@@ -1,38 +1,41 @@
 import fs from 'fs';
+import util from 'util';
 
 import { flatten } from './array';
 
-export function readRecursively(paths) {
-  return flatten(paths.map(path => {
-    try {
-      const stats = fs.lstatSync(path);
+const readdir = util.promisify(fs.readdir);
+const lstat = util.promisify(fs.lstat);
 
-      if (!stats.isDirectory()) {
-        return [path];
-      }
-
+export async function asyncReadRecursively(paths) {
+  return Promise.all(paths.map(path => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const fileList = fs.readdirSync(path);
-        return fileList.map(file => `${path}/${file}`).map(file => {
-          try {
-            const stats = fs.lstatSync(file);
+        const stats = fs.lstatSync(path);
 
-            if (!stats.isDirectory()) {
-              return file;
+        if (!stats.isDirectory()) {
+          resolve([path]);
+        }
+
+        try {
+          const fileList = await readdir(path);
+          Promise.all(fileList.map(file => `${path}/${file}`).map(async file => {
+            try {
+              const stats = await lstat(file);
+
+              if (!stats.isDirectory()) {
+                return file;
+              }
+              return asyncReadRecursively([file]);
+            } catch (error) {
+              reject(`Failed to read: ${file}, ${error}`);
             }
-            return readRecursively([file]);
-          } catch (error) {
-            console.log('failed to read: ', file, error);
-            return [];
-          }
-        });
+          })).then(files => resolve(files));
+        } catch (error) {
+          reject(`Failed to read: ${path}, ${error}`);
+        }
       } catch (error) {
-        console.log('failed to read: ', path, error);
-        return [];
+        reject(`Failed to read: ${path}, ${error}`);
       }
-    } catch (error) {
-      console.log('failed to read: ', path, error);
-      return [];
-    }
-  }));
+    });
+  })).then(files => flatten(files));
 }
