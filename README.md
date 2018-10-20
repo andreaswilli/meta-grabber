@@ -65,11 +65,12 @@ yarn dev
 
 ## WIP
 TODO:
-* Add Icons
-* a11y
-* i18n
-* Add loading indicators
 * Exclude all seasons by default
+* Add Icons
+* Add menu bar items w/ shortcuts e.g. close tab -> `cmd + w`
+* Make new demo gif
+* i18n
+* a11y
 
 Known issues:
 * none (for now) 🎉
