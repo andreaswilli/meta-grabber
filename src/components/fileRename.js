@@ -3,10 +3,16 @@ import fs from 'fs';
 import { remote } from 'electron';
 import classNames from 'classnames';
 import AnimateHeight from 'react-animate-height';
+import util from 'util';
 
 import Button from './button';
 import { flatten } from '../util/array';
 import { formatFileName, formatFilePath, formatFileExtension } from '../util/format';
+
+const stat = util.promisify(fs.stat);
+const mkdir = util.promisify(fs.mkdir);
+const rename = util.promisify(fs.rename);
+const readFile = util.promisify(fs.readFile);
 
 export default class FileRename extends Component {
 
@@ -140,25 +146,57 @@ export default class FileRename extends Component {
     this.props.onChooseOutputDir(outputDir[0]);
   }
 
-  renameFiles() {
+  async renameFiles() {
     let assignments = this.state.assignments.filter(a => a.fileName);
     try {
-      for (let i = 0; i < assignments.length; i++) {
-        const a = assignments[i];
-        const newFileDir = ((this.props.outputDir !== '?' && this.props.outputDir)
-          || formatFilePath(a.fileName))
-            .replace(/\{show_name\}/g, this.props.tvShow.name || 'error')
-            .replace(/[#%&\{\}<>\*\?$!'":@]/g, '');
-        try {
-          // test if directory is existing
-          fs.statSync(newFileDir);
-        } catch(e) {
-          // create directory if it does not exist yet
-          fs.mkdirSync(newFileDir);
-        }
-        let newFileName = `${newFileDir}/${a.name}.${formatFileExtension(a.fileName)}`;
-        fs.renameSync(a.fileName, newFileName);
-      }
+      // make sure that none of the new files replaces any existing file
+      let nameMappings = await Promise.all(assignments.map(async a => {
+        return new Promise(async (resolve, reject) => {
+          const newFileDir = ((this.props.outputDir !== '?' && this.props.outputDir)
+            || formatFilePath(a.fileName))
+              .replace(/\{show_name\}/g, this.props.tvShow.name || 'error')
+              .replace(/[#%&\{\}<>\*\?$!'":@]/g, '');
+          try {
+            // test if directory is existing
+            await stat(newFileDir);
+          } catch(e) {
+            try {
+              // create directory if it does not exist yet
+              await mkdir(newFileDir);
+            } catch (error) {
+              reject(`Output directory could not be created: ${error}`);
+            }
+          }
+          let newFileName = `${newFileDir}/${a.name}.${formatFileExtension(a.fileName)}`;
+          try {
+            // check if file is already exiting
+            await readFile(newFileName);
+            reject(`Error: File is already existing: ${newFileName}`);
+          } catch(error) {
+            if(error.toString().indexOf('no such file or directory') !== -1) {
+              // file is not existing, continue
+              resolve({
+                oldFileName: a.fileName,
+                newFileName,
+              });
+            } else {
+              reject(error);
+            }
+          }
+        });
+      }));
+
+      // none of the files are existing already, continue
+      await Promise.all(nameMappings.map(mapping => {
+        return new Promise(async (resolve, reject) => {
+          try {
+            await rename(mapping.oldFileName, mapping.newFileName);
+            resolve();
+          } catch(error) {
+            reject(`Files could not be renamed: ${error}`);
+          }
+        });
+      }));
       this.props.onFileRenameSuccess();
     } catch(e) {
       this.props.onFileRenameError(e);
