@@ -134,13 +134,15 @@ export default class App extends Component {
         ]
       })
     } else {
+      const usageHint = this.state.messages.find(m => m.id === 'usage-hint');
       this.setState({
         messages: [
-          ...this.state.messages.filter(m => m.id !== 'usage-hint'), {
-            ...this.state.messages.find(m => m.id === 'usage-hint'),
+          ...this.state.messages.filter(m => m.id !== 'usage-hint'),
+          usageHint ? {
+            ...usageHint,
             willDismiss: true,
-          },
-        ],
+          } : undefined,
+        ].filter(m => m),
       });
     }
   }
