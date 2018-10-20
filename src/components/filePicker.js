@@ -10,7 +10,9 @@ export default class FilePicker extends Component {
     const paths = await remote.dialog.showOpenDialog({
       properties: ['openFile', 'openDirectory', 'multiSelections'],
     });
+    this.props.onLoadingChange(true);
     if (!paths) {
+      this.props.onLoadingChange(false);
       return;
     }
     try {
@@ -27,6 +29,7 @@ export default class FilePicker extends Component {
         dismissable: true,
       });
     } finally {
+      this.props.onLoadingChange(false);
     }
   }
 

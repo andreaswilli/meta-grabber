@@ -9,6 +9,7 @@ import FileRename from './components/fileRename';
 import Button from './components/button';
 import SettingsPane from './components/settings/settingsPane';
 import Messages from './components/messages';
+import LoadingIndicator from './components/loadingIndicator';
 
 import './util/array.js';
 
@@ -68,13 +69,12 @@ export default class App extends Component {
           );
           return response.data;
         }));
-      this.setState({ seasons, loading: false });
+      this.setState({ seasons });
       this.updateUsageHint(seasons);
     } catch(error) {
       if (axios.isCancel(error)) {
         // ignore canceled request
       } else {
-        // TODO: error handling
         this.handleMessages({
           id: 'load-seasons-error',
           text: `Failed to load seasons: ${error}`,
@@ -83,6 +83,7 @@ export default class App extends Component {
         });
       };
     } finally {
+      this.setState({ loading: false });
     }
   }
 
@@ -157,6 +158,7 @@ export default class App extends Component {
   render () {
     return (
       <div className="app">
+        <LoadingIndicator hidden={!this.state.loading} />
         <div className="container">
           <div className="page">
             <div className="section">
@@ -172,6 +174,7 @@ export default class App extends Component {
                 includedExtensions={this.state.settings.includedExtensions}
                 excludedTerms={this.state.settings.excludedTerms}
                 files={this.state.files}
+                onLoadingChange={loading => this.setState({ loading })}
                 onMessages={this.handleMessages.bind(this)}
               />
               <Button
@@ -192,12 +195,12 @@ export default class App extends Component {
                   episodes: s.episodes.map(e => formatEpisodeName(e, this.state.tvShow, this.state.settings.template)),
                 }))
               }
-              loading={this.state.loading}
               files={this.state.files.sort()}
               outputDir={this.state.outputDir || this.state.settings.defaultOutputDir}
               onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
               onChooseOutputDir={outputDir => this.setState({ outputDir })}
               onClearOutputDir={() => this.setState({ outputDir: '?' })}
+              onLoadingChange={loading => this.setState({ loading })}
               onMessages={this.handleMessages.bind(this)}
             />
           </div>

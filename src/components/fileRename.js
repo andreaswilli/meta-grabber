@@ -147,6 +147,7 @@ export default class FileRename extends Component {
   }
 
   async renameFiles() {
+    this.props.onLoadingChange(true);
     let assignments = this.state.assignments.filter(a => a.fileName);
     try {
       // make sure that none of the new files replaces any existing file
@@ -206,6 +207,7 @@ export default class FileRename extends Component {
         dismissable: true,
       });
     } finally {
+      this.props.onLoadingChange(false);
     }
   }
 
@@ -214,8 +216,7 @@ export default class FileRename extends Component {
       <React.Fragment>
         {<div className="section section--main">
           <div className="file-rename__seasons">
-            {this.props.loading && <div className="file-rename__loading">loading...</div>}
-            {!this.props.loading && (this.props.seasons || []).map((s, i) => (
+            {(this.props.seasons || []).map((s, i) => (
               <AnimateHeight
                 key={s.name}
                 duration={ 500 }
