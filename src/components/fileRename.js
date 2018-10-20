@@ -198,8 +198,14 @@ export default class FileRename extends Component {
         });
       }));
       this.props.onFileRenameSuccess();
-    } catch(e) {
-      this.props.onFileRenameError(e);
+    } catch(error) {
+      this.props.onMessages({
+        id: 'rename-error',
+        text: error,
+        type: 'error',
+        dismissable: true,
+      });
+    } finally {
     }
   }
 

@@ -23,11 +23,16 @@ export default class TvShowInput extends Component {
         `/search/tv?language=${this.props.metaDataLang}&query=${query}`
       );
       this.setState({ results: response.data.results });
-    } catch(e) {
-      if (axios.isCancel(e)) {
+    } catch(error) {
+      if (axios.isCancel(error)) {
         // ignore canceled request
       } else {
-        // TODO: error handling
+        this.props.onMessages({
+          id: 'search-error',
+          text: `Failed to search tv show: ${error}`,
+          type: 'error',
+          dismissable: true,
+        })
       };
     }
   }

@@ -20,6 +20,12 @@ export default class FilePicker extends Component {
           !this.props.excludedTerms.filter(term => term).some(term => file.toLowerCase().includes(term))
       ));
     } catch (error) {
+      this.props.onMessages({
+        id: 'open-error',
+        text: `Files could not be opened: ${error}`,
+        type: 'error',
+        dismissable: true,
+      });
     } finally {
     }
   }

@@ -28,7 +28,7 @@ export default class SettingsPane extends Component {
         query: (response.data.find(l => l.iso_639_1 === this.props.settings.metaDataLang) || {}).english_name,
       });
     } catch(e) {
-      // TODO: error handling
+      // ignore
     }
   }
 

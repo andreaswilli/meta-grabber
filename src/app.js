@@ -63,23 +63,26 @@ export default class App extends Component {
       );
       const seasons =
         await Promise.all(response.data.seasons.map(async season => {
-          try{
-            const response = await (makeRequestCreator())(
-              `/tv/${tvShow.id}/season/${season.season_number}?language=${this.state.settings.metaDataLang}`
-            );
-            return response.data;
-          } catch(e) {
-              // TODO: error handling
-          }
+          const response = await (makeRequestCreator())(
+            `/tv/${tvShow.id}/season/${season.season_number}?language=${this.state.settings.metaDataLang}`
+          );
+          return response.data;
         }));
       this.setState({ seasons, loading: false });
       this.updateUsageHint(seasons);
-    } catch(e) {
-      if (axios.isCancel(e)) {
+    } catch(error) {
+      if (axios.isCancel(error)) {
         // ignore canceled request
       } else {
         // TODO: error handling
+        this.handleMessages({
+          id: 'load-seasons-error',
+          text: `Failed to load seasons: ${error}`,
+          type: 'error',
+          dismissable: true,
+        });
       };
+    } finally {
     }
   }
 
@@ -114,19 +117,6 @@ export default class App extends Component {
     });
   }
 
-  handleFileRenameError(error) {
-    this.setState({
-      messages: [
-        ...this.state.messages, {
-          id: 'rename-error',
-          text: `Files could not be renamed: ${error}`,
-          type: 'error',
-          dismissable: true,
-        },
-      ],
-    });
-  }
-
   updateUsageHint(seasons, files) {
     let newSeasons = seasons !== undefined ? seasons : this.state.seasons;
     let newFiles = files !== undefined ? files : this.state.files;
@@ -154,6 +144,16 @@ export default class App extends Component {
     }
   }
 
+  handleMessages(messages) {
+    const msgArray = [].concat(messages);
+    this.setState({
+      messages: [
+        ...this.state.messages.filter(msg => msgArray.every(m => m.id !== msg.id)),
+        ...msgArray,
+      ],
+    });
+  }
+
   render () {
     return (
       <div className="app">
@@ -165,12 +165,14 @@ export default class App extends Component {
                 onSelect={this.handleSelect.bind(this)}
                 onChange={query => this.setState({ query })}
                 metaDataLang={this.state.settings.metaDataLang}
+                onMessages={this.handleMessages.bind(this)}
               />
               <FilePicker
                 onFileOpen={this.handleFileOpen.bind(this)}
                 includedExtensions={this.state.settings.includedExtensions}
                 excludedTerms={this.state.settings.excludedTerms}
                 files={this.state.files}
+                onMessages={this.handleMessages.bind(this)}
               />
               <Button
                 label="settings"
@@ -194,9 +196,9 @@ export default class App extends Component {
               files={this.state.files.sort()}
               outputDir={this.state.outputDir || this.state.settings.defaultOutputDir}
               onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
-              onFileRenameError={(error) => this.handleFileRenameError(error)}
               onChooseOutputDir={outputDir => this.setState({ outputDir })}
               onClearOutputDir={() => this.setState({ outputDir: '?' })}
+              onMessages={this.handleMessages.bind(this)}
             />
           </div>
         </div>
