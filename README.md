@@ -65,7 +65,6 @@ yarn dev
 
 ## WIP
 TODO:
-* Add Icons
 * Add menu bar items w/ shortcuts e.g. close tab -> `cmd + w`
 * Make new demo gif
 * i18n
