@@ -66,6 +66,7 @@ yarn dev
 ## WIP
 TODO:
 * Exclude all seasons by default
+* Add option to toggle all seasons at once
 * Add Icons
 * Add menu bar items w/ shortcuts e.g. close tab -> `cmd + w`
 * Make new demo gif
