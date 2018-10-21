@@ -21,7 +21,7 @@
   "author": "Andreas Willi",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^2.0.8",
+    "electron": "^3.0.5",
     "electron-builder": "^20.28.3",
     "webpack-cli": "^3.1.0"
   },
@@ -34,10 +34,10 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "classnames": "^2.2.6",
-    "react": "^16.4.1",
+    "react": "^16.5.2",
     "react-animate-height": "^2.0.4",
     "react-autocomplete": "^1.8.1",
-    "react-dom": "^16.4.1",
+    "react-dom": "^16.5.2",
     "webpack": "^4.17.2"
   },
   "build": {
