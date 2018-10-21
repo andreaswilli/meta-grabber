@@ -15,6 +15,11 @@ module.exports = {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.svg$/,
+        loader: '@svgr/webpack',
+        exclude: /node_modules/
       }
     ]
   },

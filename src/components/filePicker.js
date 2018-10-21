@@ -4,6 +4,9 @@ import { remote } from 'electron';
 import Button from './button';
 import { asyncReadRecursively } from '../util/fs';
 
+import CrossIcon from '../icons/cross.svg';
+import FolderIcon from '../icons/folder.svg';
+
 export default class FilePicker extends Component {
 
   async open() {
@@ -37,14 +40,15 @@ export default class FilePicker extends Component {
     return (
       <div className="file-picker">
         <Button
-          label="open files"
+          label="Open Files"
+          icon={<FolderIcon />}
           onClick={this.open.bind(this)}
         />
         <Button
           className="file-picker__clear"
           type="delete"
           disabled={!this.props.files.length > 0}
-          label="X"
+          icon={<CrossIcon />}
           onClick={() => this.props.onFileOpen([])}
         />
       </div>

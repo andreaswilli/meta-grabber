@@ -5,6 +5,8 @@ import Autocomplete from 'react-autocomplete';
 import Button from './button';
 import { makeRequestCreator } from '../util/request';
 
+import CrossIcon from '../icons/cross.svg';
+
 export default class TvShowInput extends Component {
 
   constructor(props) {
@@ -108,7 +110,7 @@ export default class TvShowInput extends Component {
           className="tv-show-input__clear"
           type="delete"
           disabled={!this.props.query}
-          label="X"
+          icon={<CrossIcon />}
           onClick={this.clearInput.bind(this)}
         />
       </div>

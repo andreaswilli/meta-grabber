@@ -11,6 +11,8 @@ import SettingsPane from './components/settings/settingsPane';
 import Messages from './components/messages';
 import LoadingIndicator from './components/loadingIndicator';
 
+import SettingsIcon from './icons/settings.svg';
+
 import './util/array.js';
 
 export default class App extends Component {
@@ -180,7 +182,8 @@ export default class App extends Component {
                 onMessages={this.handleMessages.bind(this)}
               />
               <Button
-                label="settings"
+                label="Settings"
+                icon={<SettingsIcon />}
                 className="settings-button"
                 onClick={() => this.setState({ settingsPaneOpen: true })}
               />

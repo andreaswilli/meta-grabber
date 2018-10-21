@@ -9,6 +9,12 @@ import Button from './button';
 import { flatten } from '../util/array';
 import { formatFileName, formatFilePath, formatFileExtension } from '../util/format';
 
+import CrossIcon from '../icons/cross.svg';
+import FolderIcon from '../icons/folder.svg';
+import CheckmarkIcon from '../icons/checkmark.svg';
+import CheckboxUncheckedIcon from '../icons/checkbox-0.svg';
+import CheckboxCheckedIcon from '../icons/checkbox-1.svg';
+
 const stat = util.promisify(fs.stat);
 const mkdir = util.promisify(fs.mkdir);
 const rename = util.promisify(fs.rename);
@@ -200,7 +206,8 @@ export default class FileRename extends Component {
         <div className="section section--main">
           {this.props.seasons.length > 1 && <div className="button-row">
             <Button
-              label="include all"
+              label="Include All"
+              icon={<CheckboxCheckedIcon />}
               onClick={() => this.setState({ includedSeasons: this.props.seasons.map(s => ({
                 name: s.name,
                 includedEpisodes: s.episodes,
@@ -211,7 +218,8 @@ export default class FileRename extends Component {
               }
             />
             <Button
-              label="exclude all"
+              label="Exclude All"
+              icon={<CheckboxUncheckedIcon />}
               onClick={() => this.setState({ includedSeasons: [] })}
               disabled={this.state.includedSeasons.length === 0}
             />
@@ -266,20 +274,22 @@ export default class FileRename extends Component {
           </div>
           <Button
             className="file-rename__output__choose"
-            label="choose output dir"
+            label="Choose Output Dir"
+            icon={<FolderIcon />}
             onClick={this.handleChooseOutputDir.bind(this)}
           />
           <Button
             className="file-rename__output__clear"
             type="delete"
             disabled={!this.props.outputDir || this.props.outputDir === '?'}
-            label="X"
+            icon={<CrossIcon />}
             onClick={this.props.onClearOutputDir}
           />
           <Button
             className="file-rename__rename-button"
             type="confirm"
-            label="rename"
+            label="Rename"
+            icon={<CheckmarkIcon />}
             onClick={this.renameFiles.bind(this)}
             disabled={this.state.assignments.filter(a => a.fileName).length === 0}
           />
