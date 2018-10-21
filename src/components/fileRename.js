@@ -20,100 +20,83 @@ export default class FileRename extends Component {
     super(props);
 
     this.state = {
-      excludedSeasons: [],
+      includedSeasons: [],
       assignments: [],
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (JSON.stringify(this.props.seasons) !== JSON.stringify(nextProps.seasons)) {
-      this.setState({ excludedSeasons: [] });
+      this.setState({ includedSeasons: [] });
     }
     this.assignEpisodesToFiles(nextProps);
   }
 
-  isSeasonExcluded(seasonName) {
-    return this.state.excludedSeasons.find(season =>
+  isSeasonIncluded(seasonName) {
+    return this.state.includedSeasons.find(season =>
       season.name === seasonName) !== undefined;
   }
 
-  isEpisodeExcluded(episodeName) {
-    return this.state.excludedSeasons.filter(season =>
-      season.excludedEpisodes.filter(episode =>
+  isEpisodeIncluded(episodeName) {
+    return this.state.includedSeasons.filter(season =>
+      season.includedEpisodes.filter(episode =>
         episode === episodeName).length > 0).length > 0;
   }
 
   isWholeSeasonExcluded(seasonName) {
-    return (this.state.excludedSeasons.find(season =>
-      season.name === seasonName) || { excludedEpisodes: {}}).excludedEpisodes.length ===
-      this.props.seasons.find(season =>
-      season.name === seasonName).episodes.length;
+    return this.state.includedSeasons.find(s => s.name === seasonName) === undefined;
   }
 
   async handleSeasonChange(e, seasonName) {
     if (e.target.checked) {
       // include season
       await this.setState({
-        excludedSeasons: this.state.excludedSeasons.filter(s => s.name !== seasonName),
+        includedSeasons: [
+          ...this.state.includedSeasons.filter(s => s.name !== seasonName), {
+            name: seasonName,
+            includedEpisodes: this.props.seasons.find(s =>
+              s.name === seasonName).episodes,
+          },
+        ],
       });
     } else {
       // exclude season
       await this.setState({
-        excludedSeasons: [
-          ...this.state.excludedSeasons,
-          {
-            name: seasonName,
-            excludedEpisodes: this.props.seasons.find(s =>
-              s.name === seasonName).episodes,
-          },
-        ],
+        includedSeasons: this.state.includedSeasons.filter(s => s.name !== seasonName),
       });
     }
     this.assignEpisodesToFiles(this.props);
   }
 
   async handleEpisodeChange(e, episodeName) {
-    let season = this.props.seasons.find(season =>
+    const season = this.props.seasons.find(season =>
       season.episodes.filter(episode =>
         episode === episodeName).length > 0);
-    let excludedSeason = this.state.excludedSeasons.find(s => s.name === season.name);
+    const includedSeason = this.state.includedSeasons.find(s =>
+      s.name === season.name);
+    let includedSeasons;
 
     if (e.target.checked) {
       // include episode
-      let excludedEpisodes = excludedSeason.excludedEpisodes.filter(e => e !== episodeName);
-      let excludedSeasons = this.state.excludedSeasons.filter(s => s.name !== excludedSeason.name);
-      if (excludedEpisodes.length > 0) {
-        excludedSeasons = [
-          ...excludedSeasons,
-          {
-            name: excludedSeason.name,
-            excludedEpisodes: excludedEpisodes,
-          },
-        ];
-      }
-      await this.setState({ excludedSeasons });
+      includedSeasons = [
+        ...this.state.includedSeasons.filter(s => s.name !== season.name), {
+          name: includedSeason.name,
+          includedEpisodes: [
+            ...includedSeason.includedEpisodes,
+            episodeName,
+          ],
+        }
+      ];
     } else {
       // exclude episode
-      let excludedSeasons = excludedSeason
-        ? [
-          ...this.state.excludedSeasons.filter(s => s.name !== excludedSeason.name),
-          {
-            name: excludedSeason.name,
-            excludedEpisodes: [
-              ...excludedSeason.excludedEpisodes,
-              episodeName,
-            ],
-          }
-        ]
-        : [
-          ...this.state.excludedSeasons,
-          {
-            name: season.name,
-            excludedEpisodes: [episodeName],
-          },
-        ];
-      await this.setState({ excludedSeasons });
+      includedSeasons = [
+        ...this.state.includedSeasons.filter(s => s.name !== includedSeason.name), {
+          name: includedSeason.name,
+          includedEpisodes: includedSeason.includedEpisodes.filter(e => e !== episodeName),
+        },
+      ].filter(s => s.includedEpisodes.length > 0);
     }
+    await this.setState({ includedSeasons });
     this.assignEpisodesToFiles(this.props);
   }
 
@@ -121,13 +104,13 @@ export default class FileRename extends Component {
     let excludedEpisodesCount = 0;
     this.setState({
       assignments: flatten(props.seasons.map(s => s.episodes)).map((e, i) => {
-        let excluded = this.isEpisodeExcluded(e);
-        if (excluded) {
+        let included = this.isEpisodeIncluded(e);
+        if (!included) {
           excludedEpisodesCount++;
         }
         return {
           name: e,
-          fileName: excluded ? undefined : props.files[i - excludedEpisodesCount],
+          fileName: included ? props.files[i - excludedEpisodesCount] : undefined,
         };
       }),
     });
@@ -226,7 +209,7 @@ export default class FileRename extends Component {
                   <input
                     type="checkbox"
                     className="file-rename__item__checkbox"
-                    checked={!this.isSeasonExcluded(s.name)}
+                    checked={this.isSeasonIncluded(s.name)}
                     onChange={event => this.handleSeasonChange(event, s.name)}
                   />
                   <div
@@ -239,13 +222,13 @@ export default class FileRename extends Component {
                   <div key={e}>
                     <label className={classNames('file-rename__item', 'file-rename__item--episode', {
                       'file-rename__item--even': i%2 == 0,
-                      'file-rename__item--included': !this.isEpisodeExcluded(e),
+                      'file-rename__item--included': this.isEpisodeIncluded(e),
                     })}>
                       <input
                         type="checkbox"
                         tabIndex={-1}
                         className="file-rename__item__checkbox"
-                        checked={!this.isEpisodeExcluded(e)}
+                        checked={this.isEpisodeIncluded(e)}
                         onChange={event => this.handleEpisodeChange(event, e)}
                       />
                       <div className="file-rename__item__name">{e}</div>
