@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import AnimateHeight from 'react-animate-height';
 
 import CrossIcon from '../icons/cross.svg';
 import CheckmarkIcon from '../icons/checkmark.svg';
@@ -15,15 +16,21 @@ export default class Message extends Component {
     this.state = {
       inAnimation: false,
       outAnimation: false,
+      height: 0,
     };
   }
 
   componentDidMount() {
     setTimeout(() => {
       this.setState({
-        inAnimation: true,
+        height: 'auto',
       });
     }, 0);
+    setTimeout(() => {
+      this.setState({
+        inAnimation: true,
+      });
+    }, 150);
     if (!this.props.message.autoDismiss) return;
     setTimeout(() => this.handleDismissMessage(this.props.message.id), this.props.message.autoDismiss);
   }
@@ -37,17 +44,17 @@ export default class Message extends Component {
   handleDismissMessage(id) {
     this.setState({
       outAnimation: true,
+      height: 0,
     });
     this.props.onDismissMessage(id);
   }
 
   render() {
     return (
-      <div
-        className={classNames('message', `message--${this.props.message.type}`, {
-          'message--visible': this.state.inAnimation,
-          'message--dismiss': this.state.outAnimation,
-        })}
+      <AnimateHeight
+        duration={500}
+        delay={this.state.outAnimation ? 150 : 0}
+        height={this.state.height}
       >
         <div
           className={classNames('message', `message--${this.props.message.type}`, {
@@ -71,6 +78,7 @@ export default class Message extends Component {
             </div>
           )}
         </div>
+      </AnimateHeight>
     );
   }
 }

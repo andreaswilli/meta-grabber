@@ -228,8 +228,8 @@ export default class FileRename extends Component {
             {(this.props.seasons || []).map((s, i) => (
               <AnimateHeight
                 key={s.name}
-                duration={ 500 }
-                height={ this.isWholeSeasonExcluded(s.name) ? 62 : 'auto' }
+                duration={500}
+                height={this.isWholeSeasonExcluded(s.name) ? 62 : 'auto'}
               >
                 <label className="file-rename__item__label">
                   <input
