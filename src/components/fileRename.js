@@ -197,7 +197,25 @@ export default class FileRename extends Component {
   render() {
     return (
       <React.Fragment>
-        {<div className="section section--main">
+        <div className="section section--main">
+          {this.props.seasons.length > 1 && <div className="button-row">
+            <Button
+              label="include all"
+              onClick={() => this.setState({ includedSeasons: this.props.seasons.map(s => ({
+                name: s.name,
+                includedEpisodes: s.episodes,
+              }))})}
+              disabled={
+                JSON.stringify(this.state.includedSeasons.map(s => s.includedEpisodes)) ===
+                JSON.stringify(this.props.seasons.map(s => s.episodes))
+              }
+            />
+            <Button
+              label="exclude all"
+              onClick={() => this.setState({ includedSeasons: [] })}
+              disabled={this.state.includedSeasons.length === 0}
+            />
+          </div>}
           <div className="file-rename__seasons">
             {(this.props.seasons || []).map((s, i) => (
               <AnimateHeight
@@ -239,7 +257,7 @@ export default class FileRename extends Component {
               </AnimateHeight>
             ))}
           </div>
-        </div>}
+        </div>
         <div className="section section--output">
           <div className="file-rename__output__dir">
             {((this.props.outputDir !== '?' && this.props.outputDir) || 'none (leave the files where they are)')

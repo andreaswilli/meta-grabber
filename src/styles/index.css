@@ -104,10 +104,28 @@ body {
 
 .section--main {
   flex-grow: 1;
+  flex-direction: column;
 }
 
 .section--output {
   align-items: flex-end;
+}
+
+.button-row {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  margin: 8px 0;
+}
+
+.button-row > .button {
+  display: block;
+  flex-grow: 1;
+  margin-left: 32px;
+}
+
+.button-row > .button:first-child {
+  margin-left: 0;
 }
 
 .button {
