@@ -64,7 +64,9 @@ yarn dev
 ```
 
 ## WIP
-TODO:
+TODO: 
+* Display the version number somewhere on the UI
+* Add warnings for possible mismatches
 * Add menu bar items w/ shortcuts e.g. close tab -> `cmd + w`
 * Make new demo gif
 * i18n
