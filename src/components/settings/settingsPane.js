@@ -8,6 +8,8 @@ import NamingTemplate from './namingTemplate';
 import Link from '../../components/link';
 import Button from '../../components/button';
 
+import FolderIcon from '../../icons/folder.svg';
+
 export default class SettingsPane extends Component {
 
   constructor(props) {
@@ -153,6 +155,7 @@ export default class SettingsPane extends Component {
                 <Button
                   className="settings-pane__setting__group__button"
                   label="choose"
+                  icon={<FolderIcon />}
                   onClick={this.handleChooseOutputDir.bind(this)}
                 />
               </div>
