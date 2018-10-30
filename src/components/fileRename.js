@@ -6,6 +6,7 @@ import AnimateHeight from 'react-animate-height';
 import util from 'util';
 
 import Button from './button';
+import Link from './link';
 import { flatten } from '../util/array';
 import { formatFileName, formatFilePath, formatFileExtension } from '../util/format';
 
@@ -14,6 +15,7 @@ import FolderIcon from '../icons/folder.svg';
 import CheckmarkIcon from '../icons/checkmark.svg';
 import CheckboxUncheckedIcon from '../icons/checkbox-0.svg';
 import CheckboxCheckedIcon from '../icons/checkbox-1.svg';
+import KoFiIcon from '../icons/ko-fi.svg';
 
 const stat = util.promisify(fs.stat);
 const mkdir = util.promisify(fs.mkdir);
@@ -267,6 +269,9 @@ export default class FileRename extends Component {
           </div>
         </div>
         <div className="section section--output">
+          <Link url="https://ko-fi.com/Y8Y7LBIM">
+            <KoFiIcon className="ko-fi-icon"/>
+          </Link>
           <div className="file-rename__output__dir">
             {((this.props.outputDir !== '?' && this.props.outputDir) || 'none (leave the files where they are)')
               .replace(/\{show_name\}/g, this.props.tvShow.name || '{show_name}')

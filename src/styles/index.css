@@ -346,6 +346,7 @@ body {
 }
 
 .file-rename__output__dir {
+  margin-left: 8px;
   flex-grow: 1;
   line-height: 38px;
   text-align: right;
@@ -541,4 +542,11 @@ body {
 .loading__backdrop--hidden {
   opacity: 0;
   z-index: -10;
+}
+
+.ko-fi-icon {
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }

@@ -7,7 +7,7 @@ export default class Link extends Component {
       <span
         className="link"
         onClick={() => shell.openExternal(this.props.url)}
-      >{this.props.label}</span>
+      >{this.props.label}{this.props.children}</span>
     );
   }
 }
