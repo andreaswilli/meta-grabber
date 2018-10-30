@@ -2,6 +2,8 @@
 
 📺 A tool to grab meta data for tv shows and rename files on your hard disk.
 
+[![ko-fi](https://www.ko-fi.com/img/donate_sm.png)](https://ko-fi.com/Y8Y7LBIM)
+
 ## Download
 
 `Meta Grabber` is available for macOS, Windows and Linux.
@@ -10,7 +12,7 @@ The latest release can be downloaded [here](https://github.com/andreaswilli/meta
 ## Demo
 Rename your files in seconds! 🚀
 
-![meta-grabber-demo](https://user-images.githubusercontent.com/17298270/45350375-ed4fbf00-b5b3-11e8-8cc2-a59e157a7205.gif)
+![meta-grabber](https://user-images.githubusercontent.com/17298270/47755099-5f33b300-dc9d-11e8-9560-aca6a21527a9.gif)
 
 ## Instructions
 Rename your files with these steps:
