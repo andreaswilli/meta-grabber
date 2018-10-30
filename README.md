@@ -57,8 +57,13 @@ You can open a whole directory or even multiple at once. This option specifies w
 ### Excluded terms
 Files that contain one of the terms set here will not get included. This applies to the complete file name (including directory name). This option is mainly existing to not open sample files when importing whole directories. Defaults to `sample`.
 
-## Dev stuff
-Run it locally by running
-```
-yarn dev
-```
+## Local development
+Run it locally by following these steps:
+
+1. Install dependencies: `yarn` or `npm i`
+
+1. Start build: `yarn serve` or `npm run serve`
+
+1. Start the electron app in a **new** terminal window: `yarn dev` or `npm run dev`
+
+Now you can make changes, save the modified files, then return to the app and reload (`ctrl+r` on Windows/Linux, `cmd+r` on macOS). Your changes should now appear in the app.
