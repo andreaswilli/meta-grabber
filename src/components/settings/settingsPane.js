@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import Autocomplete from 'react-autocomplete';
 import { remote } from 'electron';
 
 import { makeRequestCreator } from '../../util/request';
 import NamingTemplate from './namingTemplate';
 import Link from '../../components/link';
 import Button from '../../components/button';
+import Autocomplete from '../../components/autocomplete';
 
 import FolderIcon from '../../icons/folder.svg';
 
@@ -84,47 +84,17 @@ export default class SettingsPane extends Component {
             <div className="settings-pane__setting">
               <div className="settings-pane__setting__label">Meta data language.</div>
               <Autocomplete
-                wrapperStyle={{}}
-                wrapperProps={{
-                  className: 'tv-show-input__wrapper',
-                }}
-                inputProps={{
-                  className: 'input',
-                  placeholder: 'Choose language',
-                  tabIndex: this.props.openState ? '0' : '-1',
-                }}
-                menuStyle={{
-                  borderRadius: '2px',
-                  color: getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete'),
-                  backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete'),
-                  padding: '6px 0',
-                  marginTop: '4px',
-                  position: 'fixed',
-                  overflow: 'auto',
-                  maxHeight: '50%',
-                  display: this.filterLanguages().length > 0 ? 'block' : 'none',
-                  zIndex: 10,
-                }}
-                getItemValue={item => item.iso_639_1}
-                items={this.filterLanguages()}
-                renderItem={(item, isHighlighted) =>
-                  <div key={item.iso_639_1} style={{
-                    color: isHighlighted
-                      ? getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete-selected')
-                      : getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete'),
-                    background: isHighlighted
-                      ? getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete-selected')
-                      : getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete'),
-                    height: '14px',
-                    padding: '12px',
-                    lineHeight: '14px',
-                  }}>
-                    {item.english_name}
-                  </div>
-                }
-                value={this.state.query}
+                placeholder="Choose language"
+                focusable={this.props.openState}
                 onChange={event => this.setState({ query: event.target.value })}
                 onSelect={this.handleLanguageSelect.bind(this)}
+                onBlur={() => this.handleLanguageSelect(this.props.settings.metaDataLang)}
+                items={this.filterLanguages()}
+                getItemValue={item => item.iso_639_1}
+                getItemKey={item => item.iso_639_1}
+                getDisplayValue={item => item.english_name}
+                value={this.state.query}
+                showDropdown={this.filterLanguages().length > 0}
               />
             </div>
             <div className="settings-pane__setting">
