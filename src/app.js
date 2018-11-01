@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import TvShowInput from './components/tvShowInput';
 import FilePicker from './components/filePicker';
-import { makeRequestCreator } from './util/request';
+import { getTvDbToken, getTvShow } from './util/request';
 import { formatEpisodeName } from './util/format';
 import FileRename from './components/fileRename';
 import Button from './components/button';
@@ -19,7 +19,8 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    this.get = makeRequestCreator();
+
+    getTvDbToken();
 
     this.initialState = {
       files: [],
@@ -43,6 +44,7 @@ export default class App extends Component {
   loadSettings() {
     return {
       metaDataLang: (localStorage.getItem('metaDataLang') || 'en').replace(/^\(empty\)$/, ''),
+      apiProvider: localStorage.getItem('apiProvider') || 'moviedb',
       template: (localStorage.getItem('template') || 'S{season_no} E{episode_no} - {episode_name}')
         .replace(/^\(empty\)$/, ''),
       defaultOutputDir: (localStorage.getItem('defaultOutputDir') || '').replace(/^\(empty\)$/, ''),
@@ -61,16 +63,7 @@ export default class App extends Component {
     }
     this.setState({ loading: true });
     try {
-      const response = await this.get(
-        `/tv/${tvShow.id}?language=${this.state.settings.metaDataLang}`
-      );
-      const seasons =
-        await Promise.all(response.data.seasons.map(async season => {
-          const response = await (makeRequestCreator())(
-            `/tv/${tvShow.id}/season/${season.season_number}?language=${this.state.settings.metaDataLang}`
-          );
-          return response.data;
-        }));
+      const seasons = await getTvShow(tvShow);
       this.setState({ seasons });
       this.updateUsageHint(seasons);
     } catch(error) {

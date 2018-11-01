@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import { remote } from 'electron';
 
-import { makeRequestCreator } from '../../util/request';
+import { getLanguages } from '../../util/request';
 import NamingTemplate from './namingTemplate';
 import Link from '../../components/link';
 import Button from '../../components/button';
@@ -15,27 +15,44 @@ export default class SettingsPane extends Component {
   constructor(props) {
     super(props);
 
+    this.apiProviders = [{
+      name: 'TheMovieDB',
+      value: 'moviedb'
+    }, {
+      name: 'TheTVDB',
+      value: 'tvdb'
+    }];
+
     this.state = {
       languages: [],
       query: '',
+      apiProvider: props.settings.apiProvider,
     };
     this.loadLanguages();
   }
 
   async loadLanguages() {
     try {
-      const response = await (makeRequestCreator())('/configuration/languages');
+      const response = await getLanguages();
+      let data = response.data.data || response.data;
+      data = data.map(lang => ({
+        english_name: lang.english_name || lang.englishName,
+        iso_639_1: lang.iso_639_1 || lang.abbreviation,
+        name: lang.name,
+      }));
       this.setState({
-        languages: response.data,
-        query: (response.data.find(l => l.iso_639_1 === this.props.settings.metaDataLang) || {}).english_name,
+        languages: data,
+        query: (data.find(l => l.iso_639_1 === this.props.settings.metaDataLang) || {}).english_name || '',
       });
     } catch(e) {
       // ignore
+      console.error(e);
     }
   }
 
   handleClose() {
     localStorage.setItem('metaDataLang', this.props.settings.metaDataLang || '(empty)');
+    localStorage.setItem('apiProvider', this.props.settings.apiProvider);
     localStorage.setItem('template', this.props.settings.template || '(empty)');
     localStorage.setItem('defaultOutputDir', this.props.settings.defaultOutputDir || '(empty)');
     localStorage.setItem('includedExtensions', (this.props.settings.includedExtensions.filter(ext => ext).length > 0 && this.props.settings.includedExtensions) || '(empty)');
@@ -48,6 +65,12 @@ export default class SettingsPane extends Component {
     const language = this.state.languages.find(l => l.iso_639_1 === lang);
     this.setState({ query: language.english_name });
     this.handleSettingsChange('metaDataLang', language.iso_639_1);
+  }
+
+  handleApiProviderSelect(apiProvider) {
+    this.setState({ apiProvider });
+    this.handleSettingsChange('apiProvider', apiProvider);
+    this.loadLanguages();
   }
 
   handleSettingsChange(name, value) {
@@ -95,6 +118,20 @@ export default class SettingsPane extends Component {
                 getDisplayValue={item => item.english_name}
                 value={this.state.query}
                 showDropdown={this.filterLanguages().length > 0}
+              />
+            </div>
+            <div className="settings-pane__setting">
+              <div className="settings-pane__setting__label">Meta data provider.</div>
+              <Autocomplete
+                placeholder="Choose provider"
+                focusable={this.props.openState}
+                onSelect={this.handleApiProviderSelect.bind(this)}
+                items={this.apiProviders}
+                getItemValue={item => item.value}
+                getItemKey={item => item.value}
+                getDisplayValue={item => item.name}
+                value={this.apiProviders.find(p => p.value === this.props.settings.apiProvider).name}
+                showDropdown={true}
               />
             </div>
             <div className="settings-pane__setting">

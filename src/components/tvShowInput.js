@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Button from './button';
 import Autocomplete from './autocomplete';
-import { makeRequestCreator } from '../util/request';
+import { search } from '../util/request';
 
 import CrossIcon from '../icons/cross.svg';
 
@@ -12,8 +12,6 @@ export default class TvShowInput extends Component {
   constructor(props) {
     super(props);
 
-    this.get = makeRequestCreator();
-
     this.state = {
       results: [],
     };
@@ -21,13 +19,13 @@ export default class TvShowInput extends Component {
 
   async search(query) {
     try {
-      const response = await this.get(
-        `/search/tv?language=${this.props.metaDataLang}&query=${query}`
-      );
-      this.setState({ results: response.data.results });
+      const results = await search(query);
+      this.setState({ results });
     } catch(error) {
       if (axios.isCancel(error)) {
         // ignore canceled request
+      } else if (error.response.status === 404) {
+        // no results, ignore
       } else {
         this.props.onMessages({
           id: 'search-error',
@@ -72,7 +70,7 @@ export default class TvShowInput extends Component {
           items={this.state.results}
           getItemValue={item => item.name}
           getItemKey={item => item.id}
-          getDisplayValue={item => `${item.name} (${item.first_air_date.substr(0, 4)})`}
+          getDisplayValue={item => `${item.name} ${(item.first_air_date && `(${item.first_air_date.substr(0, 4)})`) || ''}`}
           value={this.props.query}
           showDropdown={this.state.results.length > 0}
         />

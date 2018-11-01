@@ -19,7 +19,7 @@ export function formatEpisodeName(episode, tvShow, template) {
     .replace(/\{year\}/g, tvShow.first_air_date.substr(0, 4))
     .replace(/\{season_no\}/g, leftPad(episode.season_number, 2, 0))
     .replace(/\{episode_no\}/g, leftPad(episode.episode_number, 2, 0))
-    .replace(/\{episode_name\}/g, episode.name)
+    .replace(/\{episode_name\}/g, episode.name || 'missing translation')
     .replace(/[#%&\{\}\\<>\*\?/$!'":@]/g, '');
 }
 
