@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Autocomplete from 'react-autocomplete';
 
 import Button from './button';
-import { makeRequestCreator } from '../util/request';
+import Autocomplete from './autocomplete';
+import { search } from '../util/request';
 
 import CrossIcon from '../icons/cross.svg';
 
@@ -12,8 +12,6 @@ export default class TvShowInput extends Component {
   constructor(props) {
     super(props);
 
-    this.get = makeRequestCreator();
-
     this.state = {
       results: [],
     };
@@ -21,13 +19,13 @@ export default class TvShowInput extends Component {
 
   async search(query) {
     try {
-      const response = await this.get(
-        `/search/tv?language=${this.props.metaDataLang}&query=${query}`
-      );
-      this.setState({ results: response.data.results });
+      const results = await search(query);
+      this.setState({ results });
     } catch(error) {
       if (axios.isCancel(error)) {
         // ignore canceled request
+      } else if (error.response.status === 404) {
+        // no results, ignore
       } else {
         this.props.onMessages({
           id: 'search-error',
@@ -65,46 +63,16 @@ export default class TvShowInput extends Component {
     return (
       <div className="tv-show-input">
         <Autocomplete
-          wrapperStyle={{}}
-          wrapperProps={{
-            className: 'tv-show-input__wrapper',
-          }}
-          inputProps={{
-            className: 'input',
-            placeholder: 'Search TV show...',
-          }}
-          menuStyle={{
-            borderRadius: '2px',
-            color: getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete'),
-            backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete'),
-            padding: '6px 0',
-            marginTop: '4px',
-            position: 'fixed',
-            overflow: 'auto',
-            maxHeight: '50%',
-            display: this.state.results.length > 0 ? 'block' : 'none',
-            zIndex: 10,
-          }}
-          getItemValue={(item) => item.name}
-          items={this.state.results}
-          renderItem={(item, isHighlighted) =>
-            <div key={item.id} style={{
-              color: isHighlighted
-                ? getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete-selected')
-                : getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete'),
-              background: isHighlighted
-                ? getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete-selected')
-                : getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete'),
-              height: '14px',
-              padding: '12px',
-              lineHeight: '14px',
-            }}>
-              {item.name} ({item.first_air_date.substr(0, 4)})
-            </div>
-          }
-          value={this.props.query}
+          placeholder="Search TV show..."
+          focusable={this.props.openState}
           onChange={this.handleChange.bind(this)}
           onSelect={this.handleSelect.bind(this)}
+          items={this.state.results}
+          getItemValue={item => item.name}
+          getItemKey={item => item.id}
+          getDisplayValue={item => `${item.name} ${(item.first_air_date && `(${item.first_air_date.substr(0, 4)})`) || ''}`}
+          value={this.props.query}
+          showDropdown={this.state.results.length > 0}
         />
         <Button
           className="tv-show-input__clear"

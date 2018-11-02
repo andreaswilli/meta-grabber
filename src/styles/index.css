@@ -220,6 +220,7 @@ body {
 .tv-show-input__wrapper {
   display: flex;
   flex-grow: 1;
+  position: relative;
 }
 
 .tv-show-input__clear {
@@ -266,7 +267,7 @@ body {
   padding-bottom: 4px;
   padding-left: 2px;
   padding-right: 12px;
-  font-family: "Open Sans";
+  font-family: 'Open Sans';
   letter-spacing: 1px;
   box-shadow: 0 0 0 0 var(--color-border-season);
   transition: box-shadow 0.2s;
@@ -448,6 +449,7 @@ body {
 
 .settings-pane__container {
   margin-bottom: 200px;
+  box-sizing: content-box;
 }
 
 .settings-pane__setting {

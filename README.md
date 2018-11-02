@@ -18,7 +18,7 @@ Rename your files in seconds! 🚀
 Rename your files with these steps:
 
 1. **Search for your TV show.**  
-   Just begin typing the name of the show, the autocomplete will suggest results from the `themoviedb.org` API.
+   Just begin typing the name of the show, the autocomplete will suggest results from the `themoviedb.org` or `thetvdb.com` API, depending on which is specified in settings.
 
 1. **Choose all the files you want to rename.**  
    The files can also be located in different directories.
@@ -36,6 +36,12 @@ Rename your files with these steps:
 
 ### Meta data language
 Specifies the language of the meta data that will be grabbed. Defaults to English.
+
+### Meta data provider
+If you don't find the tv show you are looking for, you can try to switch the provider.
+You have two different options:
+- [TheMovieDB](https://www.themoviedb.org/)
+- [TheTVDB](https://www.thetvdb.com/)
 
 ### File name template
 With this setting you can define the template used to rename your files. You can set it to anything you want, however invalid characters such as `?` will be ignored.
