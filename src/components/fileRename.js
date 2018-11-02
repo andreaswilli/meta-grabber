@@ -169,7 +169,12 @@ export default class FileRename extends Component {
               // create directory if it does not exist yet
               await mkdir(newFileDir);
             } catch (error) {
-              reject(`Output directory could not be created: ${error}`);
+              // ignore 'file already exists' error
+              // since async map functions run in parallel it is possible that
+              // another function already created the directory
+              if (error.toString().indexOf('EEXIST: file already exists') === -1) {
+                reject(`Output directory could not be created: ${error}`);
+              }
             }
           }
           let newFileName = `${newFileDir}/${a.name}.${formatFileExtension(a.fileName)}`;
