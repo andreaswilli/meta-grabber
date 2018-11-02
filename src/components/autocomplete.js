@@ -31,19 +31,20 @@ export default class Autocomplete extends Component {
         getItemValue={this.props.getItemValue}
         items={this.props.items}
         renderItem={(item, isHighlighted) =>
-          <div key={this.props.getItemKey(item)} style={{
-            color: isHighlighted
-              ? getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete-selected')
-              : getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete'),
-            background: isHighlighted
-              ? getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete-selected')
-              : getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete'),
-            height: '14px',
-            padding: '12px',
-            lineHeight: '14px',
-          }}>
-            {this.props.getDisplayValue(item)}
-          </div>
+          <div
+            key={this.props.getItemKey(item)}
+            style={{
+              color: isHighlighted
+                ? getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete-selected')
+                : getComputedStyle(document.documentElement).getPropertyValue('--color-autocomplete'),
+              background: isHighlighted
+                ? getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete-selected')
+                : getComputedStyle(document.documentElement).getPropertyValue('--color-bg-autocomplete'),
+              minHeight: '14px',
+              padding: '12px',
+              lineHeight: '20px',
+            }}
+          >{this.props.getDisplayValue(item)}</div>
         }
         value={this.props.value}
         onChange={this.props.onChange}
