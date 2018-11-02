@@ -285,8 +285,9 @@ body {
 
 .file-rename__item--episode {
   text-transform: none;
+  line-height: 38px;
   margin: 0;
-  padding: 10px 12px;
+  padding: 0 12px;
   padding-left: 24px;
   color: var(--color-episode-odd);
   background-color: var(--color-bg-episode-odd);
