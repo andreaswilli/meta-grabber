@@ -137,6 +137,19 @@ export default class FileRename extends Component {
     this.props.onChooseOutputDir(outputDir[0]);
   }
 
+  async handleIncludeAll() {
+    await this.setState({ includedSeasons: this.props.seasons.map(s => ({
+      name: s.name,
+      includedEpisodes: s.episodes,
+    }))});
+    this.assignEpisodesToFiles(this.props);
+  }
+
+  async handleExcludeAll() {
+    await this.setState({ includedSeasons: [] });
+    this.assignEpisodesToFiles(this.props);
+  }
+
   async renameFiles() {
     this.props.onLoadingChange(true);
     let assignments = this.state.assignments.filter(a => a.fileName);
@@ -210,10 +223,7 @@ export default class FileRename extends Component {
             <Button
               label="Include All"
               icon={<CheckboxCheckedIcon />}
-              onClick={() => this.setState({ includedSeasons: this.props.seasons.map(s => ({
-                name: s.name,
-                includedEpisodes: s.episodes,
-              }))})}
+              onClick={this.handleIncludeAll.bind(this)}
               disabled={
                 JSON.stringify(this.state.includedSeasons.map(s => s.includedEpisodes)) ===
                 JSON.stringify(this.props.seasons.map(s => s.episodes))
@@ -222,7 +232,7 @@ export default class FileRename extends Component {
             <Button
               label="Exclude All"
               icon={<CheckboxUncheckedIcon />}
-              onClick={() => this.setState({ includedSeasons: [] })}
+              onClick={this.handleExcludeAll.bind(this)}
               disabled={this.state.includedSeasons.length === 0}
             />
           </div>}
