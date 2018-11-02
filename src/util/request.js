@@ -20,8 +20,19 @@ export function getTvDbToken() {
   });
 }
 
-export function getLanguages() {
-  return (makeRequestCreator())(localStorage.getItem('apiProvider') === 'moviedb' ? '/configuration/languages' : '/languages');
+export async function getLanguages(apiProvider) {
+  if ((apiProvider || localStorage.getItem('apiProvider')) === 'moviedb') {
+    const response = await (makeRequestCreator(apiProvider))('/configuration/languages');
+    return response.data;
+  } else {
+    // use tvdb api
+    const response = await (makeRequestCreator(apiProvider))('/languages');
+    return response.data.data.map(lang => ({
+      english_name: lang.englishName,
+      iso_639_1: lang.abbreviation,
+      name: lang.name,
+    }));
+  }
 }
 
 export async function search(query) {
@@ -75,7 +86,7 @@ export async function getTvShow(tvShow) {
   }
 }
 
-function makeRequestCreator() {
+function makeRequestCreator(apiProvider) {
   var call;
   return function(url) {
     if (call) {
@@ -83,7 +94,7 @@ function makeRequestCreator() {
     }
     call = axios.CancelToken.source();
 
-    if (localStorage.getItem('apiProvider') === 'moviedb') {
+    if ((apiProvider || localStorage.getItem('apiProvider')) === 'moviedb') {
       return axios.get(getMovieDbUrl(url), { cancelToken: call.token });
     } else {
       // use tvdb api

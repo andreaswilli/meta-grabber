@@ -28,21 +28,15 @@ export default class SettingsPane extends Component {
       query: '',
       apiProvider: props.settings.apiProvider,
     };
-    this.loadLanguages();
+    this.loadLanguages(props.settings.apiProvider);
   }
 
-  async loadLanguages() {
+  async loadLanguages(apiProvider) {
     try {
-      const response = await getLanguages();
-      let data = response.data.data || response.data;
-      data = data.map(lang => ({
-        english_name: lang.english_name || lang.englishName,
-        iso_639_1: lang.iso_639_1 || lang.abbreviation,
-        name: lang.name,
-      }));
+      const languages = await getLanguages(apiProvider);
       this.setState({
-        languages: data,
-        query: (data.find(l => l.iso_639_1 === this.props.settings.metaDataLang) || {}).english_name || '',
+        languages,
+        query: (languages.find(l => l.iso_639_1 === this.props.settings.metaDataLang) || {}).english_name || '',
       });
     } catch(e) {
       // ignore
@@ -70,7 +64,7 @@ export default class SettingsPane extends Component {
   handleApiProviderSelect(apiProvider) {
     this.setState({ apiProvider });
     this.handleSettingsChange('apiProvider', apiProvider);
-    this.loadLanguages();
+    this.loadLanguages(apiProvider);
   }
 
   handleSettingsChange(name, value) {
