@@ -14,7 +14,7 @@ const searchTvShow = makeRequestCreator();
 
 export function getTvDbToken() {
   axios.post('https://api.thetvdb.com/login', {
-    apikey: '69JBGM9TE7NT0LU7',
+    apikey: tvDb.apiKey,
   }).then(response => {
     localStorage.setItem('tvDbToken', response.data.token);
   });
