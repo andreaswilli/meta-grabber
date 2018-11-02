@@ -64,7 +64,21 @@ export default class App extends Component {
     this.setState({ loading: true });
     try {
       const seasons = await getTvShow(tvShow);
-      this.setState({ seasons });
+      this.setState(prevState => {
+        let nextState = {
+          seasons,
+        };
+        const loadSeasonsError = prevState.messages.find(m => m.id === 'load-seasons-error');
+        if (loadSeasonsError) {
+          nextState.messages = [
+            ...prevState.messages.filter(m => m.id !== 'load-seasons-error'), {
+              ...loadSeasonsError,
+              willDismiss: true,
+            },
+          ];
+        }
+        return nextState;
+      });
       this.updateUsageHint(seasons);
     } catch(error) {
       if (axios.isCancel(error)) {
