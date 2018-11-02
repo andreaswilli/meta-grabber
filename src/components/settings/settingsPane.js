@@ -99,7 +99,7 @@ export default class SettingsPane extends Component {
           <div className="container settings-pane__container">
             <h2>Settings</h2>
             <div className="settings-pane__setting">
-              <div className="settings-pane__setting__label">Meta data language.</div>
+              <div className="settings-pane__setting__label">Metadata language.</div>
               <Autocomplete
                 placeholder="Choose language"
                 focusable={this.props.openState}
@@ -115,7 +115,7 @@ export default class SettingsPane extends Component {
               />
             </div>
             <div className="settings-pane__setting">
-              <div className="settings-pane__setting__label">Meta data provider.</div>
+              <div className="settings-pane__setting__label">Metadata provider.</div>
               <Autocomplete
                 placeholder="Choose provider"
                 focusable={this.props.openState}

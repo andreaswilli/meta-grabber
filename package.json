@@ -1,7 +1,7 @@
 {
   "name": "meta-grabber",
   "version": "0.1.5",
-  "description": "A tool to grab meta data for tv shows and rename files on your hard disk.",
+  "description": "A tool to grab metadata for tv shows and rename files on your hard disk.",
   "main": "main.js",
   "scripts": {
     "dev": "electron .",
@@ -14,7 +14,7 @@
   "keywords": [
     "Electron",
     "tv shows",
-    "meta data",
+    "metadata",
     "file rename",
     "the movie database"
   ],

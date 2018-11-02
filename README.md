@@ -1,6 +1,6 @@
 # meta-grabber
 
-📺 A tool to grab meta data for tv shows and rename files on your hard disk.
+📺 A tool to grab metadata for tv shows and rename files on your hard disk.
 
 [![ko-fi](https://www.ko-fi.com/img/donate_sm.png)](https://ko-fi.com/Y8Y7LBIM)
 
@@ -34,10 +34,10 @@ Rename your files with these steps:
 
 ## Settings
 
-### Meta data language
-Specifies the language of the meta data that will be grabbed. Defaults to English.
+### Metadata language
+Specifies the language of the metadata that will be grabbed. Defaults to English.
 
-### Meta data provider
+### Metadata provider
 If you don't find the tv show you are looking for, you can try to switch the provider.
 You have two different options:
 - [TheMovieDB](https://www.themoviedb.org/)
@@ -46,7 +46,7 @@ You have two different options:
 ### File name template
 With this setting you can define the template used to rename your files. You can set it to anything you want, however invalid characters such as `?` will be ignored.
 
-Also you can use the placeholders listed below to dynamically insert meta data into the name. In fact, you have to use at least `{season_no}` and `{episode_no}` to make sure every file name is unique.
+Also you can use the placeholders listed below to dynamically insert metadata into the name. In fact, you have to use at least `{season_no}` and `{episode_no}` to make sure every file name is unique.
 
 Placeholder | Example value | Description
 --- | --- | ---
