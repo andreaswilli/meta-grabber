@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import { remote } from 'electron';
+import i18n from 'i18next';
+import { withNamespaces, Trans } from 'react-i18next';
 
 import { getLanguages } from '../../util/request';
 import NamingTemplate from './namingTemplate';
@@ -10,7 +12,7 @@ import Autocomplete from '../../components/autocomplete';
 
 import FolderIcon from '../../icons/folder.svg';
 
-export default class SettingsPane extends Component {
+class SettingsPane extends Component {
 
   constructor(props) {
     super(props);
@@ -91,17 +93,31 @@ export default class SettingsPane extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div>
         <div className={classNames('settings-pane', {
           'settings-pane--hidden': !this.props.openState,
         })}>
           <div className="container settings-pane__container">
-            <h2>Settings</h2>
+            <h2>{t('heading')}</h2>
             <div className="settings-pane__setting">
-              <div className="settings-pane__setting__label">Metadata language.</div>
+              <div className="settings-pane__setting__label">{t('uiLang.title')}</div>
+              <Button
+                className="settings-pane__setting__group__button"
+                label={t('uiLang.de')}
+                onClick={() => i18n.changeLanguage('de')}
+              />
+              <Button
+                className="settings-pane__setting__group__button"
+                label={t('uiLang.en')}
+                onClick={() => i18n.changeLanguage('en')}
+              />
+            </div>
+            <div className="settings-pane__setting">
+              <div className="settings-pane__setting__label">{t('metaLang.title')}</div>
               <Autocomplete
-                placeholder="Choose language"
+                placeholder={t('metaLang.placeholder')}
                 focusable={this.props.openState}
                 onChange={event => this.setState({ query: event.target.value })}
                 onSelect={this.handleLanguageSelect.bind(this)}
@@ -115,9 +131,9 @@ export default class SettingsPane extends Component {
               />
             </div>
             <div className="settings-pane__setting">
-              <div className="settings-pane__setting__label">Metadata provider.</div>
+              <div className="settings-pane__setting__label">{t('metadataProvider.title')}</div>
               <Autocomplete
-                placeholder="Choose provider"
+                placeholder={t('metadataProvider.placeholder')}
                 focusable={this.props.openState}
                 onSelect={this.handleApiProviderSelect.bind(this)}
                 items={this.apiProviders}
@@ -130,10 +146,13 @@ export default class SettingsPane extends Component {
             </div>
             <div className="settings-pane__setting">
               <div className="settings-pane__setting__label">
-                File name template (<Link
-                  url="https://github.com/andreaswilli/meta-grabber#file-name-template"
-                  label="help"
-                />).</div>
+                <Trans i18nKey="fileNameTemplate.title">
+                  <Link
+                    url="https://github.com/andreaswilli/meta-grabber#file-name-template"
+                    label={t('fileNameTemplate.help')}
+                  />
+                </Trans>
+              </div>
               <NamingTemplate
                 onRef={ref => this.namingTemplate = ref}
                 onChange={template => this.handleSettingsChange('template', template)}
@@ -143,7 +162,7 @@ export default class SettingsPane extends Component {
             </div>
             <div className="settings-pane__setting">
               <div className="settings-pane__setting__label">
-                Default output directory.
+                {t('defaultOutputDir.title')}
               </div>
               <div className="settings-pane__setting__group">
                 <input
@@ -155,18 +174,20 @@ export default class SettingsPane extends Component {
                 />
                 <Button
                   className="settings-pane__setting__group__button"
-                  label="choose"
+                  label={t('defaultOutputDir.choose')}
                   icon={<FolderIcon />}
                   onClick={this.handleChooseOutputDir.bind(this)}
                 />
               </div>
               <div className="settings-pane__setting__message">
-                You can use <code>{'{show_name}'}</code> to dynamically include the name of the tv show.
+                <Trans i18nKey="defaultOutputDir.hint">
+                  <code>{'{show_name}'}</code>
+                </Trans>
               </div>
             </div>
             <div className="settings-pane__setting">
               <div className="settings-pane__setting__label">
-                Included file types.
+                {t('includedFileTypes.title')}
               </div>
               <input
                 type="text"
@@ -177,12 +198,12 @@ export default class SettingsPane extends Component {
                 tabIndex={this.props.openState ? 0 : -1}
               />
               <div className="settings-pane__setting__message">
-                These file extensions will be included when opening files (separate with <code>,</code>).
+                {t('includedFileTypes.hint')}
               </div>
             </div>
             <div className="settings-pane__setting">
               <div className="settings-pane__setting__label">
-                Excluded terms.
+                {t('excludedTerms.title')}
               </div>
               <input
                 type="text"
@@ -193,7 +214,7 @@ export default class SettingsPane extends Component {
                 tabIndex={this.props.openState ? 0 : -1}
               />
               <div className="settings-pane__setting__message">
-                Exclude files that contain one of these terms in their name or path (separate with <code>,</code>).
+                {t('excludedTerms.hint')}
               </div>
             </div>
           </div>
@@ -208,3 +229,5 @@ export default class SettingsPane extends Component {
     );
   }
 }
+
+export default withNamespaces('settingsPane')(SettingsPane);

@@ -4,6 +4,7 @@ import { remote } from 'electron';
 import classNames from 'classnames';
 import AnimateHeight from 'react-animate-height';
 import util from 'util';
+import { withNamespaces } from 'react-i18next';
 
 import Button from './button';
 import Link from './link';
@@ -22,7 +23,7 @@ const mkdir = util.promisify(fs.mkdir);
 const rename = util.promisify(fs.rename);
 const readFile = util.promisify(fs.readFile);
 
-export default class FileRename extends Component {
+class FileRename extends Component {
 
   constructor(props) {
     super(props);
@@ -151,6 +152,7 @@ export default class FileRename extends Component {
   }
 
   async renameFiles() {
+    const { t } = this.props;
     this.props.onLoadingChange(true);
     let assignments = this.state.assignments.filter(a => a.fileName);
     try {
@@ -173,7 +175,7 @@ export default class FileRename extends Component {
               // since async map functions run in parallel it is possible that
               // another function already created the directory
               if (error.toString().indexOf('EEXIST: file already exists') === -1) {
-                reject(`Output directory could not be created: ${error}`);
+                reject(t('error.createDir', { error }));
               }
             }
           }
@@ -181,7 +183,7 @@ export default class FileRename extends Component {
           try {
             // check if file is already exiting
             await readFile(newFileName);
-            reject(`Error: File is already existing: ${newFileName}`);
+            reject(t('error.fileExisting', { newFileName }));
           } catch(error) {
             if(error.toString().indexOf('no such file or directory') !== -1) {
               // file is not existing, continue
@@ -203,7 +205,7 @@ export default class FileRename extends Component {
             await rename(mapping.oldFileName, mapping.newFileName);
             resolve();
           } catch(error) {
-            reject(`Files could not be renamed: ${error}`);
+            reject(t('error.renameFiles', { error }));
           }
         });
       }));
@@ -221,12 +223,13 @@ export default class FileRename extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <React.Fragment>
         <div className="section section--main">
           {this.props.seasons.length > 1 && <div className="button-row">
             <Button
-              label="Include All"
+              label={t('includeAll')}
               icon={<CheckboxCheckedIcon />}
               onClick={this.handleIncludeAll.bind(this)}
               disabled={
@@ -235,7 +238,7 @@ export default class FileRename extends Component {
               }
             />
             <Button
-              label="Exclude All"
+              label={t('excludeAll')}
               icon={<CheckboxUncheckedIcon />}
               onClick={this.handleExcludeAll.bind(this)}
               disabled={this.state.includedSeasons.length === 0}
@@ -288,13 +291,13 @@ export default class FileRename extends Component {
             <KoFiIcon className="ko-fi-icon"/>
           </Link>
           <div className="file-rename__output__dir">
-            {((this.props.outputDir !== '?' && this.props.outputDir) || 'none (leave the files where they are)')
+            {((this.props.outputDir !== '?' && this.props.outputDir) || t('noOutputDir'))
               .replace(/\{show_name\}/g, this.props.tvShow.name || '{show_name}')
               .replace(/[#%&<>\*\?$!'":@]/g, '')}
           </div>
           <Button
             className="file-rename__output__choose"
-            label="Choose Output Dir"
+            label={t('chooseOutputDir')}
             icon={<FolderIcon />}
             onClick={this.handleChooseOutputDir.bind(this)}
           />
@@ -308,7 +311,7 @@ export default class FileRename extends Component {
           <Button
             className="file-rename__rename-button"
             type="confirm"
-            label="Rename"
+            label={t('rename')}
             icon={<CheckmarkIcon />}
             onClick={this.renameFiles.bind(this)}
             disabled={this.state.assignments.filter(a => a.fileName).length === 0}
@@ -318,3 +321,5 @@ export default class FileRename extends Component {
     );
   }
 }
+
+export default withNamespaces('fileRename')(FileRename);
