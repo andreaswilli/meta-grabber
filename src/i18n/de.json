@@ -1,0 +1,76 @@
+{
+  "app": {
+    "settings": "Einstellungen",
+    "fileRenameSuccess": "Die Dateien wurden erfolgreich umbenannt!",
+    "usageHint": {
+      "message": "Bitte{{message}}.",
+      "searchTvShow": " suche nach einer Serie",
+      "openFiles": " öffne die Dateien, die du umbenennen möchtest",
+      "and": " und"
+    },
+    "error": {
+      "loadSeasons": "Fehler beim Laden der Staffeln {{error}}"
+    }
+  },
+  "tvShowInput": {
+    "placeholder": "Nach Serie suchen...",
+    "error": {
+      "searchTvShow": "Fehler beim Suchen: {{error}}"
+    }
+  },
+  "filePicker": {
+    "openFiles": "Dateien öffen",
+    "error": {
+      "openFiles": "Fehler beim Öffnen der Dateien: {{error}}"
+    }
+  },
+  "fileRename": {
+    "includeAll": "Alle auswählen",
+    "excludeAll": "Alle abwählen",
+    "noOutputDir": "keines (die Dateien bleiben, wo sie sind)",
+    "chooseOutputDir": "Zielordner wählen",
+    "rename": "Umbenennen",
+    "error": {
+      "renameFiles": "Fehler beim Umbenennen der Dateien: {{error}}",
+      "fileExisting": "Fehler: eine Datei mit diesem Namen existiert bereits: {{newFileName}}",
+      "createDir": "Fehler beim Erstellen des Zielordners: {{error}}"
+    }
+  },
+  "settingsPane": {
+    "heading": "Einstellungen",
+    "uiLang": {
+      "title": "Sprache der Benutzeroberfläche.",
+      "de": "Deutsch",
+      "en": "Englisch"
+    },
+    "metaLang": {
+      "title": "Sprache der Metadaten.",
+      "placeholder": "Sprache wählen"
+    },
+    "metadataProvider": {
+      "title": "Metadaten-Anbieter.",
+      "placeholder": "Anbieter wählen"
+    },
+    "fileNameTemplate": {
+      "title": "Vorlage für Dateinamen (<0>link</0>).",
+      "help": "Hilfe",
+      "hint": "Beispiel: {{example}}",
+      "tvShowExampleName": "Breaking Bad",
+      "episodeExampleName": "Felina",
+      "errorInvalidTemplate": "Die Vorlage muss <0>{season_no}</0> und <1>{episode_no}</1> enthalten, damit die Dateinamen eindeutig sind!"
+    },
+    "defaultOutputDir": {
+      "title": "Standard-Zielordner.",
+      "choose": "Auswählen",
+      "hint": "Verwende <0>{show_name}</0>, um den Namen der Serie im Ordnernamen einzufügen."
+    },
+    "includedFileTypes": {
+      "title": "Dateitypen.",
+      "hint": "Nur Dateitypen, die hier aufgeführt sind, können geöffnet werden (trennen mit Komma)."
+    },
+    "excludedTerms": {
+      "title": "Ausnahmen.",
+      "hint": "Dateien, die einen der hier aufgeführten Begriffe im Namen enthalten, werden nicht geöffnet (trennen mit Komma)."
+    }
+  }
+}
