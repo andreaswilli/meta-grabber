@@ -46,7 +46,7 @@ class NamingTemplate extends Component {
         />
         {!this.isTemplateValid(this.state.template) &&
           <div className="settings-pane__setting__message error">
-            <Trans i18nKey="errorInvalidTemplate">
+            <Trans i18nKey="fileNameTemplate.errorInvalidTemplate">
               <code>{'{season_no}'}</code>
               <code>{'{episode_no}'}</code>
             </Trans>
