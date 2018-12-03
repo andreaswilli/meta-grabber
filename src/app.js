@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import i18n from 'i18next';
 import { withNamespaces } from 'react-i18next';
 
 import TvShowInput from './components/tvShowInput';
@@ -22,6 +23,10 @@ class App extends Component {
     super(props);
 
     getTvDbToken();
+
+    i18n.on('languageChanged', () => {
+      this.updateUsageHint(this.state.seasons, this.state.files);
+    });
 
     this.initialState = {
       files: [],
