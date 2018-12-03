@@ -72,7 +72,5 @@
       "title": "Excluded terms.",
       "hint": "Exclude files that contain one of these terms in their name or path (separate with comma)."
     }
-  },
-  "namingTemplate": {
   }
 }
