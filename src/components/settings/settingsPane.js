@@ -47,6 +47,7 @@ class SettingsPane extends Component {
   }
 
   handleClose() {
+    localStorage.setItem('uiLang', this.props.settings.uiLang),
     localStorage.setItem('metaDataLang', this.props.settings.metaDataLang || '(empty)');
     localStorage.setItem('apiProvider', this.props.settings.apiProvider);
     localStorage.setItem('template', this.props.settings.template || '(empty)');
@@ -55,6 +56,11 @@ class SettingsPane extends Component {
     localStorage.setItem('excludedTerms', (this.props.settings.excludedTerms.filter(term => term).length > 0 && this.props.settings.excludedTerms) || '(empty)');
     this.namingTemplate.setState({ template: this.props.settings.template }); // reset invalid template
     this.props.onOpenChange(false);
+  }
+
+  handleUiLanguageSelect(lang) {
+    this.handleSettingsChange('uiLang', lang);
+    i18n.changeLanguage(lang);
   }
 
   handleLanguageSelect(lang) {
@@ -106,12 +112,12 @@ class SettingsPane extends Component {
               <Button
                 className="settings-pane__setting__group__button"
                 label={t('uiLang.de')}
-                onClick={() => i18n.changeLanguage('de')}
+                onClick={() => this.handleUiLanguageSelect('de')}
               />
               <Button
                 className="settings-pane__setting__group__button"
                 label={t('uiLang.en')}
-                onClick={() => i18n.changeLanguage('en')}
+                onClick={() => this.handleUiLanguageSelect('en')}
               />
             </div>
             <div className="settings-pane__setting">

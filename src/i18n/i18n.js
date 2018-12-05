@@ -3,7 +3,7 @@ import de from './de.json';
 import en from './en.json';
 
 i18n.init({
-  lng: 'en',
+  lng: localStorage.getItem('uiLang') || 'en',
   fallbackLng: 'en',
   // debug: true,
 

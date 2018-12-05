@@ -49,6 +49,7 @@ class App extends Component {
 
   loadSettings() {
     return {
+      uiLang: localStorage.getItem('uiLang') || 'en',
       metaDataLang: (localStorage.getItem('metaDataLang') || 'en').replace(/^\(empty\)$/, ''),
       apiProvider: localStorage.getItem('apiProvider') || 'moviedb',
       template: (localStorage.getItem('template') || 'S{season_no} E{episode_no} - {episode_name}')
