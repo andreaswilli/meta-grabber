@@ -27,7 +27,7 @@
   "fileRename": {
     "includeAll": "Alle auswählen",
     "excludeAll": "Alle abwählen",
-    "noOutputDir": "keines (die Dateien bleiben, wo sie sind)",
+    "noOutputDir": "keiner (Dateien bleiben, wo sie sind)",
     "chooseOutputDir": "Zielordner wählen",
     "rename": "Umbenennen",
     "error": {
