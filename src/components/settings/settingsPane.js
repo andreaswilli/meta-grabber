@@ -9,6 +9,8 @@ import NamingTemplate from './namingTemplate';
 import Link from '../../components/link';
 import Button from '../../components/button';
 import Autocomplete from '../../components/autocomplete';
+import RadioButtonUncheckedIcon from '../../icons/radio-button-0.svg';
+import RadioButtonCheckedIcon from '../../icons/radio-button-1.svg';
 
 import FolderIcon from '../../icons/folder.svg';
 
@@ -110,12 +112,14 @@ class SettingsPane extends Component {
             <div className="settings-pane__setting">
               <div className="settings-pane__setting__label">{t('uiLang.title')}</div>
               <Button
-                className="settings-pane__setting__group__button"
+                className="settings-pane__setting__group__button settings-pane__setting__group__button--radio"
+                icon={this.props.settings.uiLang === 'de' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
                 label={t('uiLang.de')}
                 onClick={() => this.handleUiLanguageSelect('de')}
               />
               <Button
-                className="settings-pane__setting__group__button"
+                className="settings-pane__setting__group__button settings-pane__setting__group__button--radio"
+                icon={this.props.settings.uiLang === 'en' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
                 label={t('uiLang.en')}
                 onClick={() => this.handleUiLanguageSelect('en')}
               />

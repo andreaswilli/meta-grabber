@@ -478,6 +478,10 @@ body {
   margin-left: 8px;
 }
 
+.settings-pane__setting__group__button--radio:first-of-type {
+  margin-left: 0;
+}
+
 .error {
   color: var(--color-error);
 }
