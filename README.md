@@ -36,7 +36,7 @@ Rename your files with these steps:
 
 ##### ▶︎ User interface language
 Changes the language of the user interface. So far you can choose between English and German.
-> If you speak any other language feel free to add your translations. E.g. `i18n/es.json` for Spanish.
+> If you speak any other language, feel free to add your translations. E.g. `i18n/es.json` for Spanish.
 
 ##### ▶︎ Metadata language
 Specifies the language of the metadata that will be grabbed. Defaults to English.
