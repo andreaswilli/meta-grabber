@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withNamespaces } from 'react-i18next';
 
 import Button from './button';
 import Autocomplete from './autocomplete';
@@ -7,7 +8,7 @@ import { search } from '../util/request';
 
 import CrossIcon from '../icons/cross.svg';
 
-export default class TvShowInput extends Component {
+class TvShowInput extends Component {
 
   constructor(props) {
     super(props);
@@ -18,6 +19,7 @@ export default class TvShowInput extends Component {
   }
 
   async search(query) {
+    const { t } = this.props;
     try {
       const results = await search(query);
       this.setState({ results });
@@ -29,11 +31,11 @@ export default class TvShowInput extends Component {
       } else {
         this.props.onMessages({
           id: 'search-error',
-          text: `Failed to search tv show: ${error}`,
+          text: t('error.searchTvShow', error),
           type: 'error',
           dismissable: true,
-        })
-      };
+        });
+      }
     }
   }
 
@@ -60,10 +62,11 @@ export default class TvShowInput extends Component {
   }
 
   render () {
+    const { t } = this.props;
     return (
       <div className="tv-show-input">
         <Autocomplete
-          placeholder="Search TV show..."
+          placeholder={t('placeholder')}
           focusable={this.props.openState}
           onChange={this.handleChange.bind(this)}
           onSelect={this.handleSelect.bind(this)}
@@ -85,3 +88,5 @@ export default class TvShowInput extends Component {
     );
   }
 }
+
+export default withNamespaces('tvShowInput')(TvShowInput);

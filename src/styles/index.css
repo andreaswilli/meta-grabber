@@ -451,6 +451,7 @@ body {
 .settings-pane__container {
   margin-bottom: 200px;
   box-sizing: content-box;
+  height: auto;
 }
 
 .settings-pane__setting {
@@ -475,6 +476,10 @@ body {
 
 .settings-pane__setting__group__button {
   margin-left: 8px;
+}
+
+.settings-pane__setting__group__button--radio:first-of-type {
+  margin-left: 0;
 }
 
 .error {
