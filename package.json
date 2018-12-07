@@ -36,6 +36,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "classnames": "^2.2.6",
     "electron-default-menu": "^1.0.1",
+    "electron-is-dev": "^1.0.1",
     "i18next": "^12.1.0",
     "react": "^16.5.2",
     "react-animate-height": "^2.0.4",

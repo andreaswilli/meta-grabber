@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, Menu, shell } = require('electron')
 const defaultMenu = require('electron-default-menu')
+const isDev = require('electron-is-dev')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -53,6 +54,15 @@ app.on('ready', () => {
     },
     ...menu.filter(menuItem => menuItem.label !== mainMenuItem.label)
   ]
+
+  // remove devtools and relaod in prod
+  if (!isDev) {
+    menu = menu.map(menuItem => ({
+      ...menuItem,
+      submenu: menuItem.submenu.filter(subItem =>
+        subItem.label !== 'Toggle Developer Tools' && subItem.label !== 'Reload')
+    }))
+  }
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(menu))
 })
