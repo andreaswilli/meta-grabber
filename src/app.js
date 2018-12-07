@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import i18n from 'i18next';
 import { withNamespaces } from 'react-i18next';
+import { ipcRenderer } from 'electron';
 
 import TvShowInput from './components/tvShowInput';
 import FilePicker from './components/filePicker';
@@ -26,6 +27,13 @@ class App extends Component {
 
     i18n.on('languageChanged', () => {
       this.updateUsageHint(this.state.seasons, this.state.files);
+    });
+
+    // menu bar item clicked / cmd+, pressed
+    ipcRenderer.on('settings-toggle', () => {
+      this.setState(state => ({
+        settingsPaneOpen: !state.settingsPaneOpen,
+      }));
     });
 
     this.initialState = {

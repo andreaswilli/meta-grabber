@@ -34,6 +34,26 @@ app.on('ready', () => {
   // menu bar
   let menu = defaultMenu(app, shell)
 
+  // add settings shortcut
+  const mainMenuItem = menu.find(menuItem => menuItem.label === 'meta-grabber')
+  menu = [{
+      ...mainMenuItem,
+      submenu: [
+        ...mainMenuItem.submenu.slice(0, 2), {
+          label: 'Preferences...',
+          accelerator: 'Cmd+,',
+          click: () => {
+            mainWindow.webContents.send('settings-toggle')
+          }
+        }, {
+          type: 'separator'
+        },
+        ...mainMenuItem.submenu.slice(2)
+      ]
+    },
+    ...menu.filter(menuItem => menuItem.label !== mainMenuItem.label)
+  ]
+
   Menu.setApplicationMenu(Menu.buildFromTemplate(menu))
 })
 
