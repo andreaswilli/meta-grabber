@@ -6,15 +6,12 @@ class Download extends React.Component {
   constructor(props) {
     super(props)
 
+    const { userName, repoName } = props
+
     this.state = {
-      latestReleaseUrl: `https://github.com/${props.userName}/${props.repoName}/releases/latest`,
-      allReleasesUrl: `https://github.com/${props.userName}/${props.repoName}/releases`,
-      version: null,
-      links: {
-        macos: '',
-        windows: '',
-        linux: ''
-      }
+      latestReleaseUrl: `https://github.com/${userName}/${repoName}/releases/latest`,
+      allReleasesUrl: `https://github.com/${userName}/${repoName}/releases`,
+      links: {}
     }
 
     this.getLatestRelease()
@@ -23,16 +20,14 @@ class Download extends React.Component {
   getLatestRelease() {
     const { userName, repoName } = this.props
     axios.get(`https://api.github.com/repos/${userName}/${repoName}/releases/latest`).then(response => {
-      console.log(response.data.assets.find(a => a.name.indexOf('.exe') !== -1).browser_download_url)
-      this.state = {
-        ...this.state,
+      this.setState({
         version: response.data.tag_name,
         links: {
           macos: response.data.assets.find(a => a.name.indexOf('mac.zip') !== -1).browser_download_url,
           windows: response.data.assets.find(a => a.name.indexOf('.exe') !== -1).browser_download_url,
           linux: response.data.assets.find(a => a.name.indexOf('.AppImage') !== -1).browser_download_url
         }
-      }
+      })
     })
   }
 
