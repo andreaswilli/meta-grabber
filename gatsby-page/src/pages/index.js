@@ -27,7 +27,7 @@ class Index extends React.Component {
 
     return (
       <Layout>
-        <Helmet title="Gatsby Starter - Stellar" />
+        <Helmet title="Meta Grabber" />
 
         <Header />
 
