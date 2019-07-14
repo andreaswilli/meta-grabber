@@ -37,23 +37,26 @@ app.on('ready', () => {
 
   // add settings shortcut
   const mainMenuItem = menu.find(menuItem => menuItem.label === 'meta-grabber')
-  menu = [{
-      ...mainMenuItem,
-      submenu: [
-        ...mainMenuItem.submenu.slice(0, 2), {
-          label: 'Preferences...',
-          accelerator: 'Cmd+,',
-          click: () => {
-            mainWindow.webContents.send('settings-toggle')
-          }
-        }, {
-          type: 'separator'
-        },
-        ...mainMenuItem.submenu.slice(2)
-      ]
-    },
-    ...menu.filter(menuItem => menuItem.label !== mainMenuItem.label)
-  ]
+  // only do this on macOS
+  if (mainMenuItem) {
+    menu = [{
+        ...mainMenuItem,
+        submenu: [
+          ...mainMenuItem.submenu.slice(0, 2), {
+            label: 'Preferences...',
+            accelerator: 'Cmd+,',
+            click: () => {
+              mainWindow.webContents.send('settings-toggle')
+            }
+          }, {
+            type: 'separator'
+          },
+          ...mainMenuItem.submenu.slice(2)
+        ]
+      },
+      ...menu.filter(menuItem => menuItem.label !== mainMenuItem.label)
+    ]
+  }
 
   // remove devtools and relaod in prod
   if (!isDev) {
