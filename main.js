@@ -1,5 +1,7 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow, Menu, shell } = require('electron')
+const defaultMenu = require('electron-default-menu')
+const isDev = require('electron-is-dev')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -27,7 +29,43 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+  createWindow()
+
+  // menu bar
+  let menu = defaultMenu(app, shell)
+
+  // add settings shortcut
+  const mainMenuItem = menu.find(menuItem => menuItem.label === 'meta-grabber')
+  menu = [{
+      ...mainMenuItem,
+      submenu: [
+        ...mainMenuItem.submenu.slice(0, 2), {
+          label: 'Preferences...',
+          accelerator: 'Cmd+,',
+          click: () => {
+            mainWindow.webContents.send('settings-toggle')
+          }
+        }, {
+          type: 'separator'
+        },
+        ...mainMenuItem.submenu.slice(2)
+      ]
+    },
+    ...menu.filter(menuItem => menuItem.label !== mainMenuItem.label)
+  ]
+
+  // remove devtools and relaod in prod
+  if (!isDev) {
+    menu = menu.map(menuItem => ({
+      ...menuItem,
+      submenu: menuItem.submenu.filter(subItem =>
+        subItem.label !== 'Toggle Developer Tools' && subItem.label !== 'Reload')
+    }))
+  }
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menu))
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
