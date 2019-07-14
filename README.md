@@ -7,7 +7,7 @@
 ## Download
 
 `Meta Grabber` is available for macOS, Windows and Linux.
-The latest release can be downloaded [here](https://github.com/andreaswilli/meta-grabber/releases/latest).
+The latest release can be downloaded [here](https://andreaswilli.github.io/meta-grabber/).
 
 ## Demo
 Rename your files in seconds! 🚀

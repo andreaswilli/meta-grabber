@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="11.6661033%" y1="14.6496455%" x2="85.6580066%" y2="87.5934583%" id="linearGradient-1">
+            <stop stop-color="#8D9FC7" offset="0%"></stop>
+            <stop stop-color="#3C4966" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon">
+            <circle id="bg" stroke="#FFFFFF" stroke-width="48" fill="url(#linearGradient-1)" cx="512" cy="512" r="488"></circle>
+            <g id="TV" fill="#FFFFFF">
+                <g transform="translate(16.000000, 16.000000)" id="Combined-Shape">
+                    <path d="M384,688 L624,688 C632.836556,688 640,695.163444 640,704 L640,704 C640,712.836556 632.836556,720 624,720 L384,720 C375.163444,720 368,712.836556 368,704 L368,704 C368,695.163444 375.163444,688 384,688 Z M232,320 L760,320 C773.254834,320 784,330.745166 784,344 L784,632 C784,645.254834 773.254834,656 760,656 L232,656 C218.745166,656 208,645.254834 208,632 L208,344 C208,330.745166 218.745166,320 232,320 Z M496,576 L592,512 L400,512 L496,576 Z M448,400 L448,512 L544,512 L544,400 L448,400 Z"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
