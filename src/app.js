@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import i18n from 'i18next';
+import { withNamespaces } from 'react-i18next';
+import { ipcRenderer } from 'electron';
 
 import TvShowInput from './components/tvShowInput';
 import FilePicker from './components/filePicker';
@@ -15,12 +18,23 @@ import SettingsIcon from './icons/settings.svg';
 
 import './util/array.js';
 
-export default class App extends Component {
+class App extends Component {
 
   constructor(props) {
     super(props);
 
     getTvDbToken();
+
+    i18n.on('languageChanged', () => {
+      this.updateUsageHint(this.state.seasons, this.state.files);
+    });
+
+    // menu bar item clicked / cmd+, pressed
+    ipcRenderer.on('settings-toggle', () => {
+      this.setState(state => ({
+        settingsPaneOpen: !state.settingsPaneOpen,
+      }));
+    });
 
     this.initialState = {
       files: [],
@@ -43,6 +57,7 @@ export default class App extends Component {
 
   loadSettings() {
     return {
+      uiLang: localStorage.getItem('uiLang') || 'en',
       metaDataLang: (localStorage.getItem('metaDataLang') || 'en').replace(/^\(empty\)$/, ''),
       apiProvider: localStorage.getItem('apiProvider') || 'moviedb',
       template: (localStorage.getItem('template') || 'S{season_no} E{episode_no} - {episode_name}')
@@ -86,7 +101,7 @@ export default class App extends Component {
       } else {
         this.handleMessages({
           id: 'load-seasons-error',
-          text: `Failed to load seasons: ${error}`,
+          text: t('error.loadSeasons', { error }),
           type: 'error',
           dismissable: true,
         });
@@ -119,7 +134,7 @@ export default class App extends Component {
       messages: [
         ...this.initialState.messages.filter(m => m.id !== 'rename-error'), {
           id: 'rename-success',
-          text: 'Files successfully renamed!',
+          text: t('fileRenameSuccess'),
           type: 'success',
           autoDismiss: 3000,
         },
@@ -128,6 +143,7 @@ export default class App extends Component {
   }
 
   updateUsageHint(seasons, files) {
+    const { t } = this.props;
     let newSeasons = seasons !== undefined ? seasons : this.state.seasons;
     let newFiles = files !== undefined ? files : this.state.files;
     if (newSeasons.length === 0 || newFiles.length === 0) {
@@ -135,13 +151,17 @@ export default class App extends Component {
         messages: [
           ...this.state.messages.filter(m => m.id !== 'usage-hint'), {
             id: 'usage-hint',
-            text: `Please${newSeasons.length === 0
-              ? ` search for a TV show${newFiles.length === 0 ? ' and' : '.'}` : ''}${
-                newFiles.length === 0 ? ' open the files you want to rename.' : ''}`,
+            text: t('usageHint.message', {
+              message: `${
+                newSeasons.length === 0 ? t('usageHint.searchTvShow') : ''}${
+                newSeasons.length === 0 && newFiles.length === 0 ? t('usageHint.and') : ''}${
+                newFiles.length === 0 ? t('usageHint.openFiles') : ''
+              }`
+            }),
             type: 'info',
           },
         ]
-      })
+      });
     } else {
       const usageHint = this.state.messages.find(m => m.id === 'usage-hint');
       this.setState({
@@ -167,6 +187,7 @@ export default class App extends Component {
   }
 
   render () {
+    const { t } = this.props;
     return (
       <div className="app">
         <LoadingIndicator hidden={!this.state.loading} />
@@ -189,7 +210,7 @@ export default class App extends Component {
                 onMessages={this.handleMessages.bind(this)}
               />
               <Button
-                label="Settings"
+                label={t('settings')}
                 icon={<SettingsIcon />}
                 className="settings-button"
                 onClick={() => this.setState({ settingsPaneOpen: true })}
@@ -227,3 +248,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default withNamespaces('app')(App);

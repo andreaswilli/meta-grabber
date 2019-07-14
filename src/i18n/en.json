@@ -1,0 +1,76 @@
+{
+  "app": {
+    "settings": "Settings",
+    "fileRenameSuccess": "Files successfully renamed!",
+    "usageHint": {
+      "message": "Please{{message}}.",
+      "searchTvShow": " search for a TV show",
+      "openFiles": " open the files you want to rename",
+      "and": " and"
+    },
+    "error": {
+      "loadSeasons": "Failed to load seasons {{error}}"
+    }
+  },
+  "tvShowInput": {
+    "placeholder": "Search TV show...",
+    "error": {
+      "searchTvShow": "Failed to search tv show: {{error}}"
+    }
+  },
+  "filePicker": {
+    "openFiles": "Open Files",
+    "error": {
+      "openFiles": "Files could not be opened: {{error}}"
+    }
+  },
+  "fileRename": {
+    "includeAll": "Include All",
+    "excludeAll": "Exclude All",
+    "noOutputDir": "none (leave the files where they are)",
+    "chooseOutputDir": "Choose Output Dir",
+    "rename": "Rename",
+    "error": {
+      "renameFiles": "Files could not be renamed: {{error}}",
+      "fileExisting": "Error: File is already existing: {{newFileName}}",
+      "createDir": "Output directory could not be created: {{error}}"
+    }
+  },
+  "settingsPane": {
+    "heading": "Settings",
+    "uiLang": {
+      "title": "User interface language.",
+      "de": "German",
+      "en": "English"
+    },
+    "metaLang": {
+      "title": "Metadata language.",
+      "placeholder": "Choose language"
+    },
+    "metadataProvider": {
+      "title": "Metadata provider.",
+      "placeholder": "Choose provider"
+    },
+    "fileNameTemplate": {
+      "title": "File name template (<0>link</0>).",
+      "help": "help",
+      "hint": "Example: {{example}}",
+      "tvShowExampleName": "Breaking Bad",
+      "episodeExampleName": "Felina",
+      "errorInvalidTemplate": "The template has to contain <0>{season_no}</0> and <1>{episode_no}</1>, because file names have to be unique!"
+    },
+    "defaultOutputDir": {
+      "title": "Default output directory.",
+      "choose": "Choose",
+      "hint": "You can use <0>{show_name}</0> to dynamically include the name of the tv show."
+    },
+    "includedFileTypes": {
+      "title": "Included file types.",
+      "hint": "These file extensions will be included when opening files (separate with comma)."
+    },
+    "excludedTerms": {
+      "title": "Excluded terms.",
+      "hint": "Exclude files that contain one of these terms in their name or path (separate with comma)."
+    }
+  }
+}
