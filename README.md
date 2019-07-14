@@ -72,10 +72,10 @@ Files that contain one of the terms set here will not get included. This applies
 ## Local development
 Run it locally by following these steps:
 
-1. Install dependencies: `yarn` or `npm i`
+1. Install dependencies: `npm i`
 
-1. Start build: `yarn serve` or `npm run serve`
+1. Start build: `npm run serve`
 
-1. Start the electron app in a **new** terminal window: `yarn dev` or `npm run dev`
+1. Start the electron app in a **new** terminal window: `npm run dev`
 
 Now you can make changes, save the modified files, then return to the app and reload (`ctrl+r` on Windows/Linux, `cmd+r` on macOS). Your changes should now appear in the app.
