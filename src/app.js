@@ -134,7 +134,7 @@ class App extends Component {
       messages: [
         ...this.initialState.messages.filter(m => m.id !== 'rename-error'), {
           id: 'rename-success',
-          text: t('fileRenameSuccess'),
+          text: this.props.t('fileRenameSuccess'),
           type: 'success',
           autoDismiss: 3000,
         },
