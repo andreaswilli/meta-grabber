@@ -3,7 +3,6 @@ import axios from 'axios';
 import i18n from 'i18next';
 import { withNamespaces } from 'react-i18next';
 import { ipcRenderer } from 'electron';
-import { autoUpdater } from 'electron-updater';
 
 import TvShowInput from './components/tvShowInput';
 import FilePicker from './components/filePicker';
@@ -23,8 +22,6 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-
-    autoUpdater.checkForUpdatesAndNotify();
 
     getTvDbToken();
 

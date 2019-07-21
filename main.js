@@ -2,6 +2,7 @@
 const { app, BrowserWindow, Menu, shell } = require('electron')
 const defaultMenu = require('electron-default-menu')
 const isDev = require('electron-is-dev')
+const { autoUpdater } = require('electron-updater')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -30,6 +31,8 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+  autoUpdater.checkForUpdatesAndNotify()
+
   createWindow()
 
   // menu bar
