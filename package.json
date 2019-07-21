@@ -1,6 +1,6 @@
 {
   "name": "meta-grabber",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A tool to grab metadata for tv shows and rename files on your hard disk.",
   "main": "main.js",
   "scripts": {
@@ -37,6 +37,7 @@
     "classnames": "^2.2.6",
     "electron-default-menu": "^1.0.1",
     "electron-is-dev": "^1.0.1",
+    "electron-updater": "^4.1.2",
     "i18next": "^12.1.0",
     "react": "^16.5.2",
     "react-animate-height": "^2.0.4",
@@ -53,18 +54,15 @@
       "output": "dist"
     },
     "mac": {
-      "target": "zip",
       "icon": "icons/icon.icns",
       "category": "public.app-category.utilities",
       "type": "distribution",
       "minimumSystemVersion": "10.10"
     },
     "win": {
-      "target": "portable",
       "icon": "icons/icon.ico"
     },
     "linux": {
-      "target": "AppImage",
       "icon": "icons/icon.icns",
       "category": "Utility"
     },
