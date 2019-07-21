@@ -23,7 +23,7 @@ class Download extends React.Component {
       this.setState({
         version: response.data.tag_name,
         links: {
-          macos: response.data.assets.find(a => a.name.indexOf('mac.zip') !== -1).browser_download_url,
+          macos: response.data.assets.find(a => a.name.indexOf('.dmg') !== -1).browser_download_url,
           windows: response.data.assets.find(a => a.name.indexOf('.exe') !== -1).browser_download_url,
           linux: response.data.assets.find(a => a.name.indexOf('.AppImage') !== -1).browser_download_url
         }
