@@ -151,6 +151,25 @@ class FileRename extends Component {
     this.assignEpisodesToFiles(this.props);
   }
 
+  getNewFileDir = (a) => {
+    let newFileDir = ((this.props.outputDir !== '?' && this.props.outputDir)
+      || formatFilePath(a.fileName))
+        .replace(/\{show_name\}/g, this.props.tvShow.name || '{show_name}');
+
+    // path starts with windows drive letter (e.g. `C:\...` or `D:/...`)
+    if (newFileDir.match(/^[A-Za-z]{1}\:[\/\\]/)) {
+      newFileDir = `${newFileDir.substr(0, 3)}${newFileDir.substr(3).replace(/[#%&\{\}<>\*\?$!'":@]/g, '')}`;
+    } else {
+      newFileDir = newFileDir.replace(/[#%&\{\}<>\*\?$!'":@]/g, '');
+    }
+    return newFileDir;
+  }
+
+  getNewFileDirText = () => {
+    if (!this.props.outputDir || this.props.outputDir === '?') return this.props.t('noOutputDir');
+    return this.getNewFileDir();
+  }
+
   async renameFiles() {
     const { t } = this.props;
     this.props.onLoadingChange(true);
@@ -159,10 +178,7 @@ class FileRename extends Component {
       // make sure that none of the new files replaces any existing file
       let nameMappings = await Promise.all(assignments.map(async a => {
         return new Promise(async (resolve, reject) => {
-          const newFileDir = ((this.props.outputDir !== '?' && this.props.outputDir)
-            || formatFilePath(a.fileName))
-              .replace(/\{show_name\}/g, this.props.tvShow.name || 'error')
-              .replace(/[#%&\{\}<>\*\?$!'":@]/g, '');
+          const newFileDir = this.getNewFileDir(a);
           try {
             // test if directory is existing
             await stat(newFileDir);
@@ -291,9 +307,7 @@ class FileRename extends Component {
             <KoFiIcon className="ko-fi-icon"/>
           </Link>
           <div className="file-rename__output__dir">
-            {((this.props.outputDir !== '?' && this.props.outputDir) || t('noOutputDir'))
-              .replace(/\{show_name\}/g, this.props.tvShow.name || '{show_name}')
-              .replace(/[#%&<>\*\?$!'":@]/g, '')}
+            {this.getNewFileDirText()}
           </div>
           <Button
             className="file-rename__output__choose"
