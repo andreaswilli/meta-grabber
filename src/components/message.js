@@ -1,43 +1,45 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
-import AnimateHeight from 'react-animate-height';
+import React, { Component } from 'react'
+import classNames from 'classnames'
+import AnimateHeight from 'react-animate-height'
 
-import CrossIcon from '../icons/cross.svg';
-import CheckmarkIcon from '../icons/checkmark.svg';
-import InfoIcon from '../icons/info.svg';
-import WarningIcon from '../icons/warning.svg';
-import ErrorIcon from '../icons/error.svg';
+import CrossIcon from '../icons/cross.svg'
+import CheckmarkIcon from '../icons/checkmark.svg'
+import InfoIcon from '../icons/info.svg'
+import WarningIcon from '../icons/warning.svg'
+import ErrorIcon from '../icons/error.svg'
 
 export default class Message extends Component {
-
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       inAnimation: false,
       outAnimation: false,
       height: 0,
-    };
+    }
   }
 
   componentDidMount() {
     setTimeout(() => {
       this.setState({
         height: 'auto',
-      });
-    }, 0);
+      })
+    }, 0)
     setTimeout(() => {
       this.setState({
         inAnimation: true,
-      });
-    }, 150);
-    if (!this.props.message.autoDismiss) return;
-    setTimeout(() => this.handleDismissMessage(this.props.message.id), this.props.message.autoDismiss);
+      })
+    }, 150)
+    if (!this.props.message.autoDismiss) return
+    setTimeout(
+      () => this.handleDismissMessage(this.props.message.id),
+      this.props.message.autoDismiss
+    )
   }
 
   componentDidUpdate() {
-    if(this.props.message.willDismiss && !this.state.outAnimation) {
-      this.handleDismissMessage(this.props.message.id);
+    if (this.props.message.willDismiss && !this.state.outAnimation) {
+      this.handleDismissMessage(this.props.message.id)
     }
   }
 
@@ -45,8 +47,8 @@ export default class Message extends Component {
     this.setState({
       outAnimation: true,
       height: 0,
-    });
-    this.props.onDismissMessage(id);
+    })
+    this.props.onDismissMessage(id)
   }
 
   render() {
@@ -57,10 +59,14 @@ export default class Message extends Component {
         height={this.state.height}
       >
         <div
-          className={classNames('message', `message--${this.props.message.type}`, {
-            'message--visible': this.state.inAnimation,
-            'message--dismiss': this.state.outAnimation,
-          })}
+          className={classNames(
+            'message',
+            `message--${this.props.message.type}`,
+            {
+              'message--visible': this.state.inAnimation,
+              'message--dismiss': this.state.outAnimation,
+            }
+          )}
         >
           <div className="message__icon">
             {this.props.message.type === 'success' && <CheckmarkIcon />}
@@ -79,6 +85,6 @@ export default class Message extends Component {
           )}
         </div>
       </AnimateHeight>
-    );
+    )
   }
 }

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
+import React, { Component } from 'react'
+import classNames from 'classnames'
 
 export default class Button extends Component {
-  render () {
+  render() {
     return (
       <button
         className={classNames('button', this.props.className, {
@@ -15,8 +15,10 @@ export default class Button extends Component {
         onClick={!this.props.disabled && this.props.onClick}
       >
         {this.props.icon}
-        {this.props.label && <div className="button__label">{this.props.label}</div>}
+        {this.props.label && (
+          <div className="button__label">{this.props.label}</div>
+        )}
       </button>
-    );
+    )
   }
 }

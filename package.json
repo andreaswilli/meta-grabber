@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "electron .",
     "serve": "webpack --watch --mode development",
+    "format": "prettier --write '**/*.+(js|css)'",
     "package": "webpack --mode production && electron-builder -mwl",
     "package-publish": "webpack --mode production && electron-builder -mwl --publish always"
   },
@@ -23,6 +24,7 @@
   "devDependencies": {
     "electron": "^5.0.7",
     "electron-builder": "^20.28.3",
+    "prettier": "^1.19.1",
     "webpack-cli": "^3.1.0"
   },
   "dependencies": {

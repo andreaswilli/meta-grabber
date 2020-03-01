@@ -1,6 +1,6 @@
-import i18n from 'i18next';
-import de from './de.json';
-import en from './en.json';
+import i18n from 'i18next'
+import de from './de.json'
+import en from './en.json'
 
 i18n.init({
   lng: localStorage.getItem('uiLang') || 'en',
@@ -18,8 +18,8 @@ i18n.init({
     wait: true,
     bindI18n: 'languageChanged loaded',
     bindStore: 'added removed',
-    nsMode: 'default'
-  }
-});
+    nsMode: 'default',
+  },
+})
 
-export default i18n;
+export default i18n

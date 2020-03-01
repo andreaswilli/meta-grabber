@@ -1,59 +1,72 @@
-import React, { Component } from 'react';
-import fs from 'fs';
-import { remote } from 'electron';
-import classNames from 'classnames';
-import AnimateHeight from 'react-animate-height';
-import util from 'util';
-import { withNamespaces } from 'react-i18next';
+import React, { Component } from 'react'
+import fs from 'fs'
+import { remote } from 'electron'
+import classNames from 'classnames'
+import AnimateHeight from 'react-animate-height'
+import util from 'util'
+import { withNamespaces } from 'react-i18next'
 
-import Button from './button';
-import Link from './link';
-import { flatten } from '../util/array';
-import { formatFileName, formatFilePath, formatFileExtension } from '../util/format';
+import Button from './button'
+import Link from './link'
+import { flatten } from '../util/array'
+import {
+  formatFileName,
+  formatFilePath,
+  formatFileExtension,
+} from '../util/format'
 
-import CrossIcon from '../icons/cross.svg';
-import FolderIcon from '../icons/folder.svg';
-import CheckmarkIcon from '../icons/checkmark.svg';
-import CheckboxUncheckedIcon from '../icons/checkbox-0.svg';
-import CheckboxCheckedIcon from '../icons/checkbox-1.svg';
-import KoFiIcon from '../icons/ko-fi.svg';
+import CrossIcon from '../icons/cross.svg'
+import FolderIcon from '../icons/folder.svg'
+import CheckmarkIcon from '../icons/checkmark.svg'
+import CheckboxUncheckedIcon from '../icons/checkbox-0.svg'
+import CheckboxCheckedIcon from '../icons/checkbox-1.svg'
+import KoFiIcon from '../icons/ko-fi.svg'
 
-const stat = util.promisify(fs.stat);
-const mkdir = util.promisify(fs.mkdir);
-const rename = util.promisify(fs.rename);
-const readFile = util.promisify(fs.readFile);
+const stat = util.promisify(fs.stat)
+const mkdir = util.promisify(fs.mkdir)
+const rename = util.promisify(fs.rename)
+const readFile = util.promisify(fs.readFile)
 
 class FileRename extends Component {
-
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       includedSeasons: [],
       assignments: [],
-    };
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(this.props.seasons) !== JSON.stringify(nextProps.seasons)) {
-      this.setState({ includedSeasons: [] });
+    if (
+      JSON.stringify(this.props.seasons) !== JSON.stringify(nextProps.seasons)
+    ) {
+      this.setState({ includedSeasons: [] })
     }
-    this.assignEpisodesToFiles(nextProps);
+    this.assignEpisodesToFiles(nextProps)
   }
 
   isSeasonIncluded(seasonName) {
-    return this.state.includedSeasons.find(season =>
-      season.name === seasonName) !== undefined;
+    return (
+      this.state.includedSeasons.find(season => season.name === seasonName) !==
+      undefined
+    )
   }
 
   isEpisodeIncluded(episodeName) {
-    return this.state.includedSeasons.filter(season =>
-      season.includedEpisodes.filter(episode =>
-        episode === episodeName).length > 0).length > 0;
+    return (
+      this.state.includedSeasons.filter(
+        season =>
+          season.includedEpisodes.filter(episode => episode === episodeName)
+            .length > 0
+      ).length > 0
+    )
   }
 
   isWholeSeasonExcluded(seasonName) {
-    return this.state.includedSeasons.find(s => s.name === seasonName) === undefined;
+    return (
+      this.state.includedSeasons.find(s => s.name === seasonName) === undefined
+    )
   }
 
   async handleSeasonChange(e, seasonName) {
@@ -61,205 +74,235 @@ class FileRename extends Component {
       // include season
       await this.setState({
         includedSeasons: [
-          ...this.state.includedSeasons.filter(s => s.name !== seasonName), {
+          ...this.state.includedSeasons.filter(s => s.name !== seasonName),
+          {
             name: seasonName,
-            includedEpisodes: this.props.seasons.find(s =>
-              s.name === seasonName).episodes,
+            includedEpisodes: this.props.seasons.find(
+              s => s.name === seasonName
+            ).episodes,
           },
         ],
-      });
+      })
     } else {
       // exclude season
       await this.setState({
-        includedSeasons: this.state.includedSeasons.filter(s => s.name !== seasonName),
-      });
+        includedSeasons: this.state.includedSeasons.filter(
+          s => s.name !== seasonName
+        ),
+      })
     }
-    this.assignEpisodesToFiles(this.props);
+    this.assignEpisodesToFiles(this.props)
   }
 
   async handleEpisodeChange(e, episodeName) {
-    const season = this.props.seasons.find(season =>
-      season.episodes.filter(episode =>
-        episode === episodeName).length > 0);
-    const includedSeason = this.state.includedSeasons.find(s =>
-      s.name === season.name);
-    let includedSeasons;
+    const season = this.props.seasons.find(
+      season =>
+        season.episodes.filter(episode => episode === episodeName).length > 0
+    )
+    const includedSeason = this.state.includedSeasons.find(
+      s => s.name === season.name
+    )
+    let includedSeasons
 
     if (e.target.checked) {
       // include episode
       includedSeasons = [
-        ...this.state.includedSeasons.filter(s => s.name !== season.name), {
+        ...this.state.includedSeasons.filter(s => s.name !== season.name),
+        {
           name: includedSeason.name,
-          includedEpisodes: [
-            ...includedSeason.includedEpisodes,
-            episodeName,
-          ],
-        }
-      ];
+          includedEpisodes: [...includedSeason.includedEpisodes, episodeName],
+        },
+      ]
     } else {
       // exclude episode
       includedSeasons = [
-        ...this.state.includedSeasons.filter(s => s.name !== includedSeason.name), {
+        ...this.state.includedSeasons.filter(
+          s => s.name !== includedSeason.name
+        ),
+        {
           name: includedSeason.name,
-          includedEpisodes: includedSeason.includedEpisodes.filter(e => e !== episodeName),
+          includedEpisodes: includedSeason.includedEpisodes.filter(
+            e => e !== episodeName
+          ),
         },
-      ].filter(s => s.includedEpisodes.length > 0);
+      ].filter(s => s.includedEpisodes.length > 0)
     }
-    await this.setState({ includedSeasons });
-    this.assignEpisodesToFiles(this.props);
+    await this.setState({ includedSeasons })
+    this.assignEpisodesToFiles(this.props)
   }
 
   assignEpisodesToFiles(props) {
-    let excludedEpisodesCount = 0;
+    let excludedEpisodesCount = 0
     this.setState({
       assignments: flatten(props.seasons.map(s => s.episodes)).map((e, i) => {
-        let included = this.isEpisodeIncluded(e);
+        let included = this.isEpisodeIncluded(e)
         if (!included) {
-          excludedEpisodesCount++;
+          excludedEpisodesCount++
         }
         return {
           name: e,
-          fileName: included ? props.files[i - excludedEpisodesCount] : undefined,
-        };
+          fileName: included
+            ? props.files[i - excludedEpisodesCount]
+            : undefined,
+        }
       }),
-    });
+    })
   }
 
   getAssignedFileName(episodeName) {
-    let assignment = this.state.assignments.find(a => a.name === episodeName);
-    return assignment ? assignment.fileName : null;
+    let assignment = this.state.assignments.find(a => a.name === episodeName)
+    return assignment ? assignment.fileName : null
   }
 
   async handleChooseOutputDir() {
     const outputDir = await remote.dialog.showOpenDialog({
       properties: ['openDirectory', 'createDirectory'],
-    });
-    if (!outputDir[0]) return;
-    this.props.onChooseOutputDir(outputDir[0]);
+    })
+    if (!outputDir[0]) return
+    this.props.onChooseOutputDir(outputDir[0])
   }
 
   async handleIncludeAll() {
-    await this.setState({ includedSeasons: this.props.seasons.map(s => ({
-      name: s.name,
-      includedEpisodes: s.episodes,
-    }))});
-    this.assignEpisodesToFiles(this.props);
+    await this.setState({
+      includedSeasons: this.props.seasons.map(s => ({
+        name: s.name,
+        includedEpisodes: s.episodes,
+      })),
+    })
+    this.assignEpisodesToFiles(this.props)
   }
 
   async handleExcludeAll() {
-    await this.setState({ includedSeasons: [] });
-    this.assignEpisodesToFiles(this.props);
+    await this.setState({ includedSeasons: [] })
+    this.assignEpisodesToFiles(this.props)
   }
 
-  getNewFileDir = (a) => {
-    let newFileDir = ((this.props.outputDir !== '?' && this.props.outputDir)
-      || formatFilePath(a.fileName))
-        .replace(/\{show_name\}/g, this.props.tvShow.name || '{show_name}');
+  getNewFileDir = a => {
+    let newFileDir = (
+      (this.props.outputDir !== '?' && this.props.outputDir) ||
+      formatFilePath(a.fileName)
+    ).replace(/\{show_name\}/g, this.props.tvShow.name || '{show_name}')
 
     // path starts with windows drive letter (e.g. `C:\...` or `D:/...`)
     if (newFileDir.match(/^[A-Za-z]{1}\:[\/\\]/)) {
-      newFileDir = `${newFileDir.substr(0, 3)}${newFileDir.substr(3).replace(/[#%&\{\}<>\*\?$!'":@]/g, '')}`;
+      newFileDir = `${newFileDir.substr(0, 3)}${newFileDir
+        .substr(3)
+        .replace(/[#%&\{\}<>\*\?$!'":@]/g, '')}`
     } else {
-      newFileDir = newFileDir.replace(/[#%&\{\}<>\*\?$!'":@]/g, '');
+      newFileDir = newFileDir.replace(/[#%&\{\}<>\*\?$!'":@]/g, '')
     }
-    return newFileDir;
+    return newFileDir
   }
 
   getNewFileDirText = () => {
-    if (!this.props.outputDir || this.props.outputDir === '?') return this.props.t('noOutputDir');
-    return this.getNewFileDir();
+    if (!this.props.outputDir || this.props.outputDir === '?')
+      return this.props.t('noOutputDir')
+    return this.getNewFileDir()
   }
 
   async renameFiles() {
-    const { t } = this.props;
-    this.props.onLoadingChange(true);
-    let assignments = this.state.assignments.filter(a => a.fileName);
+    const { t } = this.props
+    this.props.onLoadingChange(true)
+    let assignments = this.state.assignments.filter(a => a.fileName)
     try {
       // make sure that none of the new files replaces any existing file
-      let nameMappings = await Promise.all(assignments.map(async a => {
-        return new Promise(async (resolve, reject) => {
-          const newFileDir = this.getNewFileDir(a);
-          try {
-            // test if directory is existing
-            await stat(newFileDir);
-          } catch(e) {
+      let nameMappings = await Promise.all(
+        assignments.map(async a => {
+          return new Promise(async (resolve, reject) => {
+            const newFileDir = this.getNewFileDir(a)
             try {
-              // create directory if it does not exist yet
-              await mkdir(newFileDir);
-            } catch (error) {
-              // ignore 'file already exists' error
-              // since async map functions run in parallel it is possible that
-              // another function already created the directory
-              if (error.toString().indexOf('EEXIST: file already exists') === -1) {
-                reject(t('error.createDir', { error }));
+              // test if directory is existing
+              await stat(newFileDir)
+            } catch (e) {
+              try {
+                // create directory if it does not exist yet
+                await mkdir(newFileDir)
+              } catch (error) {
+                // ignore 'file already exists' error
+                // since async map functions run in parallel it is possible that
+                // another function already created the directory
+                if (
+                  error.toString().indexOf('EEXIST: file already exists') === -1
+                ) {
+                  reject(t('error.createDir', { error }))
+                }
               }
             }
-          }
-          let newFileName = `${newFileDir}/${a.name}.${formatFileExtension(a.fileName)}`;
-          try {
-            // check if file is already exiting
-            await readFile(newFileName);
-            reject(t('error.fileExisting', { newFileName }));
-          } catch(error) {
-            if(error.toString().indexOf('no such file or directory') !== -1) {
-              // file is not existing, continue
-              resolve({
-                oldFileName: a.fileName,
-                newFileName,
-              });
-            } else {
-              reject(error);
+            let newFileName = `${newFileDir}/${a.name}.${formatFileExtension(
+              a.fileName
+            )}`
+            try {
+              // check if file is already exiting
+              await readFile(newFileName)
+              reject(t('error.fileExisting', { newFileName }))
+            } catch (error) {
+              if (
+                error.toString().indexOf('no such file or directory') !== -1
+              ) {
+                // file is not existing, continue
+                resolve({
+                  oldFileName: a.fileName,
+                  newFileName,
+                })
+              } else {
+                reject(error)
+              }
             }
-          }
-        });
-      }));
+          })
+        })
+      )
 
       // none of the files are existing already, continue
-      await Promise.all(nameMappings.map(mapping => {
-        return new Promise(async (resolve, reject) => {
-          try {
-            await rename(mapping.oldFileName, mapping.newFileName);
-            resolve();
-          } catch(error) {
-            reject(t('error.renameFiles', { error }));
-          }
-        });
-      }));
-      this.props.onFileRenameSuccess();
-    } catch(error) {
+      await Promise.all(
+        nameMappings.map(mapping => {
+          return new Promise(async (resolve, reject) => {
+            try {
+              await rename(mapping.oldFileName, mapping.newFileName)
+              resolve()
+            } catch (error) {
+              reject(t('error.renameFiles', { error }))
+            }
+          })
+        })
+      )
+      this.props.onFileRenameSuccess()
+    } catch (error) {
       this.props.onMessages({
         id: 'rename-error',
         text: error,
         type: 'error',
         dismissable: true,
-      });
+      })
     } finally {
-      this.props.onLoadingChange(false);
+      this.props.onLoadingChange(false)
     }
   }
 
   render() {
-    const { t } = this.props;
+    const { t } = this.props
     return (
       <React.Fragment>
         <div className="section section--main">
-          {this.props.seasons.length > 1 && <div className="button-row">
-            <Button
-              label={t('includeAll')}
-              icon={<CheckboxCheckedIcon />}
-              onClick={this.handleIncludeAll.bind(this)}
-              disabled={
-                JSON.stringify(this.state.includedSeasons.map(s => s.includedEpisodes)) ===
-                JSON.stringify(this.props.seasons.map(s => s.episodes))
-              }
-            />
-            <Button
-              label={t('excludeAll')}
-              icon={<CheckboxUncheckedIcon />}
-              onClick={this.handleExcludeAll.bind(this)}
-              disabled={this.state.includedSeasons.length === 0}
-            />
-          </div>}
+          {this.props.seasons.length > 1 && (
+            <div className="button-row">
+              <Button
+                label={t('includeAll')}
+                icon={<CheckboxCheckedIcon />}
+                onClick={this.handleIncludeAll.bind(this)}
+                disabled={
+                  JSON.stringify(
+                    this.state.includedSeasons.map(s => s.includedEpisodes)
+                  ) === JSON.stringify(this.props.seasons.map(s => s.episodes))
+                }
+              />
+              <Button
+                label={t('excludeAll')}
+                icon={<CheckboxUncheckedIcon />}
+                onClick={this.handleExcludeAll.bind(this)}
+                disabled={this.state.includedSeasons.length === 0}
+              />
+            </div>
+          )}
           <div className="file-rename__seasons">
             {(this.props.seasons || []).map((s, i) => (
               <AnimateHeight
@@ -276,16 +319,28 @@ class FileRename extends Component {
                   />
                   <div
                     className={classNames('file-rename__item', {
-                      'file-rename__item--season--excluded': this.isWholeSeasonExcluded(s.name),
+                      'file-rename__item--season--excluded': this.isWholeSeasonExcluded(
+                        s.name
+                      ),
                     })}
-                  >{s.name}</div>
+                  >
+                    {s.name}
+                  </div>
                 </label>
                 {s.episodes.map((e, i) => (
                   <div key={e}>
-                    <label className={classNames('file-rename__item', 'file-rename__item--episode', {
-                      'file-rename__item--even': i%2 == 0,
-                      'file-rename__item--included': this.isEpisodeIncluded(e),
-                    })}>
+                    <label
+                      className={classNames(
+                        'file-rename__item',
+                        'file-rename__item--episode',
+                        {
+                          'file-rename__item--even': i % 2 == 0,
+                          'file-rename__item--included': this.isEpisodeIncluded(
+                            e
+                          ),
+                        }
+                      )}
+                    >
                       <input
                         type="checkbox"
                         tabIndex={-1}
@@ -294,7 +349,9 @@ class FileRename extends Component {
                         onChange={event => this.handleEpisodeChange(event, e)}
                       />
                       <div className="file-rename__item__name">{e}</div>
-                      <div className="file-rename__item__file-name">{formatFileName(this.getAssignedFileName(e))}</div>
+                      <div className="file-rename__item__file-name">
+                        {formatFileName(this.getAssignedFileName(e))}
+                      </div>
                     </label>
                   </div>
                 ))}
@@ -304,7 +361,7 @@ class FileRename extends Component {
         </div>
         <div className="section section--output">
           <Link url="https://ko-fi.com/Y8Y7LBIM">
-            <KoFiIcon className="ko-fi-icon"/>
+            <KoFiIcon className="ko-fi-icon" />
           </Link>
           <div className="file-rename__output__dir">
             {this.getNewFileDirText()}
@@ -328,12 +385,14 @@ class FileRename extends Component {
             label={t('rename')}
             icon={<CheckmarkIcon />}
             onClick={this.renameFiles.bind(this)}
-            disabled={this.state.assignments.filter(a => a.fileName).length === 0}
+            disabled={
+              this.state.assignments.filter(a => a.fileName).length === 0
+            }
           />
         </div>
       </React.Fragment>
-    );
+    )
   }
 }
 
-export default withNamespaces('fileRename')(FileRename);
+export default withNamespaces('fileRename')(FileRename)

@@ -2,63 +2,63 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
 
 ::selection {
-  background: #ACD1FD;
+  background: #acd1fd;
 }
 
 :root {
-    /* default theme */
-    --color-main: #EBF1F1;
-    --color-bg-main: #262626;
-    --color-error: #E64D3D;
+  /* default theme */
+  --color-main: #ebf1f1;
+  --color-bg-main: #262626;
+  --color-error: #e64d3d;
 
-    --color-button: #262626;
-    --color-bg-button: #EBF1F1;
-    --color-button-hover: var(--color-button);
-    --color-bg-button-hover: #BEC3C7;
-    --color-button-disabled: #7F8D8E;
-    --color-bg-button-disabled: #363636;
-    --color-button-confirm: #EBF1F1;
-    --color-bg-button-confirm: #30CC71;
-    --color-button-confirm-hover: var(--color-button-confirm);
-    --color-bg-button-confirm-hover: #28AC60;
-    --color-button-confirm-disabled: var(--color-button-disabled);
-    --color-bg-button-confirm-disabled: var(--color-bg-button-disabled);
-    --color-button-delete: var(--color-button-confirm);
-    --color-bg-button-delete: #E64D3D;
-    --color-button-delete-hover: var(--color-button-delete);
-    --color-bg-button-delete-hover: #C0392B;
-    --color-button-delete-disabled: var(--color-button-disabled);
-    --color-bg-button-delete-disabled: var(--color-bg-button-disabled);
+  --color-button: #262626;
+  --color-bg-button: #ebf1f1;
+  --color-button-hover: var(--color-button);
+  --color-bg-button-hover: #bec3c7;
+  --color-button-disabled: #7f8d8e;
+  --color-bg-button-disabled: #363636;
+  --color-button-confirm: #ebf1f1;
+  --color-bg-button-confirm: #30cc71;
+  --color-button-confirm-hover: var(--color-button-confirm);
+  --color-bg-button-confirm-hover: #28ac60;
+  --color-button-confirm-disabled: var(--color-button-disabled);
+  --color-bg-button-confirm-disabled: var(--color-bg-button-disabled);
+  --color-button-delete: var(--color-button-confirm);
+  --color-bg-button-delete: #e64d3d;
+  --color-button-delete-hover: var(--color-button-delete);
+  --color-bg-button-delete-hover: #c0392b;
+  --color-button-delete-disabled: var(--color-button-disabled);
+  --color-bg-button-delete-disabled: var(--color-bg-button-disabled);
 
-    --color-input: #262626;
-    --color-bg-input: #EBF1F1;
-    --color-input-active: var(--color-input);
-    --color-bg-input-active: var(--color-bg-input);
+  --color-input: #262626;
+  --color-bg-input: #ebf1f1;
+  --color-input-active: var(--color-input);
+  --color-bg-input-active: var(--color-bg-input);
 
-    --color-autocomplete: var(--color-input);
-    --color-bg-autocomplete: var(--color-bg-input);
-    --color-autocomplete-selected: #EBF1F1;
-    --color-bg-autocomplete-selected: #34495E;
+  --color-autocomplete: var(--color-input);
+  --color-bg-autocomplete: var(--color-bg-input);
+  --color-autocomplete-selected: #ebf1f1;
+  --color-bg-autocomplete-selected: #34495e;
 
-    --color-message-info: #EBF1F1;
-    --color-bg-message-info: #3497DB;
-    --color-message-warning: #363636;
-    --color-bg-message-warning: #F1C40F;
-    --color-message-error: var(--color-message-info);
-    --color-bg-message-error: #E64D3D;
-    --color-message-success: var(--color-message-info);
-    --color-bg-message-success: #30CC71;
+  --color-message-info: #ebf1f1;
+  --color-bg-message-info: #3497db;
+  --color-message-warning: #363636;
+  --color-bg-message-warning: #f1c40f;
+  --color-message-error: var(--color-message-info);
+  --color-bg-message-error: #e64d3d;
+  --color-message-success: var(--color-message-info);
+  --color-bg-message-success: #30cc71;
 
-    --color-season: #EBF1F1;
-    --color-bg-season: transparent;
-    --color-border-season: var(--color-season);
+  --color-season: #ebf1f1;
+  --color-bg-season: transparent;
+  --color-border-season: var(--color-season);
 
-    --color-episode-odd: var(--color-episode-even);
-    --color-bg-episode-odd: #363636;
-    --color-border-episode-odd: #BEC3C7;
-    --color-episode-even: #EBF1F1;
-    --color-bg-episode-even: #2B2B2B;
-    --color-border-episode-even: var(--color-border-episode-odd);
+  --color-episode-odd: var(--color-episode-even);
+  --color-bg-episode-odd: #363636;
+  --color-border-episode-odd: #bec3c7;
+  --color-episode-even: #ebf1f1;
+  --color-bg-episode-even: #2b2b2b;
+  --color-border-episode-even: var(--color-border-episode-odd);
 }
 
 html {
