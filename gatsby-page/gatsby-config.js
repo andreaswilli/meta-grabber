@@ -1,10 +1,11 @@
 module.exports = {
   siteMetadata: {
-    title: "Meta Grabber",
-    author: "Andreas Willi",
-    description: "A tool to grab metadata for tv shows and rename files on your hard disk."
+    title: 'Meta Grabber',
+    author: 'Andreas Willi',
+    description:
+      'A tool to grab metadata for tv shows and rename files on your hard disk.',
   },
-  pathPrefix: "/meta-grabber",
+  pathPrefix: '/meta-grabber',
   plugins: [
     'gatsby-plugin-react-helmet',
     {
@@ -24,7 +25,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: "UA-131297671-2",
+        trackingId: 'UA-131297671-2',
         // Puts tracking script in the head instead of the body
         head: true,
       },
