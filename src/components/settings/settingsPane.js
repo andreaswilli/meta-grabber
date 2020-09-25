@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { remote } from 'electron'
 import i18n from 'i18next'
-import { withNamespaces, Trans } from 'react-i18next'
+import { withTranslation, Trans } from 'react-i18next'
 
 import { getLanguages } from '../../util/request'
 import NamingTemplate from './namingTemplate'
@@ -206,7 +206,7 @@ class SettingsPane extends Component {
             </div>
             <div className="settings-pane__setting">
               <div className="settings-pane__setting__label">
-                <Trans i18nKey="fileNameTemplate.title">
+                <Trans i18nKey="fileNameTemplate.title" t={t}>
                   <Link
                     url="https://github.com/andreaswilli/meta-grabber#file-name-template"
                     label={t('fileNameTemplate.help')}
@@ -247,7 +247,7 @@ class SettingsPane extends Component {
                 />
               </div>
               <div className="settings-pane__setting__message">
-                <Trans i18nKey="defaultOutputDir.hint">
+                <Trans i18nKey="defaultOutputDir.hint" t={t}>
                   <code>{'{show_name}'}</code>
                 </Trans>
               </div>
@@ -305,4 +305,4 @@ class SettingsPane extends Component {
   }
 }
 
-export default withNamespaces('settingsPane')(SettingsPane)
+export default withTranslation('settingsPane')(SettingsPane)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import i18n from 'i18next'
-import { withNamespaces } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 import { ipcRenderer } from 'electron'
 
 import TvShowInput from './components/tvShowInput'
@@ -275,4 +275,4 @@ class App extends Component {
   }
 }
 
-export default withNamespaces('app')(App)
+export default withTranslation('app')(App)

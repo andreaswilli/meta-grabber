@@ -4,7 +4,7 @@ import { remote } from 'electron'
 import classNames from 'classnames'
 import AnimateHeight from 'react-animate-height'
 import util from 'util'
-import { withNamespaces } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 
 import Button from './button'
 import Link from './link'
@@ -395,4 +395,4 @@ class FileRename extends Component {
   }
 }
 
-export default withNamespaces('fileRename')(FileRename)
+export default withTranslation('fileRename')(FileRename)

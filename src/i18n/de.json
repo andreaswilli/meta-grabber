@@ -52,7 +52,7 @@
       "placeholder": "Anbieter wählen"
     },
     "fileNameTemplate": {
-      "title": "Vorlage für Dateinamen (<0>link</0>).",
+      "title": "Vorlage für Dateinamen (<0/>).",
       "help": "Hilfe",
       "hint": "Beispiel: {{example}}",
       "tvShowExampleName": "Breaking Bad",

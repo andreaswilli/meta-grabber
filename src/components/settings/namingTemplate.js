@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withNamespaces, Trans } from 'react-i18next'
+import { withTranslation, Trans } from 'react-i18next'
 
 import { formatEpisodeName } from '../../util/format'
 
@@ -45,7 +45,7 @@ class NamingTemplate extends Component {
         />
         {!this.isTemplateValid(this.state.template) && (
           <div className="settings-pane__setting__message error">
-            <Trans i18nKey="fileNameTemplate.errorInvalidTemplate">
+            <Trans i18nKey="fileNameTemplate.errorInvalidTemplate" t={t}>
               <code>{'{season_no}'}</code>
               <code>{'{episode_no}'}</code>
             </Trans>
@@ -74,4 +74,4 @@ class NamingTemplate extends Component {
   }
 }
 
-export default withNamespaces('settingsPane')(NamingTemplate)
+export default withTranslation('settingsPane')(NamingTemplate)

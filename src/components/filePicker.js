@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { remote } from 'electron'
-import { withNamespaces } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 
 import Button from './button'
 import { asyncReadRecursively } from '../util/fs'
@@ -65,4 +65,4 @@ class FilePicker extends Component {
   }
 }
 
-export default withNamespaces('filePicker')(FilePicker)
+export default withTranslation('filePicker')(FilePicker)

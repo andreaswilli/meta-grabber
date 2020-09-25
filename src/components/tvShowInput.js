@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { withNamespaces } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 
 import Button from './button'
 import Autocomplete from './autocomplete'
@@ -92,4 +92,4 @@ class TvShowInput extends Component {
   }
 }
 
-export default withNamespaces('tvShowInput')(TvShowInput)
+export default withTranslation('tvShowInput')(TvShowInput)

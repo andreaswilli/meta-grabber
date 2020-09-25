@@ -22,14 +22,14 @@
   "author": "Andreas Willi",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^7.2.4",
+    "electron": "^7.3.3",
     "electron-builder": "^20.28.3",
     "prettier": "^1.19.1",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "@svgr/webpack": "^4.3.2",
-    "axios": "^0.19.0",
+    "@svgr/webpack": "^4.3.3",
+    "axios": "^0.19.2",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
     "babel-polyfill": "^6.26.0",
@@ -37,16 +37,16 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "classnames": "^2.2.6",
-    "electron-default-menu": "^1.0.1",
-    "electron-is-dev": "^1.0.1",
-    "electron-updater": "^4.1.2",
+    "electron-default-menu": "^1.0.2",
+    "electron-is-dev": "^1.2.0",
+    "electron-updater": "^4.3.5",
     "i18next": "^12.1.0",
-    "react": "^16.5.2",
-    "react-animate-height": "^2.0.4",
+    "react": "^16.13.1",
+    "react-animate-height": "^2.0.23",
     "react-autocomplete": "^1.8.1",
-    "react-dom": "^16.5.2",
-    "react-i18next": "^8.3.8",
-    "webpack": "^4.36.1"
+    "react-dom": "^16.13.1",
+    "react-i18next": "^11.7.3",
+    "webpack": "^4.44.2"
   },
   "build": {
     "appId": "com.andiw.metagrabber",
