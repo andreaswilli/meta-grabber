@@ -24,12 +24,12 @@
   "devDependencies": {
     "electron": "^7.3.3",
     "electron-builder": "^20.28.3",
-    "prettier": "^1.19.1",
+    "prettier": "^2.1.2",
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "@svgr/webpack": "^4.3.3",
-    "axios": "^0.19.2",
+    "@svgr/webpack": "^5.4.0",
+    "axios": "^0.20.0",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
     "babel-polyfill": "^6.26.0",
@@ -40,7 +40,7 @@
     "electron-default-menu": "^1.0.2",
     "electron-is-dev": "^1.2.0",
     "electron-updater": "^4.3.5",
-    "i18next": "^12.1.0",
+    "i18next": "^19.7.0",
     "react": "^16.13.1",
     "react-animate-height": "^2.0.23",
     "react-autocomplete": "^1.8.1",

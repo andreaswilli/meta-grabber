@@ -11,14 +11,13 @@ import FolderIcon from '../icons/folder.svg'
 class FilePicker extends Component {
   async open() {
     const { t } = this.props
-    const paths = await remote.dialog.showOpenDialog({
+    const { filePaths: paths, canceled } = await remote.dialog.showOpenDialog({
       properties: ['openFile', 'openDirectory', 'multiSelections'],
     })
-    this.props.onLoadingChange(true)
-    if (!paths) {
-      this.props.onLoadingChange(false)
+    if (canceled) {
       return
     }
+    this.props.onLoadingChange(true)
     try {
       const files = await asyncReadRecursively(paths)
       this.props.onFileOpen(
@@ -35,7 +34,7 @@ class FilePicker extends Component {
     } catch (error) {
       this.props.onMessages({
         id: 'open-error',
-        text: t('error.openFiles', error),
+        text: t('error.openFiles', { error }),
         type: 'error',
         dismissable: true,
       })

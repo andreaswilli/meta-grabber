@@ -117,11 +117,13 @@ class SettingsPane extends Component {
   }
 
   async handleChooseOutputDir() {
-    const outputDir = await remote.dialog.showOpenDialog({
+    const { filePaths, canceled } = await remote.dialog.showOpenDialog({
       properties: ['openDirectory', 'createDirectory'],
     })
-    if (!outputDir[0]) return
-    this.handleSettingsChange('defaultOutputDir', outputDir[0])
+    if (canceled) {
+      return
+    }
+    this.handleSettingsChange('defaultOutputDir', filePaths[0])
   }
 
   render() {

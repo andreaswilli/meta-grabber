@@ -25,7 +25,6 @@ import KoFiIcon from '../icons/ko-fi.svg'
 const stat = util.promisify(fs.stat)
 const mkdir = util.promisify(fs.mkdir)
 const rename = util.promisify(fs.rename)
-const readFile = util.promisify(fs.readFile)
 
 class FileRename extends Component {
   constructor(props) {
@@ -155,11 +154,13 @@ class FileRename extends Component {
   }
 
   async handleChooseOutputDir() {
-    const outputDir = await remote.dialog.showOpenDialog({
+    const { filePaths, canceled } = await remote.dialog.showOpenDialog({
       properties: ['openDirectory', 'createDirectory'],
     })
-    if (!outputDir[0]) return
-    this.props.onChooseOutputDir(outputDir[0])
+    if (canceled) {
+      return
+    }
+    this.props.onChooseOutputDir(filePaths[0])
   }
 
   async handleIncludeAll() {
@@ -232,8 +233,8 @@ class FileRename extends Component {
               a.fileName
             )}`
             try {
-              // check if file is already exiting
-              await readFile(newFileName)
+              // check if file is already existing
+              await fs.promises.access(newFileName)
               reject(t('error.fileExisting', { newFileName }))
             } catch (error) {
               if (
