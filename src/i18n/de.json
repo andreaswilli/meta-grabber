@@ -41,7 +41,8 @@
     "uiLang": {
       "title": "Sprache der Benutzeroberfläche.",
       "de": "Deutsch",
-      "en": "Englisch"
+      "en": "English",
+      "ch":  "Schwiizerdütsch"
     },
     "metaLang": {
       "title": "Sprache der Metadaten.",
