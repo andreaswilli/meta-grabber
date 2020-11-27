@@ -1,13 +1,14 @@
 import i18n from 'i18next'
 import de from './de.json'
 import en from './en.json'
+import deCh from './ch.json'
 
 i18n.init({
   lng: localStorage.getItem('uiLang') || 'en',
   fallbackLng: 'en',
   // debug: true,
 
-  resources: { en, de },
+  resources: { en, de, 'ch': deCh },
 
   interpolation: {
     escapeValue: false, // not needed for react

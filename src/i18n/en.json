@@ -40,8 +40,9 @@
     "heading": "Settings",
     "uiLang": {
       "title": "User interface language.",
-      "de": "German",
-      "en": "English"
+      "de": "Deutsch",
+      "en": "English",
+      "ch": "Schwiizerduetsch"
     },
     "metaLang": {
       "title": "Metadata language.",

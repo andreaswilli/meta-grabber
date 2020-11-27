@@ -1,0 +1,77 @@
+{
+  "app": {
+    "settings": "Istellige",
+    "fileRenameSuccess": "D Datei isch erfolgrich umbenennt worde!",
+    "usageHint": {
+      "message": "Bitte{{message}}.",
+      "searchTvShow": " suecht nachere Serie",
+      "openFiles": " öffne d Datei, wod wetsch umbenenne",
+      "and": " und"
+    },
+    "error": {
+      "loadSeasons": "Da isch öppis schief gloffe :( {{error}}"
+    }
+  },
+  "tvShowInput": {
+    "placeholder": "Nach Serie sueche...",
+    "error": {
+      "searchTvShow": "Fähler bim Sueche: {{error}}"
+    }
+  },
+  "filePicker": {
+    "openFiles": "Dateie ufmache",
+    "error": {
+      "openFiles": "Es isch schwieder öppis schief gloffe :( :( : {{error}}"
+    }
+  },
+  "fileRename": {
+    "includeAll": "Alli uswähle",
+    "excludeAll": "Alli abwähle",
+    "noOutputDir": "keine! (Dateie bliebed, wo sie sind)",
+    "chooseOutputDir": "Zielordner wähle",
+    "rename": "Umbenenne",
+    "error": {
+      "renameFiles": "Fähler bim Umbenenne vode Dateie: {{error}}",
+      "fileExisting": "Fähler: ei Datei mit dem Namen existiert scho: {{newFileName}}",
+      "createDir": "Fähler bim Erstelle vom Zielordner: {{error}}"
+    }
+  },
+  "settingsPane": {
+    "heading": "Istellige",
+    "uiLang": {
+      "title": "Sprach vode Beuntzeroberflächi.",
+      "de": "Deutsch",
+      "en": "English",
+      "ch": "Schwiizerdütsch"
+    },
+    "metaLang": {
+      "title": "Sprach vode Metadate.",
+      "placeholder": "Sprach wähle"
+    },
+    "metadataProvider": {
+      "title": "Metadate-Abüter.",
+      "placeholder": "Abüter wähle"
+    },
+    "fileNameTemplate": {
+      "title": "Vorlag für Dateinäme (<0/>).",
+      "help": "hilf",
+      "hint": "Bispiel: {{example}}",
+      "tvShowExampleName": "Breaking Bad",
+      "episodeExampleName": "Felina",
+      "errorInvalidTemplate": "D Vorlag mues <0>{season_no}</0> und <1>{episode_no}</1> enthalte, demit d Dateinäme eidütig sind!"
+    },
+    "defaultOutputDir": {
+      "title": "Standard-Zielordner.",
+      "choose": "Uswähle",
+      "hint": "Verwände <0>{show_name}</0>, zum de Name vode Serie im Ordnername izfüege."
+    },
+    "includedFileTypes": {
+      "title": "Dateitype.",
+      "hint": "Nume Dateitype, wo da ufgführt sind, chönd göffnet werde (trenne mit Komma ,)."
+    },
+    "excludedTerms": {
+      "title": "Usnahme.",
+      "hint": "Dateie, wo eine vo dene ufgführte Begriff im Name enthalted, werded nöd göffnet (trenne mit Komma ,)."
+    }
+  }
+}
