@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@svgr/webpack": "^5.4.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
     "babel-polyfill": "^6.26.0",
