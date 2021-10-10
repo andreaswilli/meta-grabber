@@ -1,0 +1,20 @@
+name: After Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  afterRelease:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Merge develop -> master
+        run: |
+          git merge origin/develop
+          git push

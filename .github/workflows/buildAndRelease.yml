@@ -1,0 +1,45 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deleteReleaseAssets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Delete current release assets
+        uses: andreaswilli/delete-release-assets-action@v1.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  release:
+    needs: deleteReleaseAssets
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # mac_certs: ${{ secrets.MAC_CERTS }}
+          # mac_certs_password: ${{ secrets.MAC_CERTS_PASSWORD }}
+
+          release: true
