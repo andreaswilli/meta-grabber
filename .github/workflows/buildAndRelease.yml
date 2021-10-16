@@ -17,6 +17,8 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
+      - run: npm ci
+
       - run: npm run build
 
       - run: npm run test
