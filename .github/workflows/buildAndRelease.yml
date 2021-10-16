@@ -6,7 +6,23 @@ on:
       - develop
 
 jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - run: npm run build
+
+      - run: npm run test
+
   deleteReleaseAssets:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +34,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  release:
+  packageAndRelease:
     needs: deleteReleaseAssets
     runs-on: ${{ matrix.os }}
 
