@@ -12,7 +12,7 @@ export default class Button extends Component {
           'button--icon-right': this.props.iconRight,
         })}
         disabled={this.props.disabled}
-        onClick={!this.props.disabled && this.props.onClick}
+        onClick={!this.props.disabled ? this.props.onClick : undefined}
       >
         {this.props.icon}
         {this.props.label && (

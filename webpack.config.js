@@ -1,5 +1,4 @@
 const path = require('path')
-const webpack = require('webpack')
 
 module.exports = {
   entry: ['babel-polyfill', './src/index.js'],
@@ -8,7 +7,7 @@ module.exports = {
     filename: 'index.js',
     libraryTarget: 'commonjs2',
   },
-  target: 'electron-main',
+  target: 'electron-renderer',
   module: {
     rules: [
       {
@@ -23,11 +22,6 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
-  ],
   externals: {
     react: 'commonjs react',
   },

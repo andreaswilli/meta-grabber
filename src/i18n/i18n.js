@@ -8,7 +8,7 @@ i18n.init({
   fallbackLng: 'en',
   // debug: true,
 
-  resources: { en, de, 'ch': deCh },
+  resources: { en, de, ch: deCh },
 
   interpolation: {
     escapeValue: false, // not needed for react
@@ -16,7 +16,7 @@ i18n.init({
 
   // react i18next special options (optional)
   react: {
-    wait: true,
+    useSuspense: true,
     bindI18n: 'languageChanged loaded',
     bindStore: 'added removed',
     nsMode: 'default',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { remote } from 'electron'
+import { ipcRenderer } from 'electron'
 import { withTranslation } from 'react-i18next'
 
 import Button from './button'
@@ -11,9 +11,9 @@ import FolderIcon from '../icons/folder.svg'
 class FilePicker extends Component {
   async open() {
     const { t } = this.props
-    const { filePaths: paths, canceled } = await remote.dialog.showOpenDialog({
-      properties: ['openFile', 'openDirectory', 'multiSelections'],
-    })
+    const { filePaths: paths, canceled } = await ipcRenderer.invoke(
+      'open-files'
+    )
     if (canceled) {
       return
     }
@@ -22,13 +22,13 @@ class FilePicker extends Component {
       const files = await asyncReadRecursively(paths)
       this.props.onFileOpen(
         files.filter(
-          file =>
+          (file) =>
             this.props.includedExtensions
-              .filter(ext => ext)
-              .some(extension => file.toLowerCase().endsWith(extension)) &&
+              .filter((ext) => ext)
+              .some((extension) => file.toLowerCase().endsWith(extension)) &&
             !this.props.excludedTerms
-              .filter(term => term)
-              .some(term => file.toLowerCase().includes(term))
+              .filter((term) => term)
+              .some((term) => file.toLowerCase().includes(term))
         )
       )
     } catch (error) {

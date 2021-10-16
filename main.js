@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, shell } = require('electron')
+const { app, BrowserWindow, Menu, shell, ipcMain, dialog } = require('electron')
 const defaultMenu = require('electron-default-menu')
 const isDev = require('electron-is-dev')
 const { autoUpdater } = require('electron-updater')
@@ -15,6 +15,8 @@ function createWindow() {
     height: 700,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false,
+      // enableRemoteModule: true,
     },
   })
 
@@ -25,7 +27,7 @@ function createWindow() {
   // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', function() {
+  mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -45,7 +47,9 @@ app.on('ready', () => {
   let menu = defaultMenu(app, shell)
 
   // add settings shortcut
-  const mainMenuItem = menu.find(menuItem => menuItem.label === 'meta-grabber')
+  const mainMenuItem = menu.find(
+    (menuItem) => menuItem.label === 'meta-grabber'
+  )
   // only do this on macOS
   if (mainMenuItem) {
     menu = [
@@ -66,16 +70,16 @@ app.on('ready', () => {
           ...mainMenuItem.submenu.slice(2),
         ],
       },
-      ...menu.filter(menuItem => menuItem.label !== mainMenuItem.label),
+      ...menu.filter((menuItem) => menuItem.label !== mainMenuItem.label),
     ]
   }
 
   // remove devtools and relaod in prod
   if (!isDev) {
-    menu = menu.map(menuItem => ({
+    menu = menu.map((menuItem) => ({
       ...menuItem,
       submenu: menuItem.submenu.filter(
-        subItem =>
+        (subItem) =>
           subItem.label !== 'Toggle Developer Tools' &&
           subItem.label !== 'Reload'
       ),
@@ -86,7 +90,7 @@ app.on('ready', () => {
 })
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function() {
+app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   // if (process.platform !== 'darwin') {
@@ -104,3 +108,16 @@ app.on('window-all-closed', function() {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+// expose dialogs to renderer process
+ipcMain.handle('open-files', async () =>
+  dialog.showOpenDialog({
+    properties: ['openFile', 'openDirectory', 'multiSelections'],
+  })
+)
+
+ipcMain.handle('open-directory', async () =>
+  dialog.showOpenDialog({
+    properties: ['openDirectory', 'createDirectory'],
+  })
+)

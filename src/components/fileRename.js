@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import fs from 'fs'
-import { remote } from 'electron'
+import { ipcRenderer } from 'electron'
 import classNames from 'classnames'
 import AnimateHeight from 'react-animate-height'
 import util from 'util'
@@ -47,16 +47,17 @@ class FileRename extends Component {
 
   isSeasonIncluded(seasonName) {
     return (
-      this.state.includedSeasons.find(season => season.name === seasonName) !==
-      undefined
+      this.state.includedSeasons.find(
+        (season) => season.name === seasonName
+      ) !== undefined
     )
   }
 
   isEpisodeIncluded(episodeName) {
     return (
       this.state.includedSeasons.filter(
-        season =>
-          season.includedEpisodes.filter(episode => episode === episodeName)
+        (season) =>
+          season.includedEpisodes.filter((episode) => episode === episodeName)
             .length > 0
       ).length > 0
     )
@@ -64,7 +65,8 @@ class FileRename extends Component {
 
   isWholeSeasonExcluded(seasonName) {
     return (
-      this.state.includedSeasons.find(s => s.name === seasonName) === undefined
+      this.state.includedSeasons.find((s) => s.name === seasonName) ===
+      undefined
     )
   }
 
@@ -73,11 +75,11 @@ class FileRename extends Component {
       // include season
       await this.setState({
         includedSeasons: [
-          ...this.state.includedSeasons.filter(s => s.name !== seasonName),
+          ...this.state.includedSeasons.filter((s) => s.name !== seasonName),
           {
             name: seasonName,
             includedEpisodes: this.props.seasons.find(
-              s => s.name === seasonName
+              (s) => s.name === seasonName
             ).episodes,
           },
         ],
@@ -86,7 +88,7 @@ class FileRename extends Component {
       // exclude season
       await this.setState({
         includedSeasons: this.state.includedSeasons.filter(
-          s => s.name !== seasonName
+          (s) => s.name !== seasonName
         ),
       })
     }
@@ -95,18 +97,18 @@ class FileRename extends Component {
 
   async handleEpisodeChange(e, episodeName) {
     const season = this.props.seasons.find(
-      season =>
-        season.episodes.filter(episode => episode === episodeName).length > 0
+      (season) =>
+        season.episodes.filter((episode) => episode === episodeName).length > 0
     )
     const includedSeason = this.state.includedSeasons.find(
-      s => s.name === season.name
+      (s) => s.name === season.name
     )
     let includedSeasons
 
     if (e.target.checked) {
       // include episode
       includedSeasons = [
-        ...this.state.includedSeasons.filter(s => s.name !== season.name),
+        ...this.state.includedSeasons.filter((s) => s.name !== season.name),
         {
           name: includedSeason.name,
           includedEpisodes: [...includedSeason.includedEpisodes, episodeName],
@@ -116,15 +118,15 @@ class FileRename extends Component {
       // exclude episode
       includedSeasons = [
         ...this.state.includedSeasons.filter(
-          s => s.name !== includedSeason.name
+          (s) => s.name !== includedSeason.name
         ),
         {
           name: includedSeason.name,
           includedEpisodes: includedSeason.includedEpisodes.filter(
-            e => e !== episodeName
+            (e) => e !== episodeName
           ),
         },
-      ].filter(s => s.includedEpisodes.length > 0)
+      ].filter((s) => s.includedEpisodes.length > 0)
     }
     await this.setState({ includedSeasons })
     this.assignEpisodesToFiles(this.props)
@@ -133,7 +135,7 @@ class FileRename extends Component {
   assignEpisodesToFiles(props) {
     let excludedEpisodesCount = 0
     this.setState({
-      assignments: flatten(props.seasons.map(s => s.episodes)).map((e, i) => {
+      assignments: flatten(props.seasons.map((s) => s.episodes)).map((e, i) => {
         let included = this.isEpisodeIncluded(e)
         if (!included) {
           excludedEpisodesCount++
@@ -149,14 +151,12 @@ class FileRename extends Component {
   }
 
   getAssignedFileName(episodeName) {
-    let assignment = this.state.assignments.find(a => a.name === episodeName)
+    let assignment = this.state.assignments.find((a) => a.name === episodeName)
     return assignment ? assignment.fileName : null
   }
 
   async handleChooseOutputDir() {
-    const { filePaths, canceled } = await remote.dialog.showOpenDialog({
-      properties: ['openDirectory', 'createDirectory'],
-    })
+    const { filePaths, canceled } = await ipcRenderer.invoke('open-directory')
     if (canceled) {
       return
     }
@@ -165,7 +165,7 @@ class FileRename extends Component {
 
   async handleIncludeAll() {
     await this.setState({
-      includedSeasons: this.props.seasons.map(s => ({
+      includedSeasons: this.props.seasons.map((s) => ({
         name: s.name,
         includedEpisodes: s.episodes,
       })),
@@ -178,7 +178,7 @@ class FileRename extends Component {
     this.assignEpisodesToFiles(this.props)
   }
 
-  getNewFileDir = a => {
+  getNewFileDir = (a) => {
     let newFileDir = (
       (this.props.outputDir !== '?' && this.props.outputDir) ||
       formatFilePath(a.fileName)
@@ -204,11 +204,11 @@ class FileRename extends Component {
   async renameFiles() {
     const { t } = this.props
     this.props.onLoadingChange(true)
-    let assignments = this.state.assignments.filter(a => a.fileName)
+    let assignments = this.state.assignments.filter((a) => a.fileName)
     try {
       // make sure that none of the new files replaces any existing file
       let nameMappings = await Promise.all(
-        assignments.map(async a => {
+        assignments.map(async (a) => {
           return new Promise(async (resolve, reject) => {
             const newFileDir = this.getNewFileDir(a)
             try {
@@ -255,7 +255,7 @@ class FileRename extends Component {
 
       // none of the files are existing already, continue
       await Promise.all(
-        nameMappings.map(mapping => {
+        nameMappings.map((mapping) => {
           return new Promise(async (resolve, reject) => {
             try {
               await rename(mapping.oldFileName, mapping.newFileName)
@@ -292,8 +292,9 @@ class FileRename extends Component {
                 onClick={this.handleIncludeAll.bind(this)}
                 disabled={
                   JSON.stringify(
-                    this.state.includedSeasons.map(s => s.includedEpisodes)
-                  ) === JSON.stringify(this.props.seasons.map(s => s.episodes))
+                    this.state.includedSeasons.map((s) => s.includedEpisodes)
+                  ) ===
+                  JSON.stringify(this.props.seasons.map((s) => s.episodes))
                 }
               />
               <Button
@@ -316,7 +317,7 @@ class FileRename extends Component {
                     type="checkbox"
                     className="file-rename__item__checkbox"
                     checked={this.isSeasonIncluded(s.name)}
-                    onChange={event => this.handleSeasonChange(event, s.name)}
+                    onChange={(event) => this.handleSeasonChange(event, s.name)}
                   />
                   <div
                     className={classNames('file-rename__item', {
@@ -347,7 +348,7 @@ class FileRename extends Component {
                         tabIndex={-1}
                         className="file-rename__item__checkbox"
                         checked={this.isEpisodeIncluded(e)}
-                        onChange={event => this.handleEpisodeChange(event, e)}
+                        onChange={(event) => this.handleEpisodeChange(event, e)}
                       />
                       <div className="file-rename__item__name">{e}</div>
                       <div className="file-rename__item__file-name">
@@ -387,7 +388,7 @@ class FileRename extends Component {
             icon={<CheckmarkIcon />}
             onClick={this.renameFiles.bind(this)}
             disabled={
-              this.state.assignments.filter(a => a.fileName).length === 0
+              this.state.assignments.filter((a) => a.fileName).length === 0
             }
           />
         </div>

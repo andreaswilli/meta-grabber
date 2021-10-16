@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { remote } from 'electron'
+import { ipcRenderer } from 'electron'
 import i18n from 'i18next'
 import { withTranslation, Trans } from 'react-i18next'
 
@@ -45,7 +45,7 @@ class SettingsPane extends Component {
         query:
           (
             languages.find(
-              l => l.iso_639_1 === this.props.settings.metaDataLang
+              (l) => l.iso_639_1 === this.props.settings.metaDataLang
             ) || {}
           ).english_name || '',
       })
@@ -69,13 +69,13 @@ class SettingsPane extends Component {
     )
     localStorage.setItem(
       'includedExtensions',
-      (this.props.settings.includedExtensions.filter(ext => ext).length > 0 &&
+      (this.props.settings.includedExtensions.filter((ext) => ext).length > 0 &&
         this.props.settings.includedExtensions) ||
         '(empty)'
     )
     localStorage.setItem(
       'excludedTerms',
-      (this.props.settings.excludedTerms.filter(term => term).length > 0 &&
+      (this.props.settings.excludedTerms.filter((term) => term).length > 0 &&
         this.props.settings.excludedTerms) ||
         '(empty)'
     )
@@ -89,7 +89,7 @@ class SettingsPane extends Component {
   }
 
   handleLanguageSelect(lang) {
-    const language = this.state.languages.find(l => l.iso_639_1 === lang)
+    const language = this.state.languages.find((l) => l.iso_639_1 === lang)
     this.setState({ query: language.english_name })
     this.handleSettingsChange('metaDataLang', language.iso_639_1)
   }
@@ -109,7 +109,7 @@ class SettingsPane extends Component {
 
   filterLanguages() {
     return this.state.languages.filter(
-      l =>
+      (l) =>
         l.name.toLowerCase().match(this.state.query.toLowerCase()) ||
         l.english_name.toLowerCase().match(this.state.query.toLowerCase()) ||
         l.iso_639_1.toLowerCase().match(this.state.query.toLowerCase())
@@ -117,9 +117,7 @@ class SettingsPane extends Component {
   }
 
   async handleChooseOutputDir() {
-    const { filePaths, canceled } = await remote.dialog.showOpenDialog({
-      properties: ['openDirectory', 'createDirectory'],
-    })
+    const { filePaths, canceled } = await ipcRenderer.invoke('open-directory')
     if (canceled) {
       return
     }
@@ -169,14 +167,14 @@ class SettingsPane extends Component {
                 className="settings-pane__setting__group__button settings-pane__setting__group__button--radio"
                 icon={
                   this.props.settings.uiLang === 'ch' ? (
-                     <RadioButtonCheckedIcon />
+                    <RadioButtonCheckedIcon />
                   ) : (
-                     <RadioButtonUncheckedIcon />
+                    <RadioButtonUncheckedIcon />
                   )
                 }
                 label={t('uiLang.ch')}
                 onClick={() => this.handleUiLanguageSelect('ch')}
-            />
+              />
             </div>
             <div className="settings-pane__setting">
               <div className="settings-pane__setting__label">
@@ -185,15 +183,17 @@ class SettingsPane extends Component {
               <Autocomplete
                 placeholder={t('metaLang.placeholder')}
                 focusable={this.props.openState}
-                onChange={event => this.setState({ query: event.target.value })}
+                onChange={(event) =>
+                  this.setState({ query: event.target.value })
+                }
                 onSelect={this.handleLanguageSelect.bind(this)}
                 onBlur={() =>
                   this.handleLanguageSelect(this.props.settings.metaDataLang)
                 }
                 items={this.filterLanguages()}
-                getItemValue={item => item.iso_639_1}
-                getItemKey={item => item.iso_639_1}
-                getDisplayValue={item => item.english_name}
+                getItemValue={(item) => item.iso_639_1}
+                getItemKey={(item) => item.iso_639_1}
+                getDisplayValue={(item) => item.english_name}
                 value={this.state.query}
                 showDropdown={this.filterLanguages().length > 0}
               />
@@ -207,12 +207,12 @@ class SettingsPane extends Component {
                 focusable={this.props.openState}
                 onSelect={this.handleApiProviderSelect.bind(this)}
                 items={this.apiProviders}
-                getItemValue={item => item.value}
-                getItemKey={item => item.value}
-                getDisplayValue={item => item.name}
+                getItemValue={(item) => item.value}
+                getItemKey={(item) => item.value}
+                getDisplayValue={(item) => item.name}
                 value={
                   this.apiProviders.find(
-                    p => p.value === this.props.settings.apiProvider
+                    (p) => p.value === this.props.settings.apiProvider
                   ).name
                 }
                 showDropdown={true}
@@ -228,8 +228,8 @@ class SettingsPane extends Component {
                 </Trans>
               </div>
               <NamingTemplate
-                onRef={ref => (this.namingTemplate = ref)}
-                onChange={template =>
+                onRef={(ref) => (this.namingTemplate = ref)}
+                onChange={(template) =>
                   this.handleSettingsChange('template', template)
                 }
                 template={this.props.settings.template}
@@ -245,7 +245,7 @@ class SettingsPane extends Component {
                   type="text"
                   className="input"
                   value={this.props.settings.defaultOutputDir}
-                  onChange={event =>
+                  onChange={(event) =>
                     this.handleSettingsChange(
                       'defaultOutputDir',
                       event.target.value
@@ -274,10 +274,10 @@ class SettingsPane extends Component {
                 type="text"
                 className="input"
                 value={this.props.settings.includedExtensions}
-                onChange={event =>
+                onChange={(event) =>
                   this.handleSettingsChange(
                     'includedExtensions',
-                    event.target.value.split(',').map(ext => ext.trim())
+                    event.target.value.split(',').map((ext) => ext.trim())
                   )
                 }
                 tabIndex={this.props.openState ? 0 : -1}
@@ -294,10 +294,10 @@ class SettingsPane extends Component {
                 type="text"
                 className="input"
                 value={this.props.settings.excludedTerms}
-                onChange={event =>
+                onChange={(event) =>
                   this.handleSettingsChange(
                     'excludedTerms',
-                    event.target.value.split(',').map(term => term.trim())
+                    event.target.value.split(',').map((term) => term.trim())
                   )
                 }
                 tabIndex={this.props.openState ? 0 : -1}
