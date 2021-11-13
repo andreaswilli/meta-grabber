@@ -1,15 +1,15 @@
 {
   "app": {
     "settings": "Istellige",
-    "fileRenameSuccess": "D Datei isch erfolgrich umbenennt worde!",
+    "fileRenameSuccess": "D'Datei isch erfolgrich umbenennt worde!",
     "usageHint": {
       "message": "Bitte{{message}}.",
-      "searchTvShow": " suecht nachere Serie",
-      "openFiles": " öffne d Datei, wod wetsch umbenenne",
+      "searchTvShow": " suech nachere Serie",
+      "openFiles": " öffne d'Dateie, wod wetsch umbenenne",
       "and": " und"
     },
     "error": {
-      "loadSeasons": "Da isch öppis schief gloffe :( {{error}}"
+      "loadSeasons": "Fähler bim Lade vo de Staffle: {{error}}"
     }
   },
   "tvShowInput": {
@@ -21,7 +21,7 @@
   "filePicker": {
     "openFiles": "Dateie ufmache",
     "error": {
-      "openFiles": "Es isch schwieder öppis schief gloffe :( :( : {{error}}"
+      "openFiles": "Fähler bim Öffne vo de Dateie: {{error}}"
     }
   },
   "fileRename": {
@@ -31,21 +31,21 @@
     "chooseOutputDir": "Zielordner wähle",
     "rename": "Umbenenne",
     "error": {
-      "renameFiles": "Fähler bim Umbenenne vode Dateie: {{error}}",
-      "fileExisting": "Fähler: ei Datei mit dem Namen existiert scho: {{newFileName}}",
+      "renameFiles": "Fähler bim Umbenenne vo de Dateie: {{error}}",
+      "fileExisting": "Fähler: e Datei mit dem Name existiert scho: {{newFileName}}",
       "createDir": "Fähler bim Erstelle vom Zielordner: {{error}}"
     }
   },
   "settingsPane": {
     "heading": "Istellige",
     "uiLang": {
-      "title": "Sprach vode Beuntzeroberflächi.",
+      "title": "Sprach vo de Beuntzeroberflächi.",
       "de": "Deutsch",
       "en": "English",
       "ch": "Schwiizerdütsch"
     },
     "metaLang": {
-      "title": "Sprach vode Metadate.",
+      "title": "Sprach vo de Metadate.",
       "placeholder": "Sprach wähle"
     },
     "metadataProvider": {
@@ -54,24 +54,24 @@
     },
     "fileNameTemplate": {
       "title": "Vorlag für Dateinäme (<0/>).",
-      "help": "hilf",
+      "help": "Hilf",
       "hint": "Bispiel: {{example}}",
       "tvShowExampleName": "Breaking Bad",
       "episodeExampleName": "Felina",
-      "errorInvalidTemplate": "D Vorlag mues <0>{season_no}</0> und <1>{episode_no}</1> enthalte, demit d Dateinäme eidütig sind!"
+      "errorInvalidTemplate": "D'Vorlag mues <0>{season_no}</0> und <1>{episode_no}</1> enthalte, damit d Dateinäme eidütig sind!"
     },
     "defaultOutputDir": {
       "title": "Standard-Zielordner.",
       "choose": "Uswähle",
-      "hint": "Verwände <0>{show_name}</0>, zum de Name vode Serie im Ordnername izfüege."
+      "hint": "Verwände <0>{show_name}</0>, zum de Name vo de Serie im Ordnername izfüege."
     },
     "includedFileTypes": {
       "title": "Dateitype.",
-      "hint": "Nume Dateitype, wo da ufgführt sind, chönd göffnet werde (trenne mit Komma ,)."
+      "hint": "Nume Dateitype, wo da ufgführt sind, chönd g'öffnet werde (trenne mit Komma ,)."
     },
     "excludedTerms": {
       "title": "Usnahme.",
-      "hint": "Dateie, wo eine vo dene ufgführte Begriff im Name enthalted, werded nöd göffnet (trenne mit Komma ,)."
+      "hint": "Dateie, wo eine vo dene ufgführte Begriff im Name enthalted, werded nöd g'öffnet (trenne mit Komma ,)."
     }
   }
 }
