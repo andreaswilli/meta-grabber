@@ -79,15 +79,3 @@ You can open a whole directory or even multiple at once. This option specifies w
 ##### ▶︎ Excluded terms
 
 Files that contain one of the terms set here will not get included. This applies to the complete file name (including directory name). This option is mainly existing to not open sample files when importing whole directories. Defaults to `sample`.
-
-## Local development
-
-Run it locally by following these steps:
-
-1. Install dependencies: `npm i`
-
-1. Start build: `npm run serve`
-
-1. Start the electron app in a **new** terminal window: `npm run start`
-
-Now you can make changes, save the modified files, then return to the app and reload (`ctrl+r` on Windows/Linux, `cmd+r` on macOS). Your changes should now appear in the app.
