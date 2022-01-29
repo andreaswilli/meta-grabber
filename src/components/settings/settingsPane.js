@@ -30,6 +30,7 @@ class SettingsPane extends Component {
     ]
 
     this.state = {
+      uiLanguages: ['en', 'de', 'ch'],
       languages: [],
       query: '',
       apiProvider: props.settings.apiProvider,
@@ -139,42 +140,20 @@ class SettingsPane extends Component {
               <div className="settings-pane__setting__label">
                 {t('uiLang.title')}
               </div>
-              <Button
-                className="settings-pane__setting__group__button settings-pane__setting__group__button--radio"
-                icon={
-                  this.props.settings.uiLang === 'de' ? (
-                    <RadioButtonCheckedIcon />
-                  ) : (
-                    <RadioButtonUncheckedIcon />
-                  )
-                }
-                label={t('uiLang.de')}
-                onClick={() => this.handleUiLanguageSelect('de')}
-              />
-              <Button
-                className="settings-pane__setting__group__button settings-pane__setting__group__button--radio"
-                icon={
-                  this.props.settings.uiLang === 'en' ? (
-                    <RadioButtonCheckedIcon />
-                  ) : (
-                    <RadioButtonUncheckedIcon />
-                  )
-                }
-                label={t('uiLang.en')}
-                onClick={() => this.handleUiLanguageSelect('en')}
-              />
-              <Button
-                className="settings-pane__setting__group__button settings-pane__setting__group__button--radio"
-                icon={
-                  this.props.settings.uiLang === 'ch' ? (
-                    <RadioButtonCheckedIcon />
-                  ) : (
-                    <RadioButtonUncheckedIcon />
-                  )
-                }
-                label={t('uiLang.ch')}
-                onClick={() => this.handleUiLanguageSelect('ch')}
-              />
+              {this.state.uiLanguages.map((lang) => (
+                <Button
+                  className="settings-pane__setting__group__button settings-pane__setting__group__button--radio"
+                  icon={
+                    this.props.settings.uiLang === lang ? (
+                      <RadioButtonCheckedIcon />
+                    ) : (
+                      <RadioButtonUncheckedIcon />
+                    )
+                  }
+                  label={t(`uiLang.${lang}`)}
+                  onClick={() => this.handleUiLanguageSelect(lang)}
+                />
+              ))}
             </div>
             <div className="settings-pane__setting">
               <div className="settings-pane__setting__label">
