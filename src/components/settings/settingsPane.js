@@ -142,6 +142,7 @@ class SettingsPane extends Component {
               </div>
               {this.state.uiLanguages.map((lang) => (
                 <Button
+                  testId={`button-ui-lang-${lang}`}
                   className="settings-pane__setting__group__button settings-pane__setting__group__button--radio"
                   icon={
                     this.props.settings.uiLang === lang ? (
