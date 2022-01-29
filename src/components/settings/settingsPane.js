@@ -57,11 +57,11 @@ class SettingsPane extends Component {
   }
 
   handleClose() {
-    localStorage.setItem('uiLang', this.props.settings.uiLang),
-      localStorage.setItem(
-        'metaDataLang',
-        this.props.settings.metaDataLang || '(empty)'
-      )
+    localStorage.setItem('uiLang', this.props.settings.uiLang)
+    localStorage.setItem(
+      'metaDataLang',
+      this.props.settings.metaDataLang || '(empty)'
+    )
     localStorage.setItem('apiProvider', this.props.settings.apiProvider)
     localStorage.setItem('template', this.props.settings.template || '(empty)')
     localStorage.setItem(
