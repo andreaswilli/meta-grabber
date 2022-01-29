@@ -23,7 +23,7 @@ export default function ElectronTest({ timeout, port = 9200 }) {
       try {
         browser = await puppeteer.connect({
           browserURL: `http://localhost:${port}`,
-          defaultViewport: { width: 900, height: 700 },
+          defaultViewport: { width: 900, height: 672 },
         })
         ;[page] = await browser.pages()
       } catch (error) {
