@@ -23,7 +23,9 @@ describe('Home', () => {
       'Please search for a TV show and open the files you want to rename.'
     )
   })
+})
 
+describe('Settings', () => {
   test('change ui language', async () => {
     await page.click('.settings-button')
     await wait(400) // css transition
