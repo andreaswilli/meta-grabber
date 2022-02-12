@@ -10,7 +10,8 @@
     "test": "jest",
     "format": "prettier --write '**/*.+(js|css)'",
     "package": "npm run build && electron-builder -mwl",
-    "package-publish": "npm run build && electron-builder -mwl --publish always"
+    "package-publish": "npm run build && electron-builder -mwl --publish always",
+    "bump": "npm version patch --git-tag-version=false"
   },
   "homepage": "./",
   "repository": "https://github.com/andreaswilli/meta-grabber",
