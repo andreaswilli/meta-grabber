@@ -1,0 +1,7 @@
+name: PR checks
+
+on: pull_request
+
+jobs:
+  test:
+    uses: ./.github/workflows/reusable-test.yml
