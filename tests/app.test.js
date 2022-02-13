@@ -23,6 +23,25 @@ describe('Home', () => {
       'Please search for a TV show and open the files you want to rename.'
     )
   })
+
+  test('rename files', async () => {
+    // TODO: create files
+    // TODO: open files
+
+    // choose tv show
+    await page.type('[data-test-id=input-tv-show]', 'breaking bad')
+    await expectText(
+      '.tv-show-input__wrapper > div > div',
+      'Breaking Bad (2008)'
+    )
+    await page.waitForSelector('.tv-show-input__wrapper > div > div')
+    await page.click('.tv-show-input__wrapper > div > div')
+    await expectText('.file-rename__item__label', 'SEASON 0')
+
+    // TODO: choose season
+    // TODO: rename files
+    // TODO: delete files
+  })
 })
 
 describe('Settings', () => {
@@ -46,6 +65,7 @@ function wait(ms) {
 async function loadDefaultSettings() {
   await page.evaluate(() => {
     localStorage.setItem('uiLang', 'en')
+    localStorage.setItem('apiProvider', 'tvdb')
     // TODO: set rest of localstorge to default values
   })
 }
