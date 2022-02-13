@@ -29,13 +29,12 @@ describe('Home', () => {
     // TODO: open files
 
     // choose tv show
-    await page.click('[data-test-id=input-tv-show]')
     await page.type('[data-test-id=input-tv-show]', 'breaking bad')
+    await page.waitForSelector('.tv-show-input__wrapper > div > div')
     await expectText(
       '.tv-show-input__wrapper > div > div',
       'Breaking Bad (2008)'
     )
-    await page.waitForSelector('.tv-show-input__wrapper > div > div')
     await page.click('.tv-show-input__wrapper > div > div')
     await expectText('.file-rename__item__label', 'SEASON 0')
 
