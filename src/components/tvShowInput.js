@@ -65,17 +65,20 @@ class TvShowInput extends Component {
     return (
       <div className="tv-show-input">
         <Autocomplete
+          testId="input-tv-show"
           placeholder={t('placeholder')}
           focusable={this.props.openState}
           onChange={this.handleChange.bind(this)}
           onSelect={this.handleSelect.bind(this)}
           items={this.state.results}
-          getItemValue={item => item.name}
-          getItemKey={item => item.id}
-          getDisplayValue={item =>
-            `${item.name} ${(item.first_air_date &&
-              `(${item.first_air_date.substr(0, 4)})`) ||
-              ''}`
+          getItemValue={(item) => item.name}
+          getItemKey={(item) => item.id}
+          getDisplayValue={(item) =>
+            `${item.name} ${
+              (item.first_air_date &&
+                `(${item.first_air_date.substr(0, 4)})`) ||
+              ''
+            }`
           }
           value={this.props.query}
           showDropdown={this.state.results.length > 0}

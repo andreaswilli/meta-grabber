@@ -14,6 +14,7 @@ export default class Autocomplete extends Component {
           placeholder: this.props.placeholder,
           tabIndex: this.props.focusable ? '0' : '-1',
           onBlur: this.props.onBlur,
+          'data-test-id': this.props.testId,
         }}
         menuStyle={{
           borderRadius: '2px',
