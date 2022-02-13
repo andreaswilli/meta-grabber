@@ -29,6 +29,7 @@ describe('Home', () => {
     // TODO: open files
 
     // choose tv show
+    await page.click('[data-test-id=input-tv-show]')
     await page.type('[data-test-id=input-tv-show]', 'breaking bad')
     await expectText(
       '.tv-show-input__wrapper > div > div',
