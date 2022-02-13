@@ -36,6 +36,7 @@ describe('Home', () => {
       'Breaking Bad (2008)'
     )
     await page.click('.tv-show-input__wrapper > div > div')
+    await page.waitForSelector('.file-rename__item__label')
     await expectText('.file-rename__item__label', 'SEASON 0')
 
     // TODO: choose season
