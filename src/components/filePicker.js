@@ -48,6 +48,7 @@ class FilePicker extends Component {
     return (
       <div className="file-picker">
         <Button
+          testId="button-open-files"
           label={t('openFiles')}
           icon={<FolderIcon />}
           onClick={this.open.bind(this)}
