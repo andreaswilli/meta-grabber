@@ -1,4 +1,4 @@
-const regeneratorRuntime = require('regenerator-runtime')
+import regeneratorRuntime from 'regenerator-runtime'
 import fs from 'fs/promises'
 import ElectronTest from './setupElectronTests'
 
