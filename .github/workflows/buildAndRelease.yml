@@ -9,8 +9,35 @@ jobs:
   test:
     uses: ./.github/workflows/reusable-test.yml
 
-  deleteReleaseAssets:
+  lookForRelease:
     needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Get version number
+        uses: stevenbenitez/get-package-version-action@v1
+        id: package-version
+      
+      - name: Get release for current version number
+        id: get_release
+        uses: joutvhu/get-release@v1.0.1
+        with:
+          tag_name: v${{ steps.package-version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    outputs:
+      release_id: ${{ steps.get_release.outputs.id }}
+      release_is_draft: ${{ steps.get_release.outputs.draft }}
+
+  deleteReleaseAssets:
+    needs: lookForRelease 
+    if: |
+      needs.lookForRelease.outputs.release_id == null ||
+      needs.lookForRelease.outputs.release_is_draft == 'true'
     runs-on: ubuntu-latest
 
     steps:
