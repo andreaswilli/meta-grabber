@@ -63,7 +63,7 @@
     "defaultOutputDir": {
       "title": "Default output directory.",
       "choose": "Choose",
-      "hint": "You can use <0>{show_name}</0> to dynamically include the name of the tv show."
+      "hint": "This is the base directory which usually contains all your TV shows."
     },
     "includedFileTypes": {
       "title": "Included file types.",

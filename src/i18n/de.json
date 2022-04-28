@@ -42,7 +42,7 @@
       "title": "Sprache der Benutzeroberfläche.",
       "de": "Deutsch",
       "en": "English",
-      "ch":  "Schwiizerdütsch"
+      "ch": "Schwiizerdütsch"
     },
     "metaLang": {
       "title": "Sprache der Metadaten.",
@@ -63,7 +63,7 @@
     "defaultOutputDir": {
       "title": "Standard-Zielordner.",
       "choose": "Auswählen",
-      "hint": "Verwende <0>{show_name}</0>, um den Namen der Serie im Ordnernamen einzufügen."
+      "hint": "Dies ist der Basis-Ordner, wo üblicherweise alle Serien gespeichert sind."
     },
     "includedFileTypes": {
       "title": "Dateitypen.",

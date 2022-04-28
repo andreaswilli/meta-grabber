@@ -63,7 +63,7 @@
     "defaultOutputDir": {
       "title": "Standard-Zielordner.",
       "choose": "Uswähle",
-      "hint": "Verwände <0>{show_name}</0>, zum de Name vo de Serie im Ordnername izfüege."
+      "hint": "Das isch de Basis-Ordner, wo normalerwiis alli Serie g'speicheret sind."
     },
     "includedFileTypes": {
       "title": "Dateitype.",
