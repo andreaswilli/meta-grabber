@@ -20,6 +20,12 @@ class NamingTemplate extends Component {
     this.props.onRef(undefined)
   }
 
+  componentWillUpdate() {
+    if (this.state.template !== this.props.template) {
+      this.setState({ template: this.props.template })
+    }
+  }
+
   handleChange(newTemplate) {
     this.setState({ template: newTemplate })
 
@@ -41,7 +47,7 @@ class NamingTemplate extends Component {
           className="input"
           tabIndex={this.props.openState ? 0 : -1}
           value={this.state.template}
-          onChange={event => this.handleChange(event.target.value)}
+          onChange={(event) => this.handleChange(event.target.value)}
         />
         {!this.isTemplateValid(this.state.template) && (
           <div className="settings-pane__setting__message error">

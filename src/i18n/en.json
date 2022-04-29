@@ -10,6 +10,12 @@
     },
     "error": {
       "loadSeasons": "Failed to load seasons {{error}}"
+    },
+    "fileNameMigration": {
+      "title": "Check your Settings",
+      "changes": "The file name template now supports creating subdirectories by including <code>/</code> or <code>\\</code> in the template. At the same time, the output directory no longer supports the <code>{show_name}</code> placeholder",
+      "check": "Your settings have been updated automatically, however, you should check and adapt them, if necessary.",
+      "showSettings": "Show Settings"
     }
   },
   "tvShowInput": {

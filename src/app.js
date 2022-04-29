@@ -13,6 +13,8 @@ import Button from './components/button'
 import SettingsPane from './components/settings/settingsPane'
 import Messages from './components/messages'
 import LoadingIndicator from './components/loadingIndicator'
+import Modal from './components/modal'
+import { migrateFileNameTemplate } from './util/migrate'
 
 import SettingsIcon from './icons/settings.svg'
 
@@ -30,7 +32,7 @@ class App extends Component {
 
     // menu bar item clicked / cmd+, pressed
     ipcRenderer.on('settings-toggle', () => {
-      this.setState(state => ({
+      this.setState((state) => ({
         settingsPaneOpen: !state.settingsPaneOpen,
       }))
     })
@@ -45,6 +47,7 @@ class App extends Component {
       messages: [],
       settingsPaneOpen: false,
       settings: this.loadSettings(),
+      showFileNameMigrationModal: false,
     }
 
     this.state = this.initialState
@@ -52,6 +55,30 @@ class App extends Component {
 
   componentDidMount() {
     this.updateUsageHint()
+
+    const placeholderIndex =
+      this.state.settings.defaultOutputDir.indexOf('{show_name}')
+
+    if (placeholderIndex > -1) {
+      this.setState({ showFileNameMigrationModal: true })
+
+      let { defaultOutputDir, template } = this.state.settings
+      let [newDir, newTemplate] = migrateFileNameTemplate(
+        defaultOutputDir,
+        template
+      )
+
+      localStorage.setItem('defaultOutputDir', newDir ?? '(empty)')
+      localStorage.setItem('template', newTemplate)
+
+      this.setState({
+        settings: {
+          ...this.state.settings,
+          defaultOutputDir: newDir,
+          template: newTemplate,
+        },
+      })
+    }
   }
 
   loadSettings() {
@@ -74,13 +101,13 @@ class App extends Component {
       )
         .replace(/^\(empty\)$/, '')
         .split(',')
-        .map(ext => ext.trim())
-        .filter(ext => ext),
+        .map((ext) => ext.trim())
+        .filter((ext) => ext),
       excludedTerms: (localStorage.getItem('excludedTerms') || 'sample')
         .replace(/^\(empty\)$/, '')
         .split(',')
-        .map(ext => ext.trim())
-        .filter(term => term),
+        .map((ext) => ext.trim())
+        .filter((term) => term),
     }
   }
 
@@ -93,16 +120,16 @@ class App extends Component {
     this.setState({ loading: true })
     try {
       const seasons = await getTvShow(tvShow)
-      this.setState(prevState => {
+      this.setState((prevState) => {
         let nextState = {
           seasons,
         }
         const loadSeasonsError = prevState.messages.find(
-          m => m.id === 'load-seasons-error'
+          (m) => m.id === 'load-seasons-error'
         )
         if (loadSeasonsError) {
           nextState.messages = [
-            ...prevState.messages.filter(m => m.id !== 'load-seasons-error'),
+            ...prevState.messages.filter((m) => m.id !== 'load-seasons-error'),
             {
               ...loadSeasonsError,
               willDismiss: true,
@@ -149,7 +176,7 @@ class App extends Component {
       ...this.initialState,
       settings: this.loadSettings(),
       messages: [
-        ...this.initialState.messages.filter(m => m.id !== 'rename-error'),
+        ...this.initialState.messages.filter((m) => m.id !== 'rename-error'),
         {
           id: 'rename-success',
           text: this.props.t('fileRenameSuccess'),
@@ -167,7 +194,7 @@ class App extends Component {
     if (newSeasons.length === 0 || newFiles.length === 0) {
       this.setState({
         messages: [
-          ...this.state.messages.filter(m => m.id !== 'usage-hint'),
+          ...this.state.messages.filter((m) => m.id !== 'usage-hint'),
           {
             id: 'usage-hint',
             text: t('usageHint.message', {
@@ -184,12 +211,12 @@ class App extends Component {
         ],
       })
     } else {
-      const usageHint = this.state.messages.find(m => m.id === 'usage-hint')
+      const usageHint = this.state.messages.find((m) => m.id === 'usage-hint')
       this.setState({
         messages: [
-          ...this.state.messages.filter(m => m.id !== 'usage-hint'),
+          ...this.state.messages.filter((m) => m.id !== 'usage-hint'),
           usageHint ? { ...usageHint, willDismiss: true } : undefined,
-        ].filter(m => m),
+        ].filter((m) => m),
       })
     }
   }
@@ -198,8 +225,8 @@ class App extends Component {
     const msgArray = [].concat(messages)
     this.setState({
       messages: [
-        ...this.state.messages.filter(msg =>
-          msgArray.every(m => m.id !== msg.id)
+        ...this.state.messages.filter((msg) =>
+          msgArray.every((m) => m.id !== msg.id)
         ),
         ...msgArray,
       ],
@@ -211,13 +238,35 @@ class App extends Component {
     return (
       <div className="app">
         <LoadingIndicator hidden={!this.state.loading} />
+        {this.state.showFileNameMigrationModal && (
+          <Modal>
+            <div className="migrate-file-name-template">
+              <h1>{t('fileNameMigration.title')}</h1>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: t('fileNameMigration.changes'),
+                }}
+              ></p>
+              <p>{t('fileNameMigration.check')}</p>
+              <Button
+                label={t('fileNameMigration.showSettings')}
+                onClick={() =>
+                  this.setState({
+                    settingsPaneOpen: true,
+                    showFileNameMigrationModal: false,
+                  })
+                }
+              />
+            </div>
+          </Modal>
+        )}
         <div className="container">
           <div className="page">
             <div className="section">
               <TvShowInput
                 query={this.state.query}
                 onSelect={this.handleSelect.bind(this)}
-                onChange={query => this.setState({ query })}
+                onChange={(query) => this.setState({ query })}
                 metaDataLang={this.state.settings.metaDataLang}
                 onMessages={this.handleMessages.bind(this)}
               />
@@ -226,7 +275,7 @@ class App extends Component {
                 includedExtensions={this.state.settings.includedExtensions}
                 excludedTerms={this.state.settings.excludedTerms}
                 files={this.state.files}
-                onLoadingChange={loading => this.setState({ loading })}
+                onLoadingChange={(loading) => this.setState({ loading })}
                 onMessages={this.handleMessages.bind(this)}
               />
               <Button
@@ -238,13 +287,13 @@ class App extends Component {
             </div>
             <Messages
               messages={this.state.messages}
-              onMessagesUpdate={messages => this.setState({ messages })}
+              onMessagesUpdate={(messages) => this.setState({ messages })}
             />
             <FileRename
               tvShow={this.state.tvShow || {}}
-              seasons={this.state.seasons.map(s => ({
+              seasons={this.state.seasons.map((s) => ({
                 name: s.name,
-                episodes: s.episodes.map(e =>
+                episodes: s.episodes.map((e) =>
                   formatEpisodeName(
                     e,
                     this.state.tvShow,
@@ -257,16 +306,16 @@ class App extends Component {
                 this.state.outputDir || this.state.settings.defaultOutputDir
               }
               onFileRenameSuccess={this.handleFileRenameSuccess.bind(this)}
-              onChooseOutputDir={outputDir => this.setState({ outputDir })}
+              onChooseOutputDir={(outputDir) => this.setState({ outputDir })}
               onClearOutputDir={() => this.setState({ outputDir: '?' })}
-              onLoadingChange={loading => this.setState({ loading })}
+              onLoadingChange={(loading) => this.setState({ loading })}
               onMessages={this.handleMessages.bind(this)}
             />
           </div>
         </div>
         <SettingsPane
-          onOpenChange={open => this.setState({ settingsPaneOpen: open })}
-          onChange={settings => this.setState({ settings })}
+          onOpenChange={(open) => this.setState({ settingsPaneOpen: open })}
+          onChange={(settings) => this.setState({ settings })}
           openState={this.state.settingsPaneOpen}
           settings={this.state.settings}
         />

@@ -10,6 +10,12 @@
     },
     "error": {
       "loadSeasons": "Fähler bim Lade vo de Staffle: {{error}}"
+    },
+    "fileNameMigration": {
+      "title": "Istellige Überprüefe",
+      "changes": "D'Vorlag für Dateinäme unterstützt jetzt s'Erstelle vo Unterverzeichniss mit <code>/</code> oder <code>\\</code>. Glichziitig unterstützt de Standard-Zielordner de <code>{show_name}</code> Platzhalter nüme.",
+      "check": "Dini Istellige sind automatisch aktualisiert worde. Du sötsch sie aber überprüefe und ahpasse, falls nötig.",
+      "showSettings": "Istellige azeige"
     }
   },
   "tvShowInput": {

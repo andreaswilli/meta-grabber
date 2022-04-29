@@ -10,6 +10,12 @@
     },
     "error": {
       "loadSeasons": "Fehler beim Laden der Staffeln {{error}}"
+    },
+    "fileNameMigration": {
+      "title": "Einstellungen Überprüfen",
+      "changes": "Die Vorlage für Dateinamen unterstützt jetzt das Erstellen von Unterverzeichnissen mit <code>/</code> oder <code>\\</code>. Gleichzeitig unterstützt der Standard-Zielordner den <code>{show_name}</code> Platzhalter nicht mehr.",
+      "check": "Deine Einstellungen wurden automatisch aktualisiert. Du solltest diese aber überprüfen und anpassen, falls nötig.",
+      "showSettings": "Einstellungen anzeigen"
     }
   },
   "tvShowInput": {

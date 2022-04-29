@@ -85,9 +85,10 @@ body {
 
 .container {
   height: 100%;
+  width: 100%;
+  max-width: 850px;
   box-sizing: border-box;
   padding: 24px;
-  max-width: 850px;
   margin: 0 auto;
 }
 
@@ -455,7 +456,7 @@ body {
 }
 
 .settings-pane__setting {
-  max-width: 500px;
+  max-width: 600px;
   margin-top: 24px;
   box-sizing: border-box;
 }
@@ -557,4 +558,29 @@ body {
   cursor: pointer;
   display: flex;
   align-items: center;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000000BB;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  padding: 24px;
+  margin: 24px;
+  background-color: var(--color-bg-main);
+  max-width: 850px;
+  border-radius: 8px;
+}
+
+.migrate-file-name-template {
+  line-height: 1.5;
 }
