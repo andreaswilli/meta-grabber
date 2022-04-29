@@ -20,9 +20,9 @@ class NamingTemplate extends Component {
     this.props.onRef(undefined)
   }
 
-  componentWillUpdate() {
-    if (this.state.template !== this.props.template) {
-      this.setState({ template: this.props.template })
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.state.template !== nextProps.template) {
+      this.setState({ template: nextProps.template })
     }
   }
 
