@@ -64,7 +64,8 @@
       "hint": "Beispiel: {{example}}",
       "tvShowExampleName": "Breaking Bad",
       "episodeExampleName": "Felina",
-      "errorInvalidTemplate": "Die Vorlage muss <0>{season_no}</0> und <1>{episode_no}</1> enthalten, damit die Dateinamen eindeutig sind!"
+      "errorInvalidTemplate": "Die Vorlage muss <0>{season_no}</0> und <1>{episode_no}</1> enthalten, damit die Dateinamen eindeutig sind!",
+      "errorSlash": "Am Ende des Dateinamens darf kein Slash stehen!"
     },
     "defaultOutputDir": {
       "title": "Standard-Zielordner.",
