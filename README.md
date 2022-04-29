@@ -56,7 +56,7 @@ You have two different options:
 
 ##### ▶︎ File name template
 
-With this setting you can define the template used to rename your files. You can set it to anything you want, however invalid characters such as `?` will be ignored.
+With this setting you can define the template used to rename your files. You can set it to anything you want, however, invalid characters such as `?` will be ignored. You can use `/` (or `\`) to create subfolders, e.g. season folders.
 
 Also you can use the placeholders listed below to dynamically insert metadata into the name. In fact, you have to use at least `{season_no}` and `{episode_no}` to make sure every file name is unique.
 
@@ -70,7 +70,7 @@ Also you can use the placeholders listed below to dynamically insert metadata in
 
 ##### ▶︎ Default output directory
 
-The output directory that will be used if you don't manually select one. Your directory name can also include `{show_name}`, which will be replaced with the name of the tv show. This is useful to automatically organise your tv shows in subfolders.
+The base output directory that will be used if you don't manually select one. This will usually be the root folder containing all of your TV shows.
 
 ##### ▶︎ Included file types
 
