@@ -56,10 +56,7 @@ class App extends Component {
   componentDidMount() {
     this.updateUsageHint()
 
-    const placeholderIndex =
-      this.state.settings.defaultOutputDir.indexOf('{show_name}')
-
-    if (placeholderIndex > -1) {
+    if (this.state.settings.defaultOutputDir.includes('{show_name}')) {
       this.setState({ showFileNameMigrationModal: true })
 
       let { defaultOutputDir, template } = this.state.settings
