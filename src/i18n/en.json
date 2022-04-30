@@ -10,6 +10,12 @@
     },
     "error": {
       "loadSeasons": "Failed to load seasons {{error}}"
+    },
+    "fileNameMigration": {
+      "title": "Check your Settings",
+      "changes": "The file name template now supports creating subdirectories by including <code>/</code> or <code>\\</code> in the template. At the same time, the output directory no longer supports the <code>{show_name}</code> placeholder",
+      "check": "Your settings have been updated automatically, however, you should check and adapt them, if necessary.",
+      "showSettings": "Show Settings"
     }
   },
   "tvShowInput": {
@@ -58,12 +64,13 @@
       "hint": "Example: {{example}}",
       "tvShowExampleName": "Breaking Bad",
       "episodeExampleName": "Felina",
-      "errorInvalidTemplate": "The template has to contain <0>{season_no}</0> and <1>{episode_no}</1>, because file names have to be unique!"
+      "errorInvalidTemplate": "The template has to contain <0>{season_no}</0> and <1>{episode_no}</1>, because file names have to be unique!",
+      "errorSlash": "The file name cannot end with a slash!"
     },
     "defaultOutputDir": {
       "title": "Default output directory.",
       "choose": "Choose",
-      "hint": "You can use <0>{show_name}</0> to dynamically include the name of the tv show."
+      "hint": "This is the base directory which usually contains all your TV shows."
     },
     "includedFileTypes": {
       "title": "Included file types.",

@@ -20,6 +20,12 @@ class NamingTemplate extends Component {
     this.props.onRef(undefined)
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.state.template !== nextProps.template) {
+      this.setState({ template: nextProps.template })
+    }
+  }
+
   handleChange(newTemplate) {
     this.setState({ template: newTemplate })
 
@@ -28,8 +34,16 @@ class NamingTemplate extends Component {
     }
   }
 
-  isTemplateValid(newTemplate) {
+  isUnique(newTemplate) {
     return newTemplate.match('{season_no}') && newTemplate.match('{episode_no}')
+  }
+
+  doesEndWithSlash(newTemplate) {
+    return newTemplate.match(/[\\/]$/)
+  }
+
+  isTemplateValid(newTemplate) {
+    return this.isUnique(newTemplate) && !this.doesEndWithSlash(newTemplate)
   }
 
   render() {
@@ -41,14 +55,19 @@ class NamingTemplate extends Component {
           className="input"
           tabIndex={this.props.openState ? 0 : -1}
           value={this.state.template}
-          onChange={event => this.handleChange(event.target.value)}
+          onChange={(event) => this.handleChange(event.target.value)}
         />
-        {!this.isTemplateValid(this.state.template) && (
+        {!this.isUnique(this.state.template) && (
           <div className="settings-pane__setting__message error">
             <Trans i18nKey="fileNameTemplate.errorInvalidTemplate" t={t}>
               <code>{'{season_no}'}</code>
               <code>{'{episode_no}'}</code>
             </Trans>
+          </div>
+        )}
+        {this.doesEndWithSlash(this.state.template) && (
+          <div className="settings-pane__setting__message error">
+            {t('fileNameTemplate.errorSlash')}
           </div>
         )}
         {this.isTemplateValid(this.state.template) && (

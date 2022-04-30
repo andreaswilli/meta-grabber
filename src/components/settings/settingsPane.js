@@ -142,6 +142,7 @@ class SettingsPane extends Component {
               </div>
               {this.state.uiLanguages.map((lang) => (
                 <Button
+                  key={lang}
                   testId={`button-ui-lang-${lang}`}
                   className="settings-pane__setting__group__button settings-pane__setting__group__button--radio"
                   icon={
@@ -241,9 +242,7 @@ class SettingsPane extends Component {
                 />
               </div>
               <div className="settings-pane__setting__message">
-                <Trans i18nKey="defaultOutputDir.hint" t={t}>
-                  <code>{'{show_name}'}</code>
-                </Trans>
+                {t('defaultOutputDir.hint')}
               </div>
             </div>
             <div className="settings-pane__setting">

@@ -10,6 +10,12 @@
     },
     "error": {
       "loadSeasons": "Fähler bim Lade vo de Staffle: {{error}}"
+    },
+    "fileNameMigration": {
+      "title": "Istellige Überprüefe",
+      "changes": "D'Vorlag für Dateinäme unterstützt jetzt s'Erstelle vo Unterverzeichniss mit <code>/</code> oder <code>\\</code>. Glichziitig unterstützt de Standard-Zielordner de <code>{show_name}</code> Platzhalter nüme.",
+      "check": "Dini Istellige sind automatisch aktualisiert worde. Du sötsch sie aber überprüefe und ahpasse, falls nötig.",
+      "showSettings": "Istellige azeige"
     }
   },
   "tvShowInput": {
@@ -58,12 +64,13 @@
       "hint": "Bispiel: {{example}}",
       "tvShowExampleName": "Breaking Bad",
       "episodeExampleName": "Felina",
-      "errorInvalidTemplate": "D'Vorlag mues <0>{season_no}</0> und <1>{episode_no}</1> enthalte, damit d Dateinäme eidütig sind!"
+      "errorInvalidTemplate": "D'Vorlag mues <0>{season_no}</0> und <1>{episode_no}</1> enthalte, damit d Dateinäme eidütig sind!",
+      "errorSlash": "Am Schluss vom Dateiname därf kein Slash stah!"
     },
     "defaultOutputDir": {
       "title": "Standard-Zielordner.",
       "choose": "Uswähle",
-      "hint": "Verwände <0>{show_name}</0>, zum de Name vo de Serie im Ordnername izfüege."
+      "hint": "Das isch de Basis-Ordner, wo normalerwiis alli Serie g'speicheret sind."
     },
     "includedFileTypes": {
       "title": "Dateitype.",

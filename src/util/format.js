@@ -1,9 +1,9 @@
-export function formatFileName(fileName) {
+export function getFileName(fileName) {
   if (!fileName) return fileName
   return fileName.split(/[\/\\]/).last()
 }
 
-export function formatFilePath(fileName) {
+export function getDir(fileName) {
   if (!fileName) return fileName
   return fileName
     .split(/[\/\\]/)
@@ -11,7 +11,7 @@ export function formatFilePath(fileName) {
     .join('/')
 }
 
-export function formatFileExtension(fileName) {
+export function getFileExtension(fileName) {
   if (!fileName) return fileName
   return fileName.split('.').last()
 }
@@ -23,7 +23,8 @@ export function formatEpisodeName(episode, tvShow, template) {
     .replace(/\{season_no\}/g, leftPad(episode.season_number, 2, 0))
     .replace(/\{episode_no\}/g, leftPad(episode.episode_number, 2, 0))
     .replace(/\{episode_name\}/g, episode.name || 'missing translation')
-    .replace(/[#%&\{\}\\<>\*\?/$!'":@]/g, '')
+    .replace(/[#%&\{\}<>\*\?$!'":@]/g, '')
+    .replace(/\\/g, '/')
 }
 
 function leftPad(string, length, char) {

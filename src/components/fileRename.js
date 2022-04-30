@@ -9,11 +9,7 @@ import { withTranslation } from 'react-i18next'
 import Button from './button'
 import Link from './link'
 import { flatten } from '../util/array'
-import {
-  formatFileName,
-  formatFilePath,
-  formatFileExtension,
-} from '../util/format'
+import { getFileName, getDir, getFileExtension } from '../util/format'
 
 import CrossIcon from '../icons/cross.svg'
 import FolderIcon from '../icons/folder.svg'
@@ -25,6 +21,7 @@ import KoFiIcon from '../icons/ko-fi.svg'
 const stat = util.promisify(fs.stat)
 const mkdir = util.promisify(fs.mkdir)
 const rename = util.promisify(fs.rename)
+const INVALID_CHARS = /[#%&\{\}<>\*\?$!'":@]/g
 
 class FileRename extends Component {
   constructor(props) {
@@ -178,19 +175,19 @@ class FileRename extends Component {
     this.assignEpisodesToFiles(this.props)
   }
 
-  getNewFileDir = (a) => {
-    let newFileDir = (
-      (this.props.outputDir !== '?' && this.props.outputDir) ||
-      formatFilePath(a.fileName)
-    ).replace(/\{show_name\}/g, this.props.tvShow.name || '{show_name}')
+  isWindowsPath = (path) => path.match(/^[A-Za-z]{1}\:[\/\\]/)
 
-    // path starts with windows drive letter (e.g. `C:\...` or `D:/...`)
-    if (newFileDir.match(/^[A-Za-z]{1}\:[\/\\]/)) {
+  getNewFileDir = (a) => {
+    let newFileDir =
+      (this.props.outputDir !== '?' && this.props.outputDir) ||
+      getDir(a.fileName)
+
+    if (this.isWindowsPath(newFileDir)) {
       newFileDir = `${newFileDir.substr(0, 3)}${newFileDir
         .substr(3)
-        .replace(/[#%&\{\}<>\*\?$!'":@]/g, '')}`
+        .replace(INVALID_CHARS, '')}`
     } else {
-      newFileDir = newFileDir.replace(/[#%&\{\}<>\*\?$!'":@]/g, '')
+      newFileDir = newFileDir.replace(INVALID_CHARS, '')
     }
     return newFileDir
   }
@@ -210,14 +207,14 @@ class FileRename extends Component {
       let nameMappings = await Promise.all(
         assignments.map(async (a) => {
           return new Promise(async (resolve, reject) => {
-            const newFileDir = this.getNewFileDir(a)
+            const newFileDir = `${this.getNewFileDir(a)}/${getDir(a.name)}`
             try {
               // test if directory is existing
               await stat(newFileDir)
             } catch (e) {
               try {
                 // create directory if it does not exist yet
-                await mkdir(newFileDir)
+                await mkdir(newFileDir, { recursive: true })
               } catch (error) {
                 // ignore 'file already exists' error
                 // since async map functions run in parallel it is possible that
@@ -229,9 +226,9 @@ class FileRename extends Component {
                 }
               }
             }
-            let newFileName = `${newFileDir}/${a.name}.${formatFileExtension(
-              a.fileName
-            )}`
+            let newFileName = `${newFileDir}/${getFileName(
+              a.name
+            )}.${getFileExtension(a.fileName)}`
             try {
               // check if file is already existing
               await fs.promises.access(newFileName)
@@ -306,7 +303,7 @@ class FileRename extends Component {
             </div>
           )}
           <div className="file-rename__seasons">
-            {(this.props.seasons || []).map((s, i) => (
+            {(this.props.seasons || []).map((s) => (
               <AnimateHeight
                 key={s.name}
                 duration={500}
@@ -321,9 +318,8 @@ class FileRename extends Component {
                   />
                   <div
                     className={classNames('file-rename__item', {
-                      'file-rename__item--season--excluded': this.isWholeSeasonExcluded(
-                        s.name
-                      ),
+                      'file-rename__item--season--excluded':
+                        this.isWholeSeasonExcluded(s.name),
                     })}
                   >
                     {s.name}
@@ -337,9 +333,8 @@ class FileRename extends Component {
                         'file-rename__item--episode',
                         {
                           'file-rename__item--even': i % 2 == 0,
-                          'file-rename__item--included': this.isEpisodeIncluded(
-                            e
-                          ),
+                          'file-rename__item--included':
+                            this.isEpisodeIncluded(e),
                         }
                       )}
                     >
@@ -350,9 +345,11 @@ class FileRename extends Component {
                         checked={this.isEpisodeIncluded(e)}
                         onChange={(event) => this.handleEpisodeChange(event, e)}
                       />
-                      <div className="file-rename__item__name">{e}</div>
+                      <div className="file-rename__item__name">
+                        {getFileName(e)}
+                      </div>
                       <div className="file-rename__item__file-name">
-                        {formatFileName(this.getAssignedFileName(e))}
+                        {getFileName(this.getAssignedFileName(e))}
                       </div>
                     </label>
                   </div>
