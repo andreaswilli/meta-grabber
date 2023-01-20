@@ -34,7 +34,7 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
     "@svgr/webpack": "^6.2.0",
-    "axios": "^0.24.0",
+    "axios": "^1.0.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
     "babel-polyfill": "^6.26.0",
