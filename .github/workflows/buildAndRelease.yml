@@ -12,15 +12,15 @@ jobs:
   lookForRelease:
     needs: test
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get version number
         uses: stevenbenitez/get-package-version-action@v1
         id: package-version
-      
+
       - name: Get release for current version number
         id: get_release
         uses: joutvhu/get-release@v1.0.1
@@ -34,15 +34,14 @@ jobs:
       release_is_draft: ${{ steps.get_release.outputs.draft }}
 
   deleteReleaseAssets:
-    needs: lookForRelease 
+    needs: lookForRelease
     if: |
       needs.lookForRelease.outputs.release_id == null ||
       needs.lookForRelease.outputs.release_is_draft == 'true'
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v1.0.0
@@ -59,7 +58,7 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
