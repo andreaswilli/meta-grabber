@@ -21,7 +21,8 @@ import KoFiIcon from '../icons/ko-fi.svg'
 const stat = util.promisify(fs.stat)
 const mkdir = util.promisify(fs.mkdir)
 const rename = util.promisify(fs.rename)
-const INVALID_CHARS = /[#%&\{\}<>\*\?$!'":@]/g
+// https://stackoverflow.com/a/31976060
+const INVALID_CHARS = /<>:"\/\\\|\?\*/g
 
 class FileRename extends Component {
   constructor(props) {
