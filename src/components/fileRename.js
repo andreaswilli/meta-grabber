@@ -9,7 +9,12 @@ import { withTranslation } from 'react-i18next'
 import Button from './button'
 import Link from './link'
 import { flatten } from '../util/array'
-import { getFileName, getDir, getFileExtension } from '../util/format'
+import {
+  getFileName,
+  getDir,
+  getFileExtension,
+  INVALID_CHARS,
+} from '../util/format'
 
 import CrossIcon from '../icons/cross.svg'
 import FolderIcon from '../icons/folder.svg'
@@ -21,7 +26,6 @@ import KoFiIcon from '../icons/ko-fi.svg'
 const stat = util.promisify(fs.stat)
 const mkdir = util.promisify(fs.mkdir)
 const rename = util.promisify(fs.rename)
-const INVALID_CHARS = /[#%&\{\}<>\*\?$!'":@]/g
 
 class FileRename extends Component {
   constructor(props) {

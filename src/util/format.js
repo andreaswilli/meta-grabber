@@ -16,6 +16,10 @@ export function getFileExtension(fileName) {
   return fileName.split('.').last()
 }
 
+// https://stackoverflow.com/a/31976060
+// (back-)slashes are removed from episode names directly
+export const INVALID_CHARS = /[<>:"\|?*]/g
+
 export function formatEpisodeName(episode, tvShow, template) {
   return (template || 'missing template')
     .replace(/\{show_name\}/g, tvShow.name)
@@ -23,7 +27,7 @@ export function formatEpisodeName(episode, tvShow, template) {
     .replace(/\{season_no\}/g, leftPad(episode.season_number, 2, 0))
     .replace(/\{episode_no\}/g, leftPad(episode.episode_number, 2, 0))
     .replace(/\{episode_name\}/g, episode.name || 'missing translation')
-    .replace(/[#%&\{\}<>\*\?$!'":@]/g, '')
+    .replace(INVALID_CHARS, '')
     .replace(/\\/g, '/')
 }
 

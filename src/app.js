@@ -117,6 +117,11 @@ class App extends Component {
     this.setState({ loading: true })
     try {
       const seasons = await getTvShow(tvShow)
+      for (const season of seasons) {
+        for (const episode of season.episodes) {
+          episode.name = episode.name.replace(/\s*[\/\\]\s*/g, ' ')
+        }
+      }
       this.setState((prevState) => {
         let nextState = {
           seasons,
