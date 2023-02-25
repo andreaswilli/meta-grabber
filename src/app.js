@@ -3,6 +3,7 @@ import axios from 'axios'
 import i18n from 'i18next'
 import { withTranslation } from 'react-i18next'
 import { ipcRenderer } from 'electron'
+import naturalCompare from 'string-natural-compare'
 
 import TvShowInput from './components/tvShowInput'
 import FilePicker from './components/filePicker'
@@ -164,12 +165,10 @@ class App extends Component {
 
   // use Set() to prevent duplicates in array
   handleFileOpen(files) {
-    this.setState({
-      files:
-        files.length === 0
-          ? files
-          : [...new Set([...this.state.files, ...files])],
-    })
+    const uniqueFiles =
+      files.length === 0 ? files : [...new Set([...this.state.files, ...files])]
+    const sortedFiles = uniqueFiles.sort(naturalCompare)
+    this.setState({ files: sortedFiles })
     this.updateUsageHint(undefined, files)
   }
 
@@ -303,7 +302,7 @@ class App extends Component {
                   )
                 ),
               }))}
-              files={this.state.files.sort()}
+              files={this.state.files}
               outputDir={
                 this.state.outputDir || this.state.settings.defaultOutputDir
               }

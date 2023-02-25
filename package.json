@@ -50,6 +50,7 @@
     "react-autocomplete": "^1.8.1",
     "react-dom": "^16.13.1",
     "react-i18next": "^12.0.0",
+    "string-natural-compare": "^3.0.1",
     "tree-kill": "^1.2.2",
     "webpack": "^5.58.2"
   },
