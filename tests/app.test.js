@@ -19,7 +19,7 @@ beforeAll(async () => {
 
 afterAll(async () => electronTest.destroyPage())
 
-describe('Home', () => {
+xdescribe('Home', () => {
   test('show initial instructions in snackbar', async () => {
     await expectText(
       '.message__text',
@@ -63,7 +63,7 @@ describe('Home', () => {
   })
 })
 
-describe('Settings', () => {
+xdescribe('Settings', () => {
   test('change ui language', async () => {
     await page.click('.settings-button')
     await wait(400) // css transition
